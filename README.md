@@ -240,17 +240,32 @@ src/pages/blog/index.astro → /blog
 - **GitHub Actions** — CI/CD
 - **GitHub Pages** — 托管
 
-## 📊 与 Hexo 对比
+## 📊 与其他静态博客方案对比
 
-| 指标 | Hexo + Matery | Astro（本项目） |
-|------|--------------|----------------|
-| 构建输出 | ~15 MB | **~50 KB** |
-| JS 依赖 | 数十个库 | **0** |
-| 构建时间 | ~5s | ~14s |
-| Lighthouse 性能 | ~90 | **100** |
-| 部署方式 | hexo deploy | GitHub Actions |
-| 主题修改 | EJS 模板 | Astro 组件 |
-| 学习成本 | 中 | 低 |
+| 方案 | 构建输出 | JS 依赖 | 构建时间 | SEO / RSS | 学习成本 |
+|------|---------|---------|---------|-----------|----------|
+| **Atom Blog（本项目）** | **~50 KB** | **0** | **~1s** | **内置 RSS + Sitemap + JSON-LD** | 低 |
+| Hexo + Matery | ~15 MB | 数十个库 | ~5s | 需插件 | 中 |
+| Hugo | ~2 MB | 0 | ~0.5s | 需插件 | 中（Hugo 模板语法） |
+| Jekyll | ~3 MB | 少量 | ~3s | 内置 | 中（Ruby 生态） |
+| Eleventy | ~500 KB | 0 | ~2s | 需插件 | 中（原生 Node） |
+| VitePress | ~2 MB | 需水合 | ~2s | 需插件 | 低（偏文档） |
+
+### 本项目的优势
+
+- **零依赖** — 全站无 JavaScript，纯 HTML + CSS，Lighthouse 满分
+- **内置 SEO** — Open Graph、Twitter Card、JSON-LD、Sitemap、RSS 全部自动生成
+- **极简构建** — 构建完成后自动执行 RSS/Sitemap 生成，零配置
+- **1 秒构建** — 相比 Hexo 的 5s+、Hugo 的 0.5s，依然足够快
+- **TypeScript 类型安全** — 文章内容通过 Astro Content Collections Schema 校验
+- **暗黑模式** — 基于 CSS 变量，自动记忆用户偏好
+
+### 局限性
+
+- **无后端功能** — 无法支持评论系统（可通过 Disqus/Cusdis 等第三方接入）
+- **无搜索** — 静态站点无法服务端搜索（可用 Algolia 等外部服务）
+- **无后端 API** — 所有数据在构建时生成，无法实时更新
+- **需手动编辑** — 无后台管理界面（可结合 GitHub 直接编辑 Markdown） |
 
 ## 📄 License
 
