@@ -9,17 +9,51 @@ interface Props {
   description: string;
   heroImage?: string;
   tags?: string[];
-  reward?: boolean;  // 是否显示打赏区，默认不展示
+  reward?: boolean;
+  prevPost?: { title: string; slug: string };
+  nextPost?: { title: string; slug: string };
 }
 
-const { title, pubDate, updatedDate, description, heroImage, tags = [], reward = false } = Astro.props;
+const { title, pubDate, updatedDate, description, heroImage, tags = [], reward = false, prevPost, nextPost } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={title} description={description} type="article">
+  <fragment slot="head">
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description: description || '',
+        datePublished: pubDate.toISOString(),
+        dateModified: updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+        author: { "@type": "Person", name: '因特吧' },
+        mainEntityOfPage: { "@type": "WebPage", "@id": Astro.url },
+      })}
+    </script>
+    <script>
+      // Reading progress bar
+      function updateProgress() {
+        const article = document.querySelector('.post-content');
+        const bar = document.querySelector('.reading-progress-fill');
+        if (!article || !bar) return;
+        const rect = article.getBoundingClientRect();
+        const total = article.scrollHeight;
+        const scrolled = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (total + window.innerHeight - rect.height)));
+        bar.style.width = (scrolled * 100) + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress, { passive: true });
+      updateProgress();
+    </script>
+  </fragment>
+  <div class="reading-progress-container">
+    <div class="reading-progress"><div class="reading-progress-fill"></div></div>
+  </div>
   <article class="post">
     {heroImage && (
       <div class="hero-image">
-        <img src={heroImage} alt={title} />
+        <img src={heroImage} alt={title} loading="lazy" />
       </div>
     )}
     <div class="post-header">
@@ -58,8 +92,25 @@ const { title, pubDate, updatedDate, description, heroImage, tags = [], reward =
         </div>
       </div>
     )}
-    <div class="post-nav">
-      <a href="/">← 返回首页</a>
-    </div>
+    {prevPost || nextPost ? (
+      <nav class="post-nav">
+        <div class="post-nav-links">
+          {prevPost && (
+            <a href={`/blog/${prevPost.slug}/`} class="post-nav-link prev">
+              ← <span class="nav-label">{prevPost.title}</span>
+            </a>
+          )}
+          {nextPost && (
+            <a href={`/blog/${nextPost.slug}/`} class="post-nav-link next">
+              <span class="nav-label">{nextPost.title}</span> →
+            </a>
+          )}
+        </div>
+      </nav>
+    ) : (
+      <div class="post-nav">
+        <a href="/">← 返回首页</a>
+      </div>
+    )}
   </article>
 </BaseLayout>

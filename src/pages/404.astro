@@ -1,0 +1,18 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../consts';
+---
+
+<BaseLayout title="404 - 页面不存在" description="你访问的页面走丢了">
+  <section class="hero" style="padding: 6rem 0 4rem;">
+    <h1 style="font-size: 6rem; line-height: 1; margin-bottom: 1rem;">404</h1>
+    <p class="hero-desc" style="margin-bottom: 2rem;">
+      你访问的页面走丢了。<br>
+      就像 Atom 在拳击台上偶尔也会……嗯，好吧，Atom 从不会走丢。
+    </p>
+    <div class="hero-actions">
+      <a href="/" class="btn btn-primary">回到首页 →</a>
+      <a href="/blog" class="btn btn-secondary">浏览文章</a>
+    </div>
+  </section>
+</BaseLayout>

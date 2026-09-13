@@ -531,6 +531,69 @@ main {
   font-size: 0.95rem;
 }
 
+/* ===== Post Navigation (prev/next) ===== */
+.post-nav-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding-top: 1rem;
+}
+
+.post-nav-link {
+  display: block;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  text-decoration: none;
+}
+
+.post-nav-link:hover {
+  border-color: var(--accent);
+  background: var(--accent-light);
+}
+
+.post-nav-link.prev {
+  text-align: left;
+}
+
+.post-nav-link.next {
+  text-align: right;
+}
+
+.nav-label {
+  display: block;
+  font-weight: 500;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== Reading Progress Bar ===== */
+.reading-progress-container {
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  background: var(--bg-primary);
+  height: 3px;
+}
+
+.reading-progress {
+  height: 3px;
+  width: 100%;
+  background: transparent;
+}
+
+.reading-progress-fill {
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), #ec4899);
+  transition: width 0.1s linear;
+  border-radius: 0 2px 2px 0;
+}
+
 /* ===== About Page ===== */
 .about h1 {
   font-size: 2rem;
@@ -690,6 +753,10 @@ main {
   .footer-content {
     flex-direction: column;
     text-align: center;
+  }
+
+  .post-nav-links {
+    grid-template-columns: 1fr;
   }
 
   .reward-qr {
