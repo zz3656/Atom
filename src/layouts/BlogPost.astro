@@ -9,9 +9,10 @@ interface Props {
   description: string;
   heroImage?: string;
   tags?: string[];
+  reward?: boolean;  // 是否显示打赏区，默认不展示
 }
 
-const { title, pubDate, updatedDate, description, heroImage, tags = [] } = Astro.props;
+const { title, pubDate, updatedDate, description, heroImage, tags = [], reward = false } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -42,19 +43,21 @@ const { title, pubDate, updatedDate, description, heroImage, tags = [] } = Astro
     <div class="post-content">
       <slot />
     </div>
-    <div class="post-reward">
-      <p class="reward-title">☕ 觉得文章有帮助？请我喝杯咖啡</p>
-      <div class="reward-qr">
-        <div class="reward-item">
-          <img src="/wechat.png" alt="微信赞赏码" />
-          <span>微信赞赏</span>
-        </div>
-        <div class="reward-item">
-          <img src="/alipay.jpg" alt="支付宝收款码" />
-          <span>支付宝赞赏</span>
+    {reward && (
+      <div class="post-reward">
+        <p class="reward-title">🤖 觉得文章有帮助？给 Atom 加个油</p>
+        <div class="reward-qr">
+          <div class="reward-item">
+            <img src="/medias/reward/wechat.png" alt="微信赞赏码" />
+            <span>微信赞赏</span>
+          </div>
+          <div class="reward-item">
+            <img src="/medias/reward/alipay.jpg" alt="支付宝收款码" />
+            <span>支付宝赞赏</span>
+          </div>
         </div>
       </div>
-    </div>
+    )}
     <div class="post-nav">
       <a href="/">← 返回首页</a>
     </div>

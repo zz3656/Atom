@@ -1,5 +1,6 @@
 {
-  "name": "my-astro-blog",
+  "name": "atom-blog",
+  "description": "A modern blog powered by Astro — inspired by Atom from Real Steel",
   "type": "module",
   "version": "1.0.0",
   "scripts": {

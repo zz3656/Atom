@@ -12,8 +12,8 @@ import { SITE_TITLE, AUTHOR, SOCIAL_LINKS } from '../consts';
       </p>
       <p>
         这个博客使用 <a href="https://astro.build" target="_blank">Astro</a> 构建，
-        部署在 GitHub Pages 上。 Astro 是一个现代化的静态站点生成器，
-        专注于内容网站，构建速度极快，输出纯净的 HTML。
+        部署在 GitHub Pages 上。 项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom —
+        小巧、精准、充满力量。
       </p>
       <h2>为什么选择 Astro？</h2>
       <ul>
@@ -23,6 +23,25 @@ import { SITE_TITLE, AUTHOR, SOCIAL_LINKS } from '../consts';
         <li>📝 <strong>Markdown/MDX</strong> — 原生内容集合支持</li>
         <li>🐙 <strong>GitHub Pages 友好</strong> — 开箱即用的部署方案</li>
       </ul>
+      <h2>我的项目</h2>
+      <div class="about-projects">
+        <div class="project-card">
+          <h3>⚙️ Atom Blog</h3>
+          <p>Astro 构建的现代博客，灵感来自电影《铁甲钢拳》中的机器人 Atom。零 JS 输出，Lighthouse 满分，硬核科技风。</p>
+          <div class="project-links">
+            <a href="/atom-blog" target="_blank" class="tag">在线预览</a>
+            <a href="https://github.com/zz3656/atom-blog" target="_blank" class="tag">GitHub</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>🎮 Epic Games Claimer</h3>
+          <p>Epic Games 每周免费游戏自动领取服务。HTTP API 驱动，无需浏览器，Docker 部署，支持多用户和通知推送。</p>
+          <div class="project-links">
+            <a href="/epic-games-claimer" target="_blank" class="tag">在线预览</a>
+            <a href="https://github.com/zz3656/epic-games-claimer" target="_blank" class="tag">GitHub</a>
+          </div>
+        </div>
+      </div>
       <h2>联系我</h2>
       <div class="about-links">
         {SOCIAL_LINKS.github && <a href={SOCIAL_LINKS.github} target="_blank" class="btn btn-secondary">GitHub</a>}

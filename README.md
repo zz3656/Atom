@@ -1,14 +1,16 @@
 <div align="center">
 
-# 🚀 My Astro Blog
+# ⚙️ Atom Blog
 
-**一个用 Astro 构建的现代博客** — 简洁、快速、优雅
+**一个用 Astro 构建的现代博客** — 像 Atom 一样强大，像钢铁一样可靠
 
-[![Deploy](https://github.com/zz3656/my-astro-blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/zz3656/my-astro-blog/actions/workflows/deploy.yml)
+> 灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom — 小巧、精准、充满力量
+
 [![Astro](https://img.shields.io/badge/Astro-4.x-ff5d01?logo=astro&logoColor=white)](https://astro.build)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🏠 在线预览](https://zz3656.github.io/my-astro-blog) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#️-自定义)
+[🏠 在线预览](https://zz3656.github.io/atom-blog) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#️-自定义)
 
 </div>
 
@@ -21,9 +23,10 @@
 | ⚡ **Astro 驱动** | 零 JS 输出，纯 HTML，加载极快 |
 | 🌙 **暗黑模式** | 一键切换，自动记忆用户偏好 |
 | 📱 **响应式设计** | 手机、平板、桌面完美适配 |
-| 🎨 **现代 UI** | 渐变标题、卡片布局、悬浮动效 |
+| 🤖 **Atom 风格** | 硬核科技风 UI，致敬《铁甲钢拳》 |
 | 📝 **Markdown 写作** | 原生支持，代码语法高亮 |
 | 🏷️ **标签系统** | 文章自动展示分类标签 |
+| 💰 **打赏功能** | 可选开启微信/支付宝赞赏码 |
 | 🚀 **GitHub Actions** | 推送代码自动构建部署 |
 | 🔍 **SEO 友好** | 语义化 HTML、Open Graph |
 | 📦 **超小体积** | 全站仅 ~50KB（对比 Hexo ~15MB） |
@@ -33,7 +36,7 @@
 
 ### 首页
 
-- 渐变标题 + 大气的 Hero 区域
+- 硬核科技风格的 Hero 区域
 - 卡片式文章网格布局
 - 一键切换暗黑模式
 
@@ -46,39 +49,39 @@
 ## 📁 项目结构
 
 ```
-my-astro-blog/
+atom-blog/
 ├── .github_disabled/            # GitHub Actions 配置（需重命名为 .github/）
 │   └── deploy.yml               # 自动部署 workflow
 ├── public/
-│   └── favicon.svg             # 网站图标
+│   └── favicon.svg              # 网站图标
 ├── src/
 │   ├── components/
-│   │   ├── Header.astro        # 导航栏 + 暗黑模式切换
-│   │   ├── Footer.astro        # 页脚
-│   │   ├── PostCard.astro      # 文章卡片
-│   │   └── FormattedDate.astro # 日期格式化
+│   │   ├── Header.astro         # 导航栏 + 暗黑模式切换
+│   │   ├── Footer.astro         # 页脚
+│   │   ├── PostCard.astro       # 文章卡片
+│   │   └── FormattedDate.astro  # 日期格式化
 │   ├── content/
-│   │   ├── config.ts           # 文章 Schema（类型安全）
-│   │   └── blog/               # 📝 在这里放 Markdown 文章
+│   │   ├── config.ts            # 文章 Schema（类型安全）
+│   │   └── blog/                # 📝 在这里放 Markdown 文章
 │   │       ├── hello-world.md
 │   │       ├── astro-blog-tutorial.md
 │   │       └── markdown-guide.md
 │   ├── layouts/
-│   │   ├── BaseLayout.astro    # 基础布局（head + nav + footer）
-│   │   └── BlogPost.astro      # 文章详情布局
+│   │   ├── BaseLayout.astro     # 基础布局（head + nav + footer）
+│   │   └── BlogPost.astro       # 文章详情布局
 │   ├── pages/
-│   │   ├── index.astro         # 首页
-│   │   ├── about.astro         # 关于页面
+│   │   ├── index.astro          # 首页
+│   │   ├── about.astro          # 关于页面
 │   │   └── blog/
-│   │       ├── index.astro     # 文章列表
-│   │       └── [...slug].astro # 文章详情（动态路由）
+│   │       ├── index.astro      # 文章列表
+│   │       └── [...slug].astro  # 文章详情（动态路由）
 │   ├── styles/
-│   │   └── global.css          # 全局样式 + 暗黑模式变量
-│   └── consts.ts               # 站点配置（标题、作者、链接）
-├── astro.config.mjs            # Astro 配置
+│   │   └── global.css           # 全局样式 + 暗黑模式变量
+│   └── consts.ts                # 站点配置（标题、作者、链接）
+├── astro.config.mjs             # Astro 配置
 ├── package.json
 ├── tsconfig.json
-└── README.md                   # 本文件
+└── README.md                    # 本文件
 ```
 
 ## 🚀 快速开始
@@ -91,8 +94,8 @@ my-astro-blog/
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/zz3656/my-astro-blog.git
-cd my-astro-blog
+git clone https://github.com/zz3656/atom-blog.git
+cd atom-blog
 ```
 
 ### 2. 安装依赖
@@ -124,10 +127,10 @@ npm run preview  # 本地预览构建结果
 ---
 title: 文章标题
 description: 简短描述（会显示在卡片上）
-pubDate: 2026-05-01
+pubDate: 2026-09-13
 tags: [标签1, 标签2]
 heroImage: /images/cover.jpg   # 可选
-updatedDate: 2026-05-02        # 可选
+updatedDate: 2026-09-14        # 可选
 ---
 
 正文使用 Markdown 语法，支持：
@@ -150,6 +153,7 @@ Frontmatter 字段说明：
 | `tags` | string[] | ❌ | 标签列表 |
 | `heroImage` | string | ❌ | 封面图片路径 |
 | `updatedDate` | date | ❌ | 更新日期 |
+| `reward` | boolean | ❌ | 是否在文末显示打赏码（默认关闭） |
 
 ## 🐙 部署到 GitHub Pages
 
@@ -199,7 +203,7 @@ export const SOCIAL_LINKS = {
 ```javascript
 export default defineConfig({
   site: 'https://yourusername.github.io',  // 你的 GitHub Pages 地址
-  base: '/my-astro-blog',                   // 仓库名（根站点用 '/'）
+  base: '/atom-blog',                      // 仓库名（根站点用 '/'）
 });
 ```
 
@@ -258,6 +262,6 @@ src/pages/blog/index.astro → /blog
 
 **如果这个项目对你有帮助，给个 ⭐ Star 吧！**
 
-Made with ❤️ by [因特吧](https://github.com/zz3656) · Powered by [Astro](https://astro.build)
+Made with ⚙️ by [因特吧](https://github.com/zz3656) · Powered by [Astro](https://astro.build)
 
 </div>
