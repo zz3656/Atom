@@ -72,7 +72,7 @@ Atom/
 │   ├── robots.txt               # 搜索引擎爬虫规则
 │   └── medias/reward/           # 打赏二维码
 │       ├── wechat.png           # 微信赞赏码
-│       └── alipay.jpg           # 支付宝收款码
+│       └── alipay.png           # 支付宝收款码
 ├── scripts/
 │   └── generate-rss.mjs         # RSS Feed 和 Sitemap 自动生成脚本
 ├── src/
@@ -342,7 +342,7 @@ reward={true}
 public/
 └── medias/reward/
     ├── wechat.png     # 微信赞赏码（140x140 像素）
-    └── alipay.jpg     # 支付宝收款码（140x140 像素）
+    └── alipay.png     # 支付宝收款码（140x140 像素）
 ```
 
 ### 8. 样式主题
@@ -436,6 +436,16 @@ src/pages/tag/[tag]          → /tag/xx      (标签详情)
 - **无搜索** — 静态站点无法服务端搜索（可用 Algolia 等外部服务）
 - **无后端 API** — 所有数据在构建时生成，无法实时更新
 - **需手动编辑** — 无后台管理界面（可结合 GitHub 直接编辑 Markdown）
+
+## 💰 支持本项目
+
+如果你喜欢 Atom 博客，欢迎扫码打赏，给了我加个 🥤 饮料！
+
+| 微信 | 支付宝 |
+|------|--------|
+| <img src="https://zz3656.github.io/Atom-blog/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://zz3656.github.io/Atom-blog/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
+
+每一分支持都是对开源项目的最大鼓励 ❤️
 
 ## 📄 License
 
