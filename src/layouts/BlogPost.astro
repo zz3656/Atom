@@ -55,13 +55,9 @@ const { title, pubDate, updatedDate, description, heroImage, category = '', tags
     <div class="reading-progress"><div class="reading-progress-fill"></div></div>
   </div>
   <article class="post">
-    {heroImage && (
-      <div class="hero-image">
-        <img src={heroImage} alt={title} loading="lazy" />
-      </div>
-    )}
     <div class="post-header">
       <h1>{title}</h1>
+      <p class="post-description">{description}</p>
       <div class="post-meta">
         <span>📅 <FormattedDate date={pubDate} /></span>
         {updatedDate && (
@@ -83,6 +79,11 @@ const { title, pubDate, updatedDate, description, heroImage, category = '', tags
         </div>
       )}
     </div>
+    {heroImage && (
+      <div class="hero-image">
+        <img src={heroImage} alt={title} loading="lazy" />
+      </div>
+    )}
     <div class="post-content">
       <slot />
     </div>
