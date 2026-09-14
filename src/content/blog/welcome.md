@@ -2,7 +2,7 @@
 title: 欢迎使用 Atom 博客
 description: Atom 博客已部署成功！这是一个基于 Astro 构建的轻量级静态博客，简洁、快速、优雅。
 pubDate: 2025-09-14
-category: 公告
+category: 默认分类
 tags: [Atom]
 ---
 
@@ -30,7 +30,7 @@ tags: [Atom]
 title: 文章标题
 description: 文章描述
 pubDate: 2025-09-14
-category: 分类名称
+category: 默认分类
 tags: [标签1, 标签2]
 ---
 
