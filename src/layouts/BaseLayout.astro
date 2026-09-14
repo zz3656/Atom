@@ -12,9 +12,9 @@ interface Props {
 }
 
 const { title, description, image, type = 'website' } = Astro.props;
-const fullTitle = title === SITE_TITLE ? title : `${title} | ${SITE_TITLE}`;
+const fullTitle = title;
 const desc = description || SITE_DESCRIPTION;
-const siteUrl = Astro.site || 'https://zz3656.github.io/atom';
+const siteUrl = Astro.site || 'https://zz3656.github.io/atom-blog';
 const ogImage = image
   ? `${siteUrl}${image}`
   : `${siteUrl}/favicon.svg`;

@@ -100,8 +100,8 @@ atom/
 ### 1. Clone the Project
 
 ```bash
-git clone https://github.com/zz3656/atom.git
-cd atom
+git clone https://github.com/zz3656/atom-blog.git
+cd atom-blog
 ```
 
 ### 2. Install Dependencies

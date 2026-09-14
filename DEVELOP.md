@@ -76,7 +76,7 @@ Atom is a **lightweight, zero-dependency** static blog built with [Astro](https:
 ```bash
 # 1. 克隆
 git clone https://github.com/zz3656/atom.git
-cd atom
+cd atom-blog
 
 # 2. 安装依赖
 npm install
@@ -96,7 +96,7 @@ npm run preview
 ```bash
 # 1. Clone
 git clone https://github.com/zz3656/atom.git
-cd atom
+cd atom-blog
 
 # 2. Install dependencies
 npm install

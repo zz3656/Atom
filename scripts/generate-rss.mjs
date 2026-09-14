@@ -28,7 +28,7 @@ function parseFrontmatter(content) {
 }
 
 var siteUrl = 'https://zz3656.github.io';
-var repoName = 'atom';
+var repoName = 'atom-blog';
 var prefix = repoName ? '/' + repoName : '';
 
 // --- Generate RSS ---
@@ -65,8 +65,8 @@ var rss = [
   '<?xml version="1.0" encoding="UTF-8" ?>',
   '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
   '  <channel>',
-  '    <title>因特吧的博客</title>',
-  '    <description>分享技术心得、学习笔记与生活感悟</description>',
+  '    <title>Atom Blog</title>',
+  '    <description>A modern, lightweight blog built with Astro</description>',
   '    <link>' + siteUrl + prefix + '/</link>',
   '    <atom:link href="' + siteUrl + prefix + '/rss.xml" rel="self" type="application/rss+xml" />',
   items,

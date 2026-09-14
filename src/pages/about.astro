@@ -1,48 +1,54 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_TITLE, AUTHOR, SOCIAL_LINKS } from '../consts';
+import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
 ---
 
-<BaseLayout title={`关于 | ${SITE_TITLE}`}>
+<BaseLayout title="关于 | Atom Blog">
   <section class="about">
-    <h1>关于我</h1>
+    <h1>关于此博客</h1>
     <div class="about-content">
       <p>
-        你好！我是 <strong>{AUTHOR}</strong>，一个热爱技术的博主。
-      </p>
-      <p>
-        这个博客使用 <a href="https://astro.build" target="_blank">Astro</a> 构建，
-        部署在 GitHub Pages 上。 项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom —
+        你好！这是 <strong>Atom 博客</strong>，一个基于 <a href="https://astro.build" target="_blank">Astro</a> 构建的现代静态博客。
+        项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom —
         小巧、精准、充满力量。
       </p>
-      <h2>为什么选择 Astro？</h2>
+
+      <h2>🎯 设计理念</h2>
+      <p>Atom 博客追求简洁、快速、优雅。我们相信好的博客应该：</p>
       <ul>
-        <li>🚀 <strong>极快的构建速度</strong> — 内容驱动的架构</li>
-        <li>📦 <strong>零 JS 默认</strong> — 输出纯 HTML，按需水合</li>
-        <li>🎨 <strong>组件灵活</strong> — 支持 React、Vue、Svelte 等框架</li>
-        <li>📝 <strong>Markdown/MDX</strong> — 原生内容集合支持</li>
-        <li>🐙 <strong>GitHub Pages 友好</strong> — 开箱即用的部署方案</li>
+        <li>🚀 <strong>极快</strong> — 零 JavaScript，纯 HTML，Lighthouse 满分</li>
+        <li>📝 <strong>专注内容</strong> — Markdown 写作，无需后台</li>
+        <li>🌙 <strong>优雅体验</strong> — 暗黑模式，响应式布局</li>
+        <li>🔍 <strong>SEO 友好</strong> — 内置 RSS、Sitemap、Open Graph</li>
       </ul>
-      <h2>我的项目</h2>
+
+      <h2>🛠️ 技术栈</h2>
       <div class="about-projects">
         <div class="project-card">
-          <h3>⚙️ Atom</h3>
-          <p>Astro 构建的现代博客，灵感来自电影《铁甲钢拳》中的机器人 Atom。零 JS 输出，Lighthouse 满分，硬核科技风。</p>
+          <h3>⚡ Astro</h3>
+          <p>现代静态站点生成器，零 JS 默认输出，内容优先架构。</p>
           <div class="project-links">
-            <a href="/atom" target="_blank" class="tag">在线预览</a>
-            <a href="https://github.com/zz3656/atom" target="_blank" class="tag">GitHub</a>
+            <a href="https://astro.build" target="_blank" class="tag">官网</a>
           </div>
         </div>
         <div class="project-card">
-          <h3>🎮 Epic Games Claimer</h3>
-          <p>Epic Games 每周免费游戏自动领取服务。HTTP API 驱动，无需浏览器，Docker 部署，支持多用户和通知推送。</p>
+          <h3>📘 TypeScript</h3>
+          <p>类型安全的开发体验，编辑器智能提示，内容 Schema 校验。</p>
           <div class="project-links">
-            <a href="/epic-games-claimer" target="_blank" class="tag">在线预览</a>
-            <a href="https://github.com/zz3656/epic-games-claimer" target="_blank" class="tag">GitHub</a>
+            <a href="https://www.typescriptlang.org" target="_blank" class="tag">官网</a>
+          </div>
+        </div>
+        <div class="project-card">
+          <h3>🐙 GitHub Pages</h3>
+          <p>免费静态站点托管，GitHub Actions 自动构建部署。</p>
+          <div class="project-links">
+            <a href="https://pages.github.com" target="_blank" class="tag">官网</a>
           </div>
         </div>
       </div>
-      <h2>联系我</h2>
+
+      <h2>💬 联系我</h2>
+      <p>如果你对这个项目感兴趣，欢迎 Star 或 Fork！</p>
       <div class="about-links">
         {SOCIAL_LINKS.github && <a href={SOCIAL_LINKS.github} target="_blank" class="btn btn-secondary">GitHub</a>}
         {SOCIAL_LINKS.email && <a href={SOCIAL_LINKS.email} class="btn btn-secondary">Email</a>}

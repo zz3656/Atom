@@ -1,15 +1,15 @@
 ---
-import { SITE_TITLE, AUTHOR, SOCIAL_LINKS } from '../consts';
+import { SOCIAL_LINKS } from '../consts';
 const year = new Date().getFullYear();
 ---
 
 <footer class="site-footer">
   <div class="footer-content">
-    <p>© {year} {AUTHOR}. ⚙️ <a href="https://astro.build" target="_blank" rel="noopener">Astro</a> 构建</p>
+    <p>© {year} Atom Blog. Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p>
     <div class="footer-links">
       {SOCIAL_LINKS.github && <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener">GitHub</a>}
       {SOCIAL_LINKS.twitter && <a href={SOCIAL_LINKS.twitter} target="_blank" rel="noopener">Twitter</a>}
-      {SOCIAL_LINKS.email && <a href={SOCIAL_LINKS.email}>Email</a>}
+      {SOCIAL_LINKS.email && <a href={SOCIAL_LINKS.email}>RSS</a>}
     </div>
   </div>
 </footer>

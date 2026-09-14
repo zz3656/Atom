@@ -9,10 +9,12 @@ const posts = (await getCollection('blog')).sort(
 );
 ---
 
-<BaseLayout title={`所有文章 | ${SITE_TITLE}`}>
+<BaseLayout title="所有文章 | Atom Blog">
   <section class="blog-list">
-    <h1>所有文章</h1>
-    <p class="blog-count">共 {posts.length} 篇</p>
+    <div class="blog-list-header">
+      <h1>📝 所有文章</h1>
+      <p class="blog-count">共 {posts.length} 篇</p>
+    </div>
     <ul class="post-list">
       {posts.map((post) => (
         <PostCard
