@@ -23,13 +23,13 @@
 | ⚡ **Astro-Powered** | Zero JavaScript output, pure HTML, blazing fast |
 | 🌙 **Dark Mode** | One-click toggle with automatic user preference memory |
 | 📱 **Responsive** | Perfect on mobile, tablet, and desktop |
-| 🤖 **Atom Theme** | Hardcore tech-style UI, a tribute to *Real Steel* |
+| 🎨 **Modern Theme** | Gradient colors, card layouts, smooth animations |
 | 📝 **Markdown Writing** | Native support with code syntax highlighting |
 | 🏷️ **Tag System** | Automatic tag display on article cards |
 | 💰 **Reward Support** | Optional WeChat / Alipay donation QR codes |
 | 🚀 **GitHub Actions** | Automatic build and deploy on push |
-| 🔍 **SEO Friendly** | Semantic HTML, Open Graph, Twitter Cards |
-| 📦 **Tiny Size** | ~50 KB total vs Hexo's ~15 MB |
+| 🔍 **SEO Friendly** | Semantic HTML, Open Graph, JSON-LD, Sitemap |
+| 📦 **Tiny Size** | ~3KB HTML per page |
 | 💯 **Lighthouse 100** | Performance, Accessibility, SEO all perfect |
 
 ## 📸 Preview
@@ -250,7 +250,7 @@ src/pages/blog/index.astro → /blog
 
 | Solution | Output Size | JS Deps | Build Time | SEO / RSS | Learning Curve |
 |----------|-------------|---------|------------|-----------|----------------|
-| **Atom (This)** | **~50 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Low |
+| **Atom (This)** | **~3 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Low |
 | Hexo + Matery | ~15 MB | Dozens of libs | ~5s | Needs plugin | Medium |
 | Hugo | ~2 MB | 0 | ~0.5s | Needs plugin | Medium (Hugo syntax) |
 | Jekyll | ~3 MB | Minimal | ~3s | Built-in | Medium (Ruby) |
