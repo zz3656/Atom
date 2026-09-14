@@ -34,7 +34,7 @@ const tagPosts = (await getCollection('blog'))
       <ul class="post-list">
         {tagPosts.map((post) => (
           <PostCard
-            slug={base + 'blog/' + post.slug + '/'}
+            slug={base + '/blog/' + post.slug + '/'}
             title={post.data.title}
             pubDate={post.data.pubDate}
             description={post.data.description}
@@ -47,7 +47,7 @@ const tagPosts = (await getCollection('blog'))
     )}
 
     <div class="view-all" style="margin-top: 2rem;">
-      <a href={base + 'tags'}>← 返回所有标签</a>
+      <a href={base + '/tags'}>← 返回所有标签</a>
     </div>
   </section>
 </BaseLayout>

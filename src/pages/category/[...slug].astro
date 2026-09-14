@@ -35,7 +35,7 @@ const categoryPosts = (await getCollection('blog'))
       <ul class="post-list">
         {categoryPosts.map((post) => (
           <PostCard
-            slug={base + 'blog/' + post.slug + '/'}
+            slug={base + '/blog/' + post.slug + '/'}
             title={post.data.title}
             pubDate={post.data.pubDate}
             description={post.data.description}
@@ -49,7 +49,7 @@ const categoryPosts = (await getCollection('blog'))
     )}
 
     <div class="view-all" style="margin-top: 2rem;">
-      <a href={base + 'categories'}>← 返回所有分类</a>
+      <a href={base + '/categories'}>← 返回所有分类</a>
     </div>
   </section>
 </BaseLayout>
