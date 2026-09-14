@@ -28,7 +28,7 @@ const sortedCategories = [...categoryMap.entries()].sort((a, b) => b[1].length -
     {sortedCategories.length > 0 ? (
       <div class="category-cloud">
         {sortedCategories.map(([category, catPosts]) => (
-          <a href={`${base}category/${category}/`} class="category-item">
+          <a href={`${base}/category/${category}/`} class="category-item">
             <span class="category-name">📁 {category}</span>
             <span class="category-count">{catPosts.length}</span>
           </a>
