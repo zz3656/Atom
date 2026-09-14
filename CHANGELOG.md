@@ -6,6 +6,9 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Changed
+- Renamed project from `atom-blog` to `atom` (directory, package name, docs, URLs, code references)
+
 ### Added
 - Atom-style robot favicon (SVG)
 - Dark mode toggle with user preference memory
@@ -15,7 +18,7 @@ All notable changes to this project will be documented in this file.
 - Reward (donation) QR code support
 
 ### Changed
-- Renamed from `astro-blog` to `atom-blog`
+- Renamed from `astro-blog` to `atom`
 - All `from app.*` imports → root-level imports
 
 ### Fixed

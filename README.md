@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚙️ Atom Blog
+# ⚙️ Atom
 
 **一个用 Astro 构建的现代博客** — 像 Atom 一样强大，像钢铁一样可靠
 
@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🏠 在线预览](https://zz3656.github.io/atom-blog) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#️-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md)
+[🏠 在线预览](https://zz3656.github.io/atom) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#️-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md)
 
 </div>
 
@@ -49,7 +49,7 @@
 ## 📁 项目结构
 
 ```
-atom-blog/
+atom/
 ├── .github_disabled/            # GitHub Actions 配置（需重命名为 .github/）
 │   └── deploy.yml               # 自动部署 workflow
 ├── public/
@@ -94,8 +94,8 @@ atom-blog/
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/zz3656/atom-blog.git
-cd atom-blog
+git clone https://github.com/zz3656/atom.git
+cd atom
 ```
 
 ### 2. 安装依赖
@@ -203,7 +203,7 @@ export const SOCIAL_LINKS = {
 ```javascript
 export default defineConfig({
   site: 'https://yourusername.github.io',  // 你的 GitHub Pages 地址
-  base: '/atom-blog',                      // 仓库名（根站点用 '/'）
+  base: '/atom',                           // 仓库名（根站点用 '/'）
 });
 ```
 
@@ -244,7 +244,7 @@ src/pages/blog/index.astro → /blog
 
 | 方案 | 构建输出 | JS 依赖 | 构建时间 | SEO / RSS | 学习成本 |
 |------|---------|---------|---------|-----------|----------|
-| **Atom Blog（本项目）** | **~50 KB** | **0** | **~1s** | **内置 RSS + Sitemap + JSON-LD** | 低 |
+| **Atom（本项目）** | **~50 KB** | **0** | **~1s** | **内置 RSS + Sitemap + JSON-LD** | 低 |
 | Hexo + Matery | ~15 MB | 数十个库 | ~5s | 需插件 | 中 |
 | Hugo | ~2 MB | 0 | ~0.5s | 需插件 | 中（Hugo 模板语法） |
 | Jekyll | ~3 MB | 少量 | ~3s | 内置 | 中（Ruby 生态） |

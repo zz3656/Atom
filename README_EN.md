@@ -1,6 +1,6 @@
 <div align="center">
 
-# ⚙️ Atom Blog
+# ⚙️ Atom
 
 **A modern blog built with Astro** — Powerful like Atom, reliable like steel.
 
@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🏠 Live Demo](https://zz3656.github.io/atom-blog) · [📝 Write Posts](#-write-posts) · [🚀 Deploy](#-deploy-to-github-pages) · [🇨🇳 中文版](README.md) · [📘 Dev Guide](DEVELOP.md)
+[🏠 Live Demo](https://zz3656.github.io/atom) · [📝 Write Posts](#-write-posts) · [🚀 Deploy](#-deploy-to-github-pages) · [🇨🇳 中文版](README.md) · [📘 Dev Guide](DEVELOP.md)
 
 </div>
 
@@ -49,7 +49,7 @@
 ## 📁 Project Structure
 
 ```
-atom-blog/
+atom/
 ├── .github_disabled/            # GitHub Actions config (rename to .github/)
 │   └── deploy.yml               # Auto-deploy workflow
 ├── public/
@@ -100,8 +100,8 @@ atom-blog/
 ### 1. Clone the Project
 
 ```bash
-git clone https://github.com/zz3656/atom-blog.git
-cd atom-blog
+git clone https://github.com/zz3656/atom.git
+cd atom
 ```
 
 ### 2. Install Dependencies
@@ -209,7 +209,7 @@ Edit `astro.config.mjs`:
 ```javascript
 export default defineConfig({
   site: 'https://yourusername.github.io',  // Your GitHub Pages URL
-  base: '/atom-blog',                       // Repo name ('/' for root site)
+  base: '/atom',                            // Repo name ('/' for root site)
 });
 ```
 
@@ -250,7 +250,7 @@ src/pages/blog/index.astro → /blog
 
 | Solution | Output Size | JS Deps | Build Time | SEO / RSS | Learning Curve |
 |----------|-------------|---------|------------|-----------|----------------|
-| **Atom Blog (This)** | **~50 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Low |
+| **Atom (This)** | **~50 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Low |
 | Hexo + Matery | ~15 MB | Dozens of libs | ~5s | Needs plugin | Medium |
 | Hugo | ~2 MB | 0 | ~0.5s | Needs plugin | Medium (Hugo syntax) |
 | Jekyll | ~3 MB | Minimal | ~3s | Built-in | Medium (Ruby) |

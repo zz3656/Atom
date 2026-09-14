@@ -1,8 +1,8 @@
 # 开发者指南 · Developer Guide
 
-> Atom Blog 的详细开发文档。适合想 Fork、二次开发或贡献代码的开发者。
+> Atom 的详细开发文档。适合想 Fork、二次开发或贡献代码的开发者。
 
-> Detailed development docs for Atom Blog. For those who want to fork, customize, or contribute.
+> Detailed development docs for Atom. For those who want to fork, customize, or contribute.
 
 ---
 
@@ -25,7 +25,7 @@
 
 ### 中文
 
-Atom Blog 是一个**轻量级、零依赖**的静态博客，使用 [Astro](https://astro.build) 构建，专为 GitHub Pages 部署优化。项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom — 小巧、精准、充满力量。
+Atom 是一个**轻量级、零依赖**的静态博客，使用 [Astro](https://astro.build) 构建，专为 GitHub Pages 部署优化。项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom — 小巧、精准、充满力量。
 
 **核心设计理念：**
 - **快** — 零 JavaScript 输出，Lighthouse 满分
@@ -34,7 +34,7 @@ Atom Blog 是一个**轻量级、零依赖**的静态博客，使用 [Astro](htt
 
 ### English
 
-Atom Blog is a **lightweight, zero-dependency** static blog built with [Astro](https://astro.build), optimized for GitHub Pages deployment. Inspired by Atom, the boxing robot from *Real Steel* — compact, precise, full of power.
+Atom is a **lightweight, zero-dependency** static blog built with [Astro](https://astro.build), optimized for GitHub Pages deployment. Inspired by Atom, the boxing robot from *Real Steel* — compact, precise, full of power.
 
 **Core design philosophy:**
 - **Fast** — Zero JavaScript output, Lighthouse 100
@@ -75,8 +75,8 @@ Atom Blog is a **lightweight, zero-dependency** static blog built with [Astro](h
 
 ```bash
 # 1. 克隆
-git clone https://github.com/zz3656/atom-blog.git
-cd atom-blog
+git clone https://github.com/zz3656/atom.git
+cd atom
 
 # 2. 安装依赖
 npm install
@@ -95,8 +95,8 @@ npm run preview
 
 ```bash
 # 1. Clone
-git clone https://github.com/zz3656/atom-blog.git
-cd atom-blog
+git clone https://github.com/zz3656/atom.git
+cd atom
 
 # 2. Install dependencies
 npm install
@@ -118,7 +118,7 @@ npm run preview
 ### 中文
 
 ```
-atom-blog/
+atom/
 ├── public/                    # 静态资源（原样复制到 dist/）
 │   ├── favicon.svg            # 网站图标
 │   ├── robots.txt             # 搜索引擎爬虫规则
@@ -161,7 +161,7 @@ atom-blog/
 ### English
 
 ```
-atom-blog/
+atom/
 ├── public/                    # Static assets (copied to dist/)
 │   ├── favicon.svg            # Site favicon
 │   ├── robots.txt             # Search engine crawler rules
@@ -373,7 +373,7 @@ reward: true
 
 ### 集成评论
 
-Atom Blog 本身无后端，可通过以下方式集成评论：
+Atom 本身无后端，可通过以下方式集成评论：
 
 1. **Cusdis** (推荐) — 开源轻量，支持 Telegram 通知
 2. **Disqus** — 最成熟，但需科学上网

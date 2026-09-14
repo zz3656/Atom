@@ -1,4 +1,4 @@
-// Atom Blog — 站点配置
+// Atom — 站点配置
 // 灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom
 
 export const SITE_TITLE = '因特吧的博客';
