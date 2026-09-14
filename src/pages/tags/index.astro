@@ -29,7 +29,7 @@ const sortedTags = [...tagMap.entries()].sort((a, b) => b[1].length - a[1].lengt
     {sortedTags.length > 0 ? (
       <div class="tag-cloud">
         {sortedTags.map(([tag, tagPosts]) => (
-          <a href={`${base}tag/${tag}/`} class="tag-item">
+          <a href={`${base}/tag/${tag}/`} class="tag-item">
             <span class="tag-name">{tag}</span>
             <span class="tag-count">{tagPosts.length}</span>
           </a>
