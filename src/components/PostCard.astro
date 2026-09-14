@@ -1,6 +1,6 @@
 ---
 interface Props {
-  href: string;
+  slug: string;
   title: string;
   pubDate: Date;
   description: string;
@@ -9,11 +9,11 @@ interface Props {
 
 import FormattedDate from './FormattedDate.astro';
 
-const { href, title, pubDate, description, tags = [] } = Astro.props;
+const { slug, title, pubDate, description, tags = [] } = Astro.props;
 ---
 
 <li class="post-card">
-  <a href={href}>
+  <a href={slug}
     <h2 class="post-card-title">{title}</h2>
     <p class="post-card-desc">{description}</p>
     <div class="post-card-meta">

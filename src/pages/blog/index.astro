@@ -1,9 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { SITE_TITLE } from '../../consts';
 import { getCollection } from 'astro:content';
 
+const base = import.meta.env.BASE_URL;
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
@@ -18,7 +18,7 @@ const posts = (await getCollection('blog')).sort(
     <ul class="post-list">
       {posts.map((post) => (
         <PostCard
-          href={`/blog/${post.slug}/`}
+          slug={base + "/blog/" + post.slug + "/"}
           title={post.data.title}
           pubDate={post.data.pubDate}
           description={post.data.description}
