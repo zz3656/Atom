@@ -21,12 +21,11 @@
 | Feature | Description |
 |---------|-------------|
 | ⚡ **Astro-Powered** | Zero JavaScript output, pure HTML, blazing fast |
-| 🌙 **Dark Mode** | One-click toggle with automatic user preference memory |
+| 🌑 **Cyberpunk Theme** | Dark futuristic UI, neon glow, grid background |
 | 📱 **Responsive** | Perfect on mobile, tablet, and desktop |
-| 🎨 **Modern Theme** | Gradient colors, card layouts, smooth animations |
+| 🎯 **Base Path Fix** | Supports GitHub Pages subpath deployment |
 | 📝 **Markdown Writing** | Native support with code syntax highlighting |
 | 🏷️ **Tag System** | Automatic tag display on article cards |
-| 💰 **Reward Support** | Optional WeChat / Alipay donation QR codes |
 | 🚀 **GitHub Actions** | Automatic build and deploy on push |
 | 🔍 **SEO Friendly** | Semantic HTML, Open Graph, JSON-LD, Sitemap |
 | 📦 **Tiny Size** | ~3KB HTML per page |
@@ -100,7 +99,7 @@ atom/
 ### 1. Clone the Project
 
 ```bash
-git clone https://github.com/zz3656/atom-blog.git
+git clone https://github.com/zz3656/Atom.git
 cd atom-blog
 ```
 
@@ -250,7 +249,7 @@ src/pages/blog/index.astro → /blog
 
 | Solution | Output Size | JS Deps | Build Time | SEO / RSS | Learning Curve |
 |----------|-------------|---------|------------|-----------|----------------|
-| **Atom (This)** | **~3 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Low |
+| **Atom (This)** | **~3 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Minimal |
 | Hexo + Matery | ~15 MB | Dozens of libs | ~5s | Needs plugin | Medium |
 | Hugo | ~2 MB | 0 | ~0.5s | Needs plugin | Medium (Hugo syntax) |
 | Jekyll | ~3 MB | Minimal | ~3s | Built-in | Medium (Ruby) |

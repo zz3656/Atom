@@ -21,12 +21,11 @@
 | 特性 | 说明 |
 |------|------|
 | ⚡ **Astro 驱动** | 零 JS 输出，纯 HTML，加载极快 |
-| 🌙 **暗黑模式** | 一键切换，自动记忆用户偏好 |
+| 🌑 **赛博朋克主题** | 深色科技感 UI，霓虹光晕，网格背景 |
 | 📱 **响应式设计** | 手机、平板、桌面完美适配 |
-| 🎨 **现代主题** | 渐变色彩、卡片布局、流畅动画 |
+| 🎯 **路由修复** | 支持 GitHub Pages 子路径部署 |
 | 📝 **Markdown 写作** | 原生支持，代码语法高亮 |
 | 🏷️ **标签系统** | 文章自动展示分类标签 |
-| 💰 **打赏功能** | 可选开启微信/支付宝赞赏码 |
 | 🚀 **GitHub Actions** | 推送代码自动构建部署 |
 | 🔍 **SEO 友好** | 语义化 HTML、Open Graph、JSON-LD、Sitemap |
 | 📦 **超小体积** | HTML 仅 ~3KB（单页） |
@@ -94,7 +93,7 @@ atom/
 ### 1. 克隆项目
 
 ```bash
-git clone https://github.com/zz3656/atom-blog.git
+git clone https://github.com/zz3656/Atom.git
 cd atom-blog
 ```
 
@@ -244,7 +243,7 @@ src/pages/blog/index.astro → /blog
 
 | 方案 | 构建输出 | JS 依赖 | 构建时间 | SEO / RSS | 学习成本 |
 |------|---------|---------|---------|-----------|----------|
-| **Atom（本项目）** | **~3 KB** | **0** | **~1s** | **内置 RSS + Sitemap + JSON-LD** | 低 |
+| **Atom（本项目）** | **~3 KB** | **0** | **~1s** | **内置 RSS + Sitemap + JSON-LD** | 极低 |
 | Hexo + Matery | ~15 MB | 数十个库 | ~5s | 需插件 | 中 |
 | Hugo | ~2 MB | 0 | ~0.5s | 需插件 | 中（Hugo 模板语法） |
 | Jekyll | ~3 MB | 少量 | ~3s | 内置 | 中（Ruby 生态） |
