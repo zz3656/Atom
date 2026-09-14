@@ -11,13 +11,14 @@ interface Props {
   updatedDate?: Date;
   description: string;
   heroImage?: string;
+  category?: string;
   tags?: string[];
   reward?: boolean;
   prevPost?: { title: string; slug: string };
   nextPost?: { title: string; slug: string };
 }
 
-const { title, pubDate, updatedDate, description, heroImage, tags = [], reward = false, prevPost, nextPost } = Astro.props;
+const { title, pubDate, updatedDate, description, heroImage, category = '', tags = [], reward = false, prevPost, nextPost } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description} type="article">
@@ -69,6 +70,11 @@ const { title, pubDate, updatedDate, description, heroImage, tags = [], reward =
           </span>
         )}
       </div>
+      {category && (
+        <div class="post-category">
+          📁 {category}
+        </div>
+      )}
       {tags.length > 0 && (
         <div class="post-tags">
           {tags.map((tag) => (

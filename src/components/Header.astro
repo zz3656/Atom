@@ -7,6 +7,7 @@ const currentPage = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '
 const navLinks = [
   { href: base, label: '首页', active: currentPage === '' },
   { href: base + '/blog', label: '文章', active: currentPage.startsWith('blog') },
+  { href: base + '/categories', label: '分类', active: currentPage === 'categories' },
   { href: base + '/tags', label: '标签', active: currentPage === 'tags' },
   { href: base + '/about', label: '关于', active: currentPage === 'about' },
 ];

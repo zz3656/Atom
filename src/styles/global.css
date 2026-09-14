@@ -23,6 +23,10 @@
   --tag-text: #00e5ff;
   --tag-border: rgba(0, 229, 255, 0.2);
   --tag-active-bg: rgba(0, 229, 255, 0.15);
+  --cat-bg: rgba(167, 139, 250, 0.08);
+  --cat-text: #a78bfa;
+  --cat-border: rgba(167, 139, 250, 0.2);
+  --cat-active-bg: rgba(167, 139, 250, 0.15);
   --success: #10b981;
   --warning: #f59e0b;
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -448,11 +452,18 @@ main {
 .post-card-meta {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 0.8rem;
   font-size: 0.82rem;
   color: var(--text-muted);
   padding-top: 0.9rem;
   border-top: 1px solid var(--border-light);
+  flex-wrap: wrap;
+}
+
+.post-card-category {
+  color: var(--cat-text);
+  font-weight: 500;
+  font-family: var(--font-mono);
 }
 
 .post-card-tags {
@@ -509,6 +520,49 @@ main {
   min-width: 200px;
   margin-bottom: 0;
   flex-shrink: 0;
+}
+
+/* ===== Category Cloud ===== */
+.category-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.category-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s ease;
+}
+
+.category-item:hover {
+  border-color: var(--cat-text);
+  background: var(--bg-card-hover);
+  box-shadow: 0 0 15px var(--purple-glow);
+  transform: translateY(-2px);
+}
+
+.category-name {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-bright);
+  font-family: var(--font-mono);
+}
+
+.category-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--cat-bg);
+  padding: 0.1rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
 }
 
 /* ===== Tag Cloud ===== */
@@ -613,6 +667,24 @@ main {
 .updated {
   font-size: 0.8rem;
   color: var(--warning);
+}
+
+.post-category {
+  display: inline-block;
+  padding: 0.12rem 0.5rem;
+  background: var(--cat-bg);
+  color: var(--cat-text);
+  border: 1px solid var(--cat-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  transition: all 0.2s ease;
+}
+
+.post-category:hover {
+  background: var(--cat-active-bg);
+  border-color: var(--cat-text);
 }
 
 .post-tags {
