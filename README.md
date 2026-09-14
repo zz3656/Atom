@@ -72,7 +72,7 @@ Atom/
 │   ├── robots.txt               # 搜索引擎爬虫规则
 │   └── medias/reward/           # 打赏二维码
 │       ├── wechat.png           # 微信赞赏码
-│       └── alipay.jpg           # 支付宝收款码
+│       └── alipay.png           # 支付宝收款码
 ├── scripts/
 │   └── generate-rss.mjs         # RSS Feed 和 Sitemap 自动生成脚本
 ├── src/
@@ -342,7 +342,7 @@ reward={true}
 public/
 └── medias/reward/
     ├── wechat.png     # 微信赞赏码（140x140 像素）
-    └── alipay.jpg     # 支付宝收款码（140x140 像素）
+    └── alipay.png     # 支付宝收款码（140x140 像素）
 ```
 
 ### 8. 样式主题
