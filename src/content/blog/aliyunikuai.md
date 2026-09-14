@@ -1,6 +1,6 @@
 ---
 title: 阿里云/腾讯云 安装爱快系统步骤
-description: **📢 本文已迁移到《[阿里云腾讯云安装爱快系统步骤](https://www.inte8.top/2025/07/11/a-li-yun-teng-xun-yun-an-zhuang-ai-kuai-xi-tong-bu-zou/)》**(2025-07-11 发布，完整版)。原文保留如下供参考。
+description: "**📢 本文已迁移到《[阿里云腾讯云安装爱快系统步骤](https://www.inte8.top/2025/07/11/a-li-yun-teng-xun-yun-an-zhuang-ai-kuai-xi-tong-bu-zou/)》**(2025-07-11 发布，完整版)。原文保留如下供参考。"
 pubDate: 2025-07-12
 category: 工作笔记
 tags: [阿里云, 爱快, 软路由]

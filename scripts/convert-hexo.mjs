@@ -156,17 +156,32 @@ function cleanBody(body, title) {
   return result.join('\n').replace(/^\n+|\n+$/g, '');
 }
 
+// ─── YAML 安全字符串格式化 ─────────────────────────────────
+// 如果值包含特殊 YAML 字符（*: & ! > | ' " # , ? % - [ ] { } @ ` *），
+// 必须用双引号包裹，并对内部双引号做转义
+function yamlSafe(val) {
+  const s = String(val).trim();
+  // 不需要引号的情况：纯数字、true/false/null、空值
+  if (!s || /^(true|false|null|yes|no|on|off)\s*$/i.test(s)) return s;
+  if (/^\d+(\.\d+)?$/.test(s)) return `"${s}"`;
+  // 需要引号的情况
+  if (/[*:&!>'"#?,\[\]{}@`|\n\r]/.test(s) || s.startsWith(' ') || s.endsWith(' ')) {
+    return `"${s.replace(/"/g, '\\"')}"`;
+  }
+  return s;
+}
+
 // ─── 构建 Astro frontmatter ────────────────────────────────────
 function buildAstroFrontmatter(fields, body) {
   const lines = [];
 
   // title (required)
-  if (fields.title) lines.push(`title: ${fields.title}`);
+  if (fields.title) lines.push(`title: ${yamlSafe(fields.title)}`);
 
   // description
   let desc = fields.description || '';
   if (!desc) desc = extractDescription(body);
-  lines.push(`description: ${desc}`);
+  lines.push(`description: ${yamlSafe(desc)}`);
 
   // pubDate
   if (fields.date) {

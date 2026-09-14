@@ -1,6 +1,6 @@
 ---
 title: 从零开始安装 CasaOS 保姆级教程
-description: 原文出自[**NAS/Docker折腾系列 篇二：从零开始安装CasaOS保姆级教程**](https://post.smzdm.com/p/a607edoe/pic_3/)，作者只是在原文基础上踩坑的地方补充添加了点自己的想法以完善此教程。本站为个人博客站点，此文仅做为安装记录备用。如果侵权请联系本站下架！
+description: "原文出自[**NAS/Docker折腾系列 篇二：从零开始安装CasaOS保姆级教程**](https://post.smzdm.com/p/a607edoe/pic_3/)，作者只是在原文基础上踩坑的地方补充添加了点自己的想法以完善此教程。本站为个人博客站点，此文仅做为安装记录备用。如果侵权请联系本站下架！"
 pubDate: 2025-07-12
 category: 操作系统
 tags: [nas, casaos, 教程]

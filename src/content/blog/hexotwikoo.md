@@ -1,6 +1,6 @@
 ---
 title: Hexo 添加第三方评论模块 Twikoo
-description: Twikoo 是一个**简洁、自部署、支持多种部署方式**的评论系统。2021 年发布后迅速成为 Hexo 博客最主流的评论方案——它支持 Vercel / Cloudflare Workers / Docker 等多种部署方式，比早期的 Valine / Disqus 更适合国内用户（无广告 + 不追踪）。
+description: "Twikoo 是一个**简洁、自部署、支持多种部署方式**的评论系统。2021 年发布后迅速成为 Hexo 博客最主流的评论方案——它支持 Vercel / Cloudflare Workers / Docker 等多种部署方式，比早期的 Valine / Disqus 更适合国内用户（无广告 + 不追踪）。"
 pubDate: 2025-07-14
 category: 工作笔记
 tags: [hexo, twikoo, 博客搭建]

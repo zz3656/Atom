@@ -1,6 +1,6 @@
 ---
 title: Python 装饰器从入门到精通
-description: Python 装饰器（Decorator）是 Python 中非常强大且优雅的特性。从 Python 2.4 引入 `@` 语法后，装饰器就被广泛用于日志记录、性能测试、事务处理、缓存等横切关注点（cross-cutting concerns）。理解装饰器对于写出高质量的 Python 代码至关重要。本文将带你从...
+description: "Python 装饰器（Decorator）是 Python 中非常强大且优雅的特性。从 Python 2.4 引入 `@` 语法后，装饰器就被广泛用于日志记录、性能测试、事务处理、缓存等横切关注点（cross-cutting concerns）。理解装饰器对于写出高质量的 Python 代码至关重要。本文将带你从..."
 pubDate: 2026-04-29
 category: 编程开发
 tags: [Python, 装饰器, 编程技巧]

@@ -1,6 +1,6 @@
 ---
 title: RouterOS 7.X IPV6 设置
-description: RouterOS 7 开始 IPv6 包内置到主包，不再需要单独安装（RouterOS 6 时代 IPv6 是独立包 `ipv6-7.x.npk`，需要手动上传重启）。
+description: "RouterOS 7 开始 IPv6 包内置到主包，不再需要单独安装（RouterOS 6 时代 IPv6 是独立包 `ipv6-7.x.npk`，需要手动上传重启）。"
 pubDate: 2025-07-12
 category: 工作笔记
 tags: [ros, routeros, 软路由]

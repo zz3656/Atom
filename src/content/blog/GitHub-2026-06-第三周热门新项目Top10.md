@@ -1,6 +1,6 @@
 ---
 title: GitHub 2026 年 6 月第三周热门新项目 Top10
-description: 2026年6月第三周（6月15日～6月21日），GitHub 新建仓库中 **AI Agent 框架** 与 **OCR / 多模态** 赛道持续爆发。百度开源的无限长度一次性解析 OCR 模型 `Unlimited-OCR` 凭 6k+ 星星空降榜首，Vercel 推出 Agent 框架 `eve`、Sakan...
+description: "2026年6月第三周（6月15日～6月21日），GitHub 新建仓库中 **AI Agent 框架** 与 **OCR / 多模态** 赛道持续爆发。百度开源的无限长度一次性解析 OCR 模型 `Unlimited-OCR` 凭 6k+ 星星空降榜首，Vercel 推出 Agent 框架 `eve`、Sakan..."
 pubDate: 2026-06-15
 category: 技术资讯
 tags: [GitHub, 开源, AI]

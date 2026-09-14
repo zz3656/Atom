@@ -1,6 +1,6 @@
 ---
 title: GitHub 2026 年 5 月第三周热门新项目 Top10
-description: 2026年5月第三周（5月18日～5月24日），GitHub 新建仓库中 **AI Coding Agent** 和 **智能体记忆系统** 成为最大热点。本周多个项目围绕 AI 编程助手生态构建基础设施——代码知识图谱、持久化记忆、多模态感知。本周新增 Stars Top 10 如下。
+description: "2026年5月第三周（5月18日～5月24日），GitHub 新建仓库中 **AI Coding Agent** 和 **智能体记忆系统** 成为最大热点。本周多个项目围绕 AI 编程助手生态构建基础设施——代码知识图谱、持久化记忆、多模态感知。本周新增 Stars Top 10 如下。"
 pubDate: 2026-05-18
 category: 技术资讯
 tags: [GitHub, 开源, AI]

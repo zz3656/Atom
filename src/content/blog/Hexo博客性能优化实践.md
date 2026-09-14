@@ -1,6 +1,6 @@
 ---
 title: Hexo 博客性能优化实践
-description: Hexo 博客搭建完成后，访问速度直接影响留存率。本文记录我在优化自己博客（inte8.top）过程中验证有效的几种做法，重点是**不动服务端配置**（GitHub Pages 不开放 .htaccess）、靠 hexo 模板 + 静态资源处理完成的优化。
+description: "Hexo 博客搭建完成后，访问速度直接影响留存率。本文记录我在优化自己博客（inte8.top）过程中验证有效的几种做法，重点是**不动服务端配置**（GitHub Pages 不开放 .htaccess）、靠 hexo 模板 + 静态资源处理完成的优化。"
 pubDate: 2026-04-29
 category: 项目测试
 tags: [hexo, 性能优化, 博客]

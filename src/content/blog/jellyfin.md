@@ -1,6 +1,6 @@
 ---
 title: Jellyfin 解决封面乱码和字幕乱码
-description: **封面乱码**
+description: "**封面乱码**"
 pubDate: 2025-07-12
 category: 操作系统
 tags: [nas, jellyfin, 家庭影院]

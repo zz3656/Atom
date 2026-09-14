@@ -1,6 +1,6 @@
 ---
 title: VPS 安装爱快
-description: **📢 本文已迁移到《[爱快(iKuai)软路由安装全指南：从实体机到虚拟机再到云主机](https://www.inte8.top/2026/04/30/ai-kuai-ikuai-ruan-lu-you-an-zhuang-quan-zhi-nan-cong-shi-ti-ji-dao-xu-ni-ji-z...
+description: "**📢 本文已迁移到《[爱快(iKuai)软路由安装全指南：从实体机到虚拟机再到云主机](https://www.inte8.top/2026/04/30/ai-kuai-ikuai-ruan-lu-you-an-zhuang-quan-zhi-nan-cong-shi-ti-ji-dao-xu-ni-ji-z..."
 pubDate: 2025-07-12
 tags: [vps, ikuai, 爱快]
 ---
