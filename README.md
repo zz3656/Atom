@@ -276,6 +276,6 @@ src/pages/blog/index.astro → /blog
 
 **如果这个项目对你有帮助，给个 ⭐ Star 吧！**
 
-Made with ⚙️ by [因特吧](https://github.com/zz3656) · Powered by [Astro](https://astro.build)
+Made with ⚙️ by [Atom Blog](https://github.com/zz3656/Atom) · Powered by [Astro](https://astro.build)
 
 </div>
