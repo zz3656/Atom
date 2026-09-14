@@ -437,6 +437,16 @@ src/pages/tag/[tag]          → /tag/xx      (标签详情)
 - **无后端 API** — 所有数据在构建时生成，无法实时更新
 - **需手动编辑** — 无后台管理界面（可结合 GitHub 直接编辑 Markdown）
 
+## 💰 支持本项目
+
+如果你喜欢 Atom 博客，欢迎扫码打赏，给了我加个 🥤 饮料！
+
+| 微信 | 支付宝 |
+|------|--------|
+| <img src="https://zz3656.github.io/Atom-blog/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://zz3656.github.io/Atom-blog/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
+
+每一分支持都是对开源项目的最大鼓励 ❤️
+
 ## 📄 License
 
 [MIT](LICENSE) — 自由使用、修改、分发。
