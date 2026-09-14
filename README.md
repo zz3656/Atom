@@ -25,7 +25,7 @@
 | 📱 **响应式设计** | 手机、平板、桌面完美适配 |
 | 🎯 **路由修复** | 支持 GitHub Pages 子路径部署 |
 | 📝 **Markdown 写作** | 原生支持，代码语法高亮 |
-| 🏷️ **标签系统** | 文章自动展示分类标签 |
+| 📁 **分类 + 标签** | 分类（单数）组织文章大类，标签（可多）标注细分主题 |
 | 🚀 **GitHub Actions** | 推送代码自动构建部署 |
 | 🔍 **SEO 友好** | 语义化 HTML、Open Graph、JSON-LD、Sitemap |
 | 📦 **超小体积** | HTML 仅 ~3KB（单页） |
@@ -36,14 +36,21 @@
 ### 首页
 
 - 硬核科技风格的 Hero 区域
-- 卡片式文章网格布局
+- 卡片式文章网格布局（展示标题、描述、日期、分类、标签）
 - 一键切换暗黑模式
 
 ### 文章页
 
 - 优雅的排版，最佳阅读体验
 - 代码块语法高亮（GitHub Dark 主题）
-- 标签、日期、更新时间清晰展示
+- 标题 + 描述 + 日期 + 分类 + 标签层次清晰
+
+### 分类 & 标签
+
+- 分类列表页：展示所有分类及文章数量
+- 分类详情页：展示某分类下的所有文章
+- 标签列表页 & 标签详情页：展示标签对应的文章
+- 分类与标签完全独立，互不混淆
 
 ## 📁 项目结构
 
@@ -71,9 +78,17 @@ Atom/
 │   ├── pages/
 │   │   ├── index.astro          # 首页
 │   │   ├── about.astro          # 关于页面
-│   │   └── blog/
-│   │       ├── index.astro      # 文章列表
-│   │       └── [...slug].astro  # 文章详情（动态路由）
+│   │   ├── blog/
+│   │   │   ├── index.astro      # 文章列表
+│   │   │   └── [...slug].astro  # 文章详情（动态路由）
+│   │   ├── categories/
+│   │   │   └── index.astro      # 分类列表
+│   │   ├── category/
+│   │   │   └── [...slug].astro  # 分类详情（动态路由）
+│   │   ├── tags/
+│   │   │   └── index.astro      # 标签列表
+│   │   └── tag/
+│   │       └── [...tag].astro   # 标签详情（动态路由）
 │   ├── styles/
 │   │   └── global.css           # 全局样式 + 暗黑模式变量
 │   └── consts.ts                # 站点配置（标题、作者、链接）
@@ -127,8 +142,9 @@ npm run preview  # 本地预览构建结果
 title: 文章标题
 description: 简短描述（会显示在卡片上）
 pubDate: 2026-09-13
-tags: [标签1, 标签2]
+category: 分类名称   # 每篇文章只能一个分类
 heroImage: /images/cover.jpg   # 可选
+tags: [标签1, 标签2]  # 可以有多个标签
 updatedDate: 2026-09-14        # 可选
 ---
 
@@ -149,10 +165,20 @@ Frontmatter 字段说明：
 | `title` | string | ✅ | 文章标题 |
 | `description` | string | ✅ | 简短描述，显示在文章卡片 |
 | `pubDate` | date | ✅ | 发布日期 |
-| `tags` | string[] | ❌ | 标签列表 |
+| `category` | string | ❌ | 分类名称（每篇文章只能一个） |
+| `tags` | string[] | ❌ | 标签列表（可以有多个） |
 | `heroImage` | string | ❌ | 封面图片路径 |
 | `updatedDate` | date | ❌ | 更新日期 |
 | `reward` | boolean | ❌ | 是否在文末显示打赏码（默认关闭） |
+
+### 分类 vs 标签
+
+| | **分类 (Category)** | **标签 (Tag)** |
+|---|---|---|
+| 数量 | 每篇文章**只能一个** | 每篇文章可以**多个** |
+| 用途 | 组织文章的大类 | 标注文章的细分主题 |
+| 展示 | 📁 列表页 + 详情页 | 🏷️ 列表页 + 详情页 |
+| 关系 | **相互独立**，不互相影响 | |
 
 ## 🐙 部署到 GitHub Pages
 
@@ -229,6 +255,10 @@ export default defineConfig({
 src/pages/about.astro      → /about
 src/pages/links.astro      → /links
 src/pages/blog/index.astro → /blog
+src/pages/categories/      → /categories  (分类列表)
+src/pages/category/[slug]  → /category/xx (分类详情)
+src/pages/tags/            → /tags        (标签列表)
+src/pages/tag/[tag]        → /tag/xx      (标签详情)
 ```
 
 ## 🔧 技术栈

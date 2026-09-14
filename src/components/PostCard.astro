@@ -14,21 +14,23 @@ const { slug, title, pubDate, description, category = '', tags = [] } = Astro.pr
 ---
 
 <li class="post-card">
-  <a href={slug}
-    <h2 class="post-card-title">{title}</h2>
-    <p class="post-card-desc">{description}</p>
-    <div class="post-card-meta">
-      <FormattedDate date={pubDate} />
-      {category && (
-        <span class="post-card-category">📁 {category}</span>
-      )}
-      {tags.length > 0 && (
-        <span class="post-card-tags">
-          {tags.map((tag) => (
-            <span class="tag">{tag}</span>
-          ))}
-        </span>
-      )}
+  <a href={slug}>
+    <div class="post-card-body">
+      <h2 class="post-card-title">{title}</h2>
+      <p class="post-card-desc">{description}</p>
+      <div class="post-card-meta">
+        <FormattedDate date={pubDate} />
+        {category && (
+          <span class="post-card-category">📁 {category}</span>
+        )}
+        {tags.length > 0 && (
+          <span class="post-card-tags">
+            {tags.map((tag) => (
+              <span class="tag">{tag}</span>
+            ))}
+          </span>
+        )}
+      </div>
     </div>
   </a>
 </li>
