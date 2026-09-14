@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="所有文章 | Atom Blog">
+  <section class="blog-list">
+    <div class="blog-list-header">
+      <h1>📝 所有文章</h1>
+      <p class="blog-count">共 {posts.length} 篇</p>
+    </div>
+    <ul class="post-list">
+      {posts.map((post) => (
+        <PostCard
+          slug={base + "/blog/" + post.slug + "/"}
+          title={post.data.title}
+          pubDate={post.data.pubDate}
+          description={post.data.description}
+          tags={post.data.tags}
+        />
+      ))}
+    </ul>
+  </section>
+</BaseLayout>

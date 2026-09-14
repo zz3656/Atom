@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const allTags = new Set<string>();
+  posts.forEach((post) => {
+    (post.data.tags || []).forEach((tag) => allTags.add(tag));
+  });
+  
+  return [...allTags].map((tag) => ({
+    params: { tag },
+  }));
+}
+
+const base = import.meta.env.BASE_URL;
+const { tag } = Astro.params;
+
+const tagPosts = (await getCollection('blog'))
+  .filter((post) => post.data.tags?.includes(tag))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`${tag} | Atom Blog`}>
+  <section class="blog-list">
+    <div class="blog-list-header">
+      <h1>🏷️ {tag}</h1>
+      <p class="blog-count">共 {tagPosts.length} 篇文章</p>
+    </div>
+
+    {tagPosts.length > 0 ? (
+      <ul class="post-list">
+        {tagPosts.map((post) => (
+          <PostCard
+            slug={base + 'blog/' + post.slug + '/'}
+            title={post.data.title}
+            pubDate={post.data.pubDate}
+            description={post.data.description}
+            tags={post.data.tags}
+          />
+        ))}
+      </ul>
+    ) : (
+      <p class="blog-count">该标签下暂无文章</p>
+    )}
+
+    <div class="view-all" style="margin-top: 2rem;">
+      <a href={base + 'tags'}>← 返回所有标签</a>
+    </div>
+  </section>
+</BaseLayout>

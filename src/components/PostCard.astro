@@ -1,0 +1,30 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  pubDate: Date;
+  description: string;
+  tags?: string[];
+}
+
+import FormattedDate from './FormattedDate.astro';
+
+const { slug, title, pubDate, description, tags = [] } = Astro.props;
+---
+
+<li class="post-card">
+  <a href={slug}
+    <h2 class="post-card-title">{title}</h2>
+    <p class="post-card-desc">{description}</p>
+    <div class="post-card-meta">
+      <FormattedDate date={pubDate} />
+      {tags.length > 0 && (
+        <span class="post-card-tags">
+          {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </span>
+      )}
+    </div>
+  </a>
+</li>

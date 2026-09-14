@@ -1,0 +1,119 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { AUTHOR } from '../consts';
+
+const base = import.meta.env.BASE_URL;
+
+interface Props {
+  title: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  description: string;
+  heroImage?: string;
+  tags?: string[];
+  reward?: boolean;
+  prevPost?: { title: string; slug: string };
+  nextPost?: { title: string; slug: string };
+}
+
+const { title, pubDate, updatedDate, description, heroImage, tags = [], reward = false, prevPost, nextPost } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} type="article">
+  <fragment slot="head">
+    <script type="application/ld+json">
+      {JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        headline: title,
+        description: description || '',
+        datePublished: pubDate.toISOString(),
+        dateModified: updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+        author: { "@type": "Person", name: AUTHOR },
+        mainEntityOfPage: { "@type": "WebPage", "@id": Astro.url },
+      })}
+    </script>
+    <script>
+      // Reading progress bar
+      function updateProgress() {
+        const article = document.querySelector('.post-content');
+        const bar = document.querySelector('.reading-progress-fill');
+        if (!article || !bar) return;
+        const rect = article.getBoundingClientRect();
+        const total = article.scrollHeight;
+        const scrolled = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (total + window.innerHeight - rect.height)));
+        bar.style.width = (scrolled * 100) + '%';
+      }
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress, { passive: true });
+      updateProgress();
+    </script>
+  </fragment>
+  <div class="reading-progress-container">
+    <div class="reading-progress"><div class="reading-progress-fill"></div></div>
+  </div>
+  <article class="post">
+    {heroImage && (
+      <div class="hero-image">
+        <img src={heroImage} alt={title} loading="lazy" />
+      </div>
+    )}
+    <div class="post-header">
+      <h1>{title}</h1>
+      <div class="post-meta">
+        <span>📅 <FormattedDate date={pubDate} /></span>
+        {updatedDate && (
+          <span class="updated">
+            🔄 更新于 <FormattedDate date={updatedDate} />
+          </span>
+        )}
+      </div>
+      {tags.length > 0 && (
+        <div class="post-tags">
+          {tags.map((tag) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+      )}
+    </div>
+    <div class="post-content">
+      <slot />
+    </div>
+    {reward && (
+      <div class="post-reward">
+        <p class="reward-title">🤖 觉得文章有帮助？给 Atom 加个油</p>
+        <div class="reward-qr">
+          <div class="reward-item">
+            <img src="/medias/reward/wechat.png" alt="微信赞赏码" />
+            <span>微信赞赏</span>
+          </div>
+          <div class="reward-item">
+            <img src="/medias/reward/alipay.jpg" alt="支付宝收款码" />
+            <span>支付宝赞赏</span>
+          </div>
+        </div>
+      </div>
+    )}
+    {prevPost || nextPost ? (
+      <nav class="post-nav">
+        <div class="post-nav-links">
+          {prevPost && (
+            <a href={base + "/blog/" + prevPost.slug + "/"} class="post-nav-link prev">
+              ← <span class="nav-label">{prevPost.title}</span>
+            </a>
+          )}
+          {nextPost && (
+            <a href={base + "/blog/" + nextPost.slug + "/"} class="post-nav-link next">
+              <span class="nav-label">{nextPost.title}</span> →
+            </a>
+          )}
+        </div>
+      </nav>
+    ) : (
+      <div class="post-nav">
+        <a href={base}>← 返回首页</a>
+      </div>
+    )}
+  </article>
+</BaseLayout>
