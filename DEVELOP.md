@@ -75,8 +75,8 @@ Atom is a **lightweight, zero-dependency** static blog built with [Astro](https:
 
 ```bash
 # 1. 克隆
-git clone https://github.com/zz3656/atom.git
-cd atom-blog
+git clone https://github.com/zz3656/Atom.git
+cd Atom-blog
 
 # 2. 安装依赖
 npm install
@@ -95,8 +95,8 @@ npm run preview
 
 ```bash
 # 1. Clone
-git clone https://github.com/zz3656/atom.git
-cd atom-blog
+git clone https://github.com/zz3656/Atom.git
+cd Atom-blog
 
 # 2. Install dependencies
 npm install
@@ -118,7 +118,7 @@ npm run preview
 ### 中文
 
 ```
-atom/
+Atom/
 ├── public/                    # 静态资源（原样复制到 dist/）
 │   ├── favicon.svg            # 网站图标
 │   ├── robots.txt             # 搜索引擎爬虫规则
@@ -161,7 +161,7 @@ atom/
 ### English
 
 ```
-atom/
+Atom/
 ├── public/                    # Static assets (copied to dist/)
 │   ├── favicon.svg            # Site favicon
 │   ├── robots.txt             # Search engine crawler rules

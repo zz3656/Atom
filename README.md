@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🏠 在线预览](https://zz3656.github.io/atom) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#️-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md)
+[🏠 在线预览](https://zz3656.github.io/Atom) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#️-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md)
 
 </div>
 
@@ -48,7 +48,7 @@
 ## 📁 项目结构
 
 ```
-atom/
+Atom/
 ├── .github_disabled/            # GitHub Actions 配置（需重命名为 .github/）
 │   └── deploy.yml               # 自动部署 workflow
 ├── public/
@@ -94,7 +94,7 @@ atom/
 
 ```bash
 git clone https://github.com/zz3656/Atom.git
-cd atom-blog
+cd Atom-blog
 ```
 
 ### 2. 安装依赖
@@ -202,7 +202,7 @@ export const SOCIAL_LINKS = {
 ```javascript
 export default defineConfig({
   site: 'https://yourusername.github.io',  // 你的 GitHub Pages 地址
-  base: '/atom',                           // 仓库名（根站点用 '/'）
+  base: '/Atom',                           // 仓库名（根站点用 '/'）
 });
 ```
 

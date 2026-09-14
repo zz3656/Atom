@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCollection } from 'astro:content';
+
+const base = import.meta.env.BASE_URL;
+const { tag } = Astro.params;
+const tagLabel = decodeURIComponent(tag);
+
+const posts = (await getCollection('blog'))
+  .filter((post) => post.data.tags?.includes(tagLabel))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+<BaseLayout title={`${tagLabel} | Atom Blog`}>
+  <section class="blog-list">
+    <div class="blog-list-header">
+      <h1>🏷️ {tagLabel}</h1>
+      <p class="blog-count">共 {posts.length} 篇文章</p>
+    </div>
+
+    {posts.length > 0 ? (
+      <ul class="post-list">
+        {posts.map((post) => (
+          <PostCard
+            slug={base + 'blog/' + post.slug + '/'}
+            title={post.data.title}
+            pubDate={post.data.pubDate}
+            description={post.data.description}
+            tags={post.data.tags}
+          />
+        ))}
+      </ul>
+    ) : (
+      <p class="blog-count">该标签下暂无文章</p>
+    )}
+
+    <div class="view-all" style="margin-top: 2rem;">
+      <a href={base + 'tags'}>← 返回所有标签</a>
+    </div>
+  </section>
+</BaseLayout>

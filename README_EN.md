@@ -10,7 +10,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🏠 Live Demo](https://zz3656.github.io/atom) · [📝 Write Posts](#-write-posts) · [🚀 Deploy](#-deploy-to-github-pages) · [🇨🇳 中文版](README.md) · [📘 Dev Guide](DEVELOP.md)
+[🏠 Live Demo](https://zz3656.github.io/Atom) · [📝 Write Posts](#-write-posts) · [🚀 Deploy](#-deploy-to-github-pages) · [🇨🇳 中文版](README.md) · [📘 Dev Guide](DEVELOP.md)
 
 </div>
 
@@ -48,7 +48,7 @@
 ## 📁 Project Structure
 
 ```
-atom/
+Atom/
 ├── .github_disabled/            # GitHub Actions config (rename to .github/)
 │   └── deploy.yml               # Auto-deploy workflow
 ├── public/
@@ -100,7 +100,7 @@ atom/
 
 ```bash
 git clone https://github.com/zz3656/Atom.git
-cd atom-blog
+cd Atom-blog
 ```
 
 ### 2. Install Dependencies
@@ -208,7 +208,7 @@ Edit `astro.config.mjs`:
 ```javascript
 export default defineConfig({
   site: 'https://yourusername.github.io',  // Your GitHub Pages URL
-  base: '/atom',                            // Repo name ('/' for root site)
+  base: '/Atom',                            // Repo name ('/' for root site)
 });
 ```
 

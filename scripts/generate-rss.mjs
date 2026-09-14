@@ -28,7 +28,7 @@ function parseFrontmatter(content) {
 }
 
 var siteUrl = 'https://zz3656.github.io';
-var repoName = 'atom-blog';
+var repoName = 'Atom-blog';
 var prefix = repoName ? '/' + repoName : '';
 
 // --- Generate RSS ---
@@ -63,12 +63,12 @@ var items = posts.map(function(p) {
 
 var rss = [
   '<?xml version="1.0" encoding="UTF-8" ?>',
-  '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
+  '<rss version="2.0" xmlns:Atom="http://www.w3.org/2005/Atom">',
   '  <channel>',
   '    <title>Atom Blog</title>',
   '    <description>A modern, lightweight blog built with Astro</description>',
   '    <link>' + siteUrl + prefix + '/</link>',
-  '    <atom:link href="' + siteUrl + prefix + '/rss.xml" rel="self" type="application/rss+xml" />',
+  '    <Atom:link href="' + siteUrl + prefix + '/rss.xml" rel="self" type="application/rss+xml" />',
   items,
   '  </channel>',
   '</rss>',
