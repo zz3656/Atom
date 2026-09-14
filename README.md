@@ -18,7 +18,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🏠 在线预览](https://zz3656.github.io/Atom-blog) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#%EF%B8%8F-%E8%87%AA%E5%AE%9A%E4%B9%89) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md)
+[🏠 在线预览](https://zz3656.github.io/Atom-blog) · [📝 写文章](#-写文章) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#%EF%B8%8F-%E8%87%AA%E5%AE%9A%E4%B9%89) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md) · [🔄 Hexo 转换工具](scripts/README.md)
 
 </div>
 
