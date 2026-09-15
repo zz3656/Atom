@@ -271,6 +271,15 @@ html.dark .site-title:hover {
   gap: 0.25rem;
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--border-color);
+}
+
 .nav-link {
   color: var(--text-secondary);
   font-size: 0.9rem;
