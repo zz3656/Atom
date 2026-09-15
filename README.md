@@ -18,7 +18,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🌐 在线预览](https://zz3656.github.io/Atom-blog) · [📝 写文章](#-写文章) · [🤖 CLI 工具](#-cli-本地构建工具) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#%EF%B8%8F-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md) · [🔄 Hexo 转换工具](scripts/README.md)
+[🌐 在线预览](https://zz3656.github.io/Atom) · [📝 写文章](#-写文章) · [🤖 CLI 工具](#-cli-本地构建工具) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#%EF%B8%8F-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md) · [🔄 Hexo 转换工具](scripts/README.md)
 
 </div>
 
@@ -465,7 +465,7 @@ src/pages/links.astro        → /links
 
 | 微信 | 支付宝 |
 |------|--------|
-| <img src="https://zz3656.github.io/Atom-blog/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://zz3656.github.io/Atom-blog/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
+| <img src="https://zz3656.github.io/Atom/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://zz3656.github.io/Atom/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
 
 每一分支持都是对开源项目的最大鼓励 ❤️
 
