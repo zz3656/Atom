@@ -35,7 +35,7 @@
 | 📝 **Markdown 写作** | 原生支持，代码语法高亮 |
 | 📁 **分类 + 标签** | 分类（单数）组织文章大类，标签（可多）标注细分主题 |
 | 🚀 **GitHub Actions** | 推送代码自动构建部署 |
-| 🔍 **SEO 友好** | 语义化 HTML、Open Graph、JSON-LD、Sitemap |
+| 🔍 **SEO 友好** | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅（导航栏 📡 和页脚均可访问） |
 | 📦 **超小体积** | HTML 仅 ~3KB（单页） |
 | 💯 **Lighthouse 满分** | 性能、无障碍、SEO 全 100 |
 
@@ -398,9 +398,34 @@ src/pages/tags/              → /tags        (标签列表)
 src/pages/tag/[tag]          → /tag/xx      (标签详情)
 ```
 
-### 10. RSS Feed 与 Sitemap
+### 10. SEO 元数据与 RSS 订阅
+
+Atom 的 SEO 功能分为两部分：**自动注入的元数据**（后端）和 **RSS 订阅入口**（前端可见）。
+
+#### 自动 SEO 元数据（每篇文章自动注入）
+
+在 `src/layouts/BlogPost.astro` 中自动注入，无需手动配置：
+
+- **Open Graph**（`og:*`）— Facebook、微信等平台分享卡片
+- **Twitter Card** — Twitter 分享卡片
+- **JSON-LD 结构化数据**（`application/ld+json`）— Google 搜索结果增强（文章类型、发布日期、作者等）
+- **Sitemap** — 构建时自动生成 `dist/sitemap.xml`
+- **RSS Feed** — 构建时自动生成 `dist/rss.xml`
+
+#### RSS 订阅入口
+
+导航栏（📡 图标）和页脚都提供了 RSS 订阅链接，点击即可访问 `rss.xml`。
+
+#### 自定义
 
 编辑 `scripts/generate-rss.mjs` 自定义 RSS 的标题、描述和生成规则。构建时会自动执行（`postbuild` 脚本）。
+
+#### 验证
+
+使用以下工具验证 SEO 元数据是否生效：
+- [Google Rich Results Test](https://search.google.com/test/rich-results)
+- [Open Graph 测试](https://www.opengraph.xyz/)
+- [Twitter Card Validator](https://cards-dev.twitter.com/validator)
 
 ## 🔧 技术栈
 
@@ -412,9 +437,9 @@ src/pages/tag/[tag]          → /tag/xx      (标签详情)
 
 ## 📊 与其他静态博客方案对比
 
-| 方案 | 构建输出 | JS 依赖 | 构建时间 | SEO / RSS | 学习成本 |
+| 方案 | 构建输出 | JS 依赖 | 构建时间 | SEO / RSS / Sitemap | 学习成本 |
 |------|---------|---------|---------|-----------|----------|
-| **Atom（本项目）** | **~3 KB** | **0** | **~1s** | **内置 RSS + Sitemap + JSON-LD** | 极低 |
+| **Atom（本项目）** | **~3 KB** | **0** | **~1s** | **RSS/Sitemap/JSON-LD 自动生成，导航栏 📡 和页脚可订阅** | 极低 |
 | Hexo + Matery | ~15 MB | 数十个库 | ~5s | 需插件 | 中 |
 | Hugo | ~2 MB | 0 | ~0.5s | 需插件 | 中（Hugo 模板语法） |
 | Jekyll | ~3 MB | 少量 | ~3s | 内置 | 中（Ruby 生态） |
@@ -425,7 +450,7 @@ src/pages/tag/[tag]          → /tag/xx      (标签详情)
 
 - **零依赖** — 全站无 JavaScript，纯 HTML + CSS，Lighthouse 满分
 - **双主题** — 日间明亮模式 + 夜间赛博朋克风格，基于 CSS 变量一键切换
-- **内置 SEO** — Open Graph、Twitter Card、JSON-LD、Sitemap、RSS 全部自动生成
+- **自动 SEO 元数据** — 每篇文章自动注入 Open Graph、Twitter Card 卡片、JSON-LD 结构化数据（BlogPosting Schema），无需额外配置
 - **极简构建** — 构建完成后自动执行 RSS/Sitemap 生成，零配置
 - **1 秒构建** — 相比 Hexo 的 5s+、Hugo 的 0.5s，依然足够快
 - **TypeScript 类型安全** — 文章内容通过 Astro Content Collections Schema 校验
