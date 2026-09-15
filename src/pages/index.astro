@@ -8,31 +8,11 @@ const base = import.meta.env.BASE_URL;
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
-
-// Pagination settings
 const POSTS_PER_PAGE = 12;
-const totalPosts = posts.length;
-const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE);
-
-// Get current page from URL query string
-const url = new URL(Astro.request.url);
-const pageQuery = parseInt(url.searchParams.get('page') || '1', 10);
-const currentPage = Math.max(1, Math.min(pageQuery, totalPages || 1));
-const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-const paginatedPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
-
-// Generate pagination pages array
-const getPageUrl = (p: number) => {
-  const u = new URL(Astro.request.url);
-  if (p <= 1) return base + '/blog/';
-  u.searchParams.set('page', String(p));
-  return u.pathname + u.search;
-};
-const pageNumbers: number[] = [];
-for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
+const recentPosts = posts.slice(0, POSTS_PER_PAGE);
 ---
 
-<BaseLayout title={`${SITE_TITLE} - 第${currentPage}页`} description={SITE_DESCRIPTION}>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <section class="hero">
     <h1>
       <svg class="hero-atom-icon" viewBox="0 0 32 32" width="36" height="36" xmlns="http://www.w3.org/2000/svg">
@@ -67,10 +47,10 @@ for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
   <section class="recent-posts">
     <div class="section-header">
       <h2 class="section-title">最新文章</h2>
-      <span class="section-count">共 {totalPosts} 篇</span>
+      <span class="section-count">共 {posts.length} 篇</span>
     </div>
     <ul class="post-grid">
-      {paginatedPosts.map((post) => (
+      {recentPosts.map((post) => (
         <PostCard
           slug={base + "/blog/" + post.slug + "/"}
           title={post.data.title}
@@ -81,26 +61,5 @@ for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
         />
       ))}
     </ul>
-
-    {totalPages > 1 && (
-      <nav class="pagination" aria-label="文章分页">
-        {currentPage > 1 && (
-          <a href={getPageUrl(currentPage - 1)} class="page-btn prev">← 上一页</a>
-        )}
-        <div class="page-numbers">
-          {pageNumbers.map((p) => (
-            <a
-              href={getPageUrl(p)}
-              class:list={['page-link', p === currentPage && 'active']}
-              aria-label={p === currentPage ? '当前页' : `第 ${p} 页`}
-              aria-current={p === currentPage ? 'page' : undefined}
-            >{p}</a>
-          ))}
-        </div>
-        {currentPage < totalPages && (
-          <a href={getPageUrl(currentPage + 1)} class="page-btn next">下一页 →</a>
-        )}
-      </nav>
-    )}
   </section>
 </BaseLayout>
