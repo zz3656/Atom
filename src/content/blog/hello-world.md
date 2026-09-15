@@ -1,41 +1,38 @@
 ---
 title: Hello World
-description: 博客的第一篇文章，记录从 Hexo 迁移到 Astro 的原因和未来的写作计划。
+description: 欢迎来到 Atom 博客！这是博客的第一篇文章。
 pubDate: 2026-04-30
 category: 默认分类
-tags: [Astro, 博客, 迁移, Hexo, 随笔]
+tags: [博客, 随笔]
 ---
 
 ## 你好，世界！
 
-欢迎来到我的新博客！这是用 [Astro](https://astro.build) 搭建的第一个站点。
+欢迎来到 **Atom 博客**！这是博客的第一篇文章。
 
-## 为什么换博客？
+## 关于 Atom 博客
 
-之前使用 Hexo + Matery 主题，虽然功能丰富，但也带来了一些问题：
+Atom 是一个用 [Astro](https://astro.build) 构建的现代静态博客。它像 Atom 一样小巧、精准、充满力量，专注于简洁的内容展示。
 
-1. **构建依赖重** — Node 模块 + 主题依赖，体积庞大
-2. **主题定制难** — 改样式需要深入 EJS 模板
-3. **性能瓶颈** — 加载了大量未使用的 JS 库
-4. **SEO 不友好** — 动态渲染不利于搜索引擎抓取
+博客的技术栈：
 
-Astro 的 "零 JS 默认" 策略完美解决了这些问题，所有页面都是纯 HTML 输出。
+- **Astro** — 静态站点生成器
+- **TypeScript** — 类型安全的开发体验
+- **GitHub Pages** — 站点托管
+- **GitHub Actions** — 自动构建部署
 
-## 接下来写什么？
+## 博客主题
 
-这个博客将聚焦于以下主题：
+这里会记录以下主题的内容：
 
-- 🤖 **AI 与智能体** — AI 工具评测、LLM 应用、Agent 架构
-- 💻 **编程技术** — Astro、Python、前端开发、DevOps
-- 🌐 **网络技术** — 软路由、RouterOS、网络配置
-- 📝 **学习笔记** — 技术学习记录和总结
+- 🤖 **AI 与智能体** — AI 工具评测、LLM 应用
+- 💻 **编程技术** — Astro、Python、前端开发
+- 🌐 **网络技术** — 软路由、RouterOS
+- 📝 **学习笔记** — 技术学习记录
 
-## 致谢
+## 快速体验
 
-感谢以下开源项目：
-
-- [Astro](https://astro.build) — 现代静态站点生成器
-- [GitHub Pages](https://pages.github.com) — 免费静态站点托管
+如果你对这个博客的源码感兴趣，欢迎在 [GitHub](https://github.com/zz3656/Atom) 查看源码。
 
 ---
 

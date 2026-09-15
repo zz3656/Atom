@@ -1,19 +1,19 @@
 ---
 title: 用 Astro 搭建你的第一个博客
-description: 从零开始，手把手教你用 Astro 搭建一个现代、快速的个人博客，并部署到 GitHub Pages 或 Cloudflare Pages。
+description: 从零开始，手把手教你用 Astro 搭建一个现代、快速的个人博客，并部署到 GitHub Pages。
 pubDate: 2026-05-01
 category: 默认分类
-tags: [Astro, 教程, 博客, GitHub Pages, Cloudflare, 静态站点]
+tags: [Astro, 教程, 博客, GitHub Pages]
 ---
 
 ## 为什么选择 Astro？
 
-在众多静态站点生成器中，Astro 凭借几个独特的优势脱颖而出：
+Astro 是一个现代静态站点生成器，以下几个特点让它很适合内容类网站：
 
-- **零 JavaScript 默认** — 页面输出纯 HTML，只有需要交互时才加载 JS
-- **内容优先** — 原生支持 Markdown/MDX 内容集合
+- **零 JavaScript 默认** — 页面输出纯 HTML，按需加载交互脚本
+- **内容优先** — 原生支持 Markdown/MDX 内容集合，内置类型检查
 - **组件灵活** — 可以混用 React、Vue、Svelte 等框架组件
-- **构建极快** — 基于 Vite，开发体验丝滑
+- **构建快速** — 基于 Vite，开发体验流畅
 
 ## 快速开始
 
@@ -53,7 +53,7 @@ tags: [随笔]
 这是正文内容，支持完整的 Markdown 语法！
 ```
 
-Frontmatter 中的字段会自动类型检查，写错了 IDE 会提示。
+Frontmatter 中的字段会自动进行类型检查，写错了 IDE 会提示。
 
 ## 部署到 GitHub Pages
 
@@ -97,18 +97,8 @@ jobs:
 
 推送代码后，GitHub 会自动构建部署。🎉
 
-## 性能对比
-
-| 框架 | 构建时间 | 输出大小 | Lighthouse |
-|------|---------|---------|------------|
-| Astro | ~2s | ~50KB | 100/100 |
-| Next.js | ~8s | ~200KB | 95/100 |
-| Hexo | ~5s | ~100KB | 90/100 |
-
-> Astro 的 "零 JS" 策略让它默认就能拿到满分 Lighthouse。
-
 ## 总结
 
-Astro 是目前最适合内容类网站的框架。如果你的需求是博客、文档站、作品集，强烈推荐试试 Astro！
+Astro 让搭建个人博客变得简单而高效。如果你的需求是博客、文档站、作品集，值得一试！
 
 > 💡 **提示**：访问 [astro.build](https://astro.build) 获取更多主题和组件。
