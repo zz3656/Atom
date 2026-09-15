@@ -342,6 +342,46 @@ export const AUTHOR = 'Your Name';
 
 ---
 
+## Hexo → Atom 迁移记录
+
+### 背景
+
+从 Hexo (hexo-theme-matery) 迁移到 Astro 静态博客，记录转换脚本编写过程和核心规律。
+
+### 转换脚本
+
+- **脚本路径**: `scripts/convert-hexo.mjs`
+- **文档**: `scripts/README.md`
+- **来源**: `../../zz3656.github.io/source/_posts/`（Hexo 源文件）
+- **目标**: `src/content/blog/`（Astro Content Collections）
+
+### 转换规则摘要
+
+| Hexo (matery) 字段 | Astro 字段 | 转换规则 |
+|---|---|---|
+| `title` | `title` | 直接保留 |
+| `date: 2025-07-14 05:23:30` | `pubDate: 2025-07-14` | 只取日期 |
+| `categories` (单值/列表) | `category` | 列表取第一个 |
+| `tags: [- x]` | `tags: [x]` | YAML → inline |
+| `summary` / `description` | `description` | 自动提取正文第一段（160字符） |
+| `img` / `cover` / `top_img` | `heroImage` | 统一映射，路径规范化 |
+
+丢弃字段：`top`、`hide`、`password`、`toc`、`mathjax`、`keywords`、`reprintPolicy`、`author`、`coverImg` 及 matery 非官方字段（`swiper_index`、`top_group_index` 等）。
+
+### 迁移统计
+
+- 源文章: **44 篇**
+- 成功转换: **44 篇**（包括中文文件名）
+- 手动补充 category: **3 篇**（pvesetupistoreos.md、routeros.md、vpsikuai.md）
+- 排除: welcome.md（原有）
+- 详细规则见 [`scripts/README.md`](scripts/README.md)
+
+### 参考文档
+
+- [hexo-theme-matery 官方 Front-matter 文档](https://github.com/blinkfox/hexo-theme-matery#post-front-matter)
+
+---
+
 ## 高级功能
 
 ### RSS / Sitemap

@@ -27,7 +27,7 @@
 | 📝 **Markdown Writing** | Native support with code syntax highlighting |
 | 🏷️ **Tag System** | Automatic tag display on article cards |
 | 🚀 **GitHub Actions** | Automatic build and deploy on push |
-| 🔍 **SEO Friendly** | Semantic HTML, Open Graph, JSON-LD, Sitemap |
+| 🔍 **SEO Friendly** | Semantic HTML, Open Graph / Twitter Card / JSON-LD Structured Data, Sitemap, RSS Feed (📡 in nav bar and footer) |
 | 📦 **Tiny Size** | ~3KB HTML per page |
 | 💯 **Lighthouse 100** | Performance, Accessibility, SEO all perfect |
 
@@ -247,9 +247,9 @@ src/pages/blog/index.astro → /blog
 
 ## 📊 Comparison with Other Static Blog Solutions
 
-| Solution | Output Size | JS Deps | Build Time | SEO / RSS | Learning Curve |
+| Solution | Output Size | JS Deps | Build Time | SEO / RSS / Sitemap | Learning Curve |
 |----------|-------------|---------|------------|-----------|----------------|
-| **Atom (This)** | **~3 KB** | **0** | **~1s** | **Built-in RSS + Sitemap + JSON-LD** | Minimal |
+| **Atom (This)** | **~3 KB** | **0** | **~1s** | **RSS/Sitemap/JSON-LD auto-generated, RSS accessible from 📡 nav button and footer** | Minimal |
 | Hexo + Matery | ~15 MB | Dozens of libs | ~5s | Needs plugin | Medium |
 | Hugo | ~2 MB | 0 | ~0.5s | Needs plugin | Medium (Hugo syntax) |
 | Jekyll | ~3 MB | Minimal | ~3s | Built-in | Medium (Ruby) |
@@ -259,7 +259,7 @@ src/pages/blog/index.astro → /blog
 ### Advantages
 
 - **Zero dependencies** — No JavaScript, pure HTML + CSS, Lighthouse 100
-- **Built-in SEO** — Open Graph, Twitter Cards, JSON-LD, Sitemap, RSS auto-generated
+- **Auto SEO metadata — each post auto-injects Open Graph, Twitter Cards, JSON-LD structured data (BlogPosting Schema)
 - **Minimal builds** — RSS / Sitemap generated post-build with zero config
 - **1-second build** — Fast compared to Hexo's 5s+
 - **TypeScript safety** — Content validated via Astro Content Collections Schema

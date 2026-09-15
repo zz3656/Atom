@@ -11,6 +11,8 @@ const navLinks = [
   { href: base + '/tags', label: '标签', active: currentPage === 'tags' },
   { href: base + '/about', label: '关于', active: currentPage === 'about' },
 ];
+
+const rssUrl = base + '/rss.xml';
 ---
 
 <header class="site-header">
@@ -39,9 +41,10 @@ const navLinks = [
       {navLinks.map((link) => (
         <a href={link.href} class:list={['nav-link', link.active && 'active']}>{link.label}</a>
       ))}
+      <div class="nav-actions">
+        <div class="theme-toggle" id="theme-toggle" aria-label="切换暗黑模式" style="cursor:pointer;">🌙</div>
+        <a href={rssUrl} class="theme-toggle" aria-label="RSS 订阅" style="text-decoration:none;font-size:1.1rem;cursor:pointer;">📡</a>
+      </div>
     </div>
-    <button class="theme-toggle" id="theme-toggle" aria-label="切换暗黑模式">
-      🌙
-    </button>
   </nav>
 </header>
