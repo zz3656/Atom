@@ -1,8 +1,37 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PostCard from '../components/PostCard.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { getCollection } from 'astro:content';
 
 const base = import.meta.env.BASE_URL;
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+// Pagination settings
+const POSTS_PER_PAGE = 12;
+const totalPosts = posts.length;
+const totalPages = Math.ceil(totalPosts / POSTS_PER_PAGE) || 1;
+
+export function getStaticPaths() {
+  const paths: { params: { page?: string }; props: { page: number } }[] = [];
+  for (let page = 1; page <= totalPages; page++) {
+    paths.push({ params: page === 1 ? {} : { page: String(page) }, props: { page }});
+  }
+  return paths;
+}
+
+const currentPage = Astro.props.page || 1;
+const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+const paginatedPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+
+const getPageUrl = (p: number) => {
+  if (p <= 1) return base + '/';
+  return base + `${p}/`;
+};
+const pageNumbers: number[] = [];
+for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
 ---
 
 <BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
@@ -34,6 +63,50 @@ const base = import.meta.env.BASE_URL;
     <div class="hero-actions">
       <a href={base + "/blog"} class="btn btn-primary">浏览文章 →</a>
       <a href={base + "/about"} class="btn btn-secondary">关于此博客</a>
+    </div>
+  </section>
+
+  <section class="recent-posts">
+    <div class="section-header">
+      <h2 class="section-title">最新文章</h2>
+      <span class="section-count">共 {totalPosts} 篇</span>
+    </div>
+    <ul class="post-grid">
+      {paginatedPosts.map((post) => (
+        <PostCard
+          slug={base + "/blog/" + post.slug + "/"}
+          title={post.data.title}
+          pubDate={post.data.pubDate}
+          description={post.data.description}
+          category={post.data.category}
+          tags={post.data.tags}
+        />
+      ))}
+    </ul>
+
+    {totalPages > 1 && (
+      <nav class="pagination" aria-label="文章分页">
+        {currentPage > 1 && (
+          <a href={getPageUrl(currentPage - 1)} class="page-btn prev">← 上一页</a>
+        )}
+        <div class="page-numbers">
+          {pageNumbers.map((p) => (
+            <a
+              href={getPageUrl(p)}
+              class:list={['page-link', p === currentPage && 'active']}
+              aria-label={p === currentPage ? '当前页' : `第 ${p} 页`}
+              aria-current={p === currentPage ? 'page' : undefined}
+            >{p}</a>
+          ))}
+        </div>
+        {currentPage < totalPages && (
+          <a href={getPageUrl(currentPage + 1)} class="page-btn next">下一页 →</a>
+        )}
+      </nav>
+    )}
+
+    <div class="view-all">
+      <a href={base + "/blog"}>查看全部文章 →</a>
     </div>
   </section>
 </BaseLayout>
