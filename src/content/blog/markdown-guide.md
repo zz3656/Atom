@@ -1,13 +1,14 @@
 ---
 title: Markdown 写作完全指南
-description: 掌握 Markdown 的所有常用语法，让你的博客写作效率翻倍。
+description: 掌握 Markdown 的所有常用语法，让你的博客写作效率翻倍。覆盖标题、列表、代码块、表格、引用等基础语法和进阶技巧。
 pubDate: 2026-05-01
-tags: [Markdown, 写作, 教程]
+category: 默认分类
+tags: [Markdown, 写作, 教程, 文档, 工具]
 ---
 
 ## 什么是 Markdown？
 
-Markdown 是一种轻量级标记语言，由 John Gruber 在 2004 年创造。它的设计哲学是：
+Markdown 是一种轻量级标记语言，由 [John Gruber](https://daringfireball.net/projects/markdown/) 在 2004 年创造。它的设计哲学是：
 
 > 易读、易写，尽可能接近纯文本。
 

@@ -1,8 +1,9 @@
 ---
 title: 用 Astro 搭建你的第一个博客
-description: 从零开始，手把手教你用 Astro 搭建一个现代、快速的个人博客，并部署到 GitHub Pages。
+description: 从零开始，手把手教你用 Astro 搭建一个现代、快速的个人博客，并部署到 GitHub Pages 或 Cloudflare Pages。
 pubDate: 2026-05-01
-tags: [Astro, 教程, 博客]
+category: 默认分类
+tags: [Astro, 教程, 博客, GitHub Pages, Cloudflare, 静态站点]
 ---
 
 ## 为什么选择 Astro？
