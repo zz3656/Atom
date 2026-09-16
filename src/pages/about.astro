@@ -1,58 +1,58 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
+import { SOCIAL_LINKS } from '../consts';
 ---
 
 <BaseLayout title="关于 | Atom Blog">
   <section class="about">
     <div class="unified-page-header">
-      <h1>关于此博客</h1>
+      <h1>关于我</h1>
     </div>
     <div class="about-content">
       <p>
-        你好！这是 <strong>Atom 博客</strong>，一个基于 <a href="https://astro.build" target="_blank">Astro</a> 构建的现代静态博客。
-        项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom —
+        嗨，我是 <strong>zz3656</strong> 👋<br/>
+        一个热爱技术的开发者，热衷于用简洁优雅的方式解决问题。
+        这个博客以电影《铁甲钢拳》(Real Steel) 中的机器人
+        <strong>Atom</strong> 命名 —
         小巧、精准、充满力量。
       </p>
-
-      <h2>🎯 设计理念</h2>
-      <p>Atom 博客追求简洁、快速、优雅。我们相信好的博客应该：</p>
-      <ul>
-        <li>🚀 <strong>极快</strong> — 零 JavaScript，纯 HTML，Lighthouse 满分</li>
-        <li>📝 <strong>专注内容</strong> — Markdown 写作，无需后台</li>
-        <li>🌙 <strong>优雅体验</strong> — 暗黑模式，响应式布局</li>
-        <li>🔍 <strong>SEO 友好</strong> — 内置 RSS、Sitemap、Open Graph</li>
-      </ul>
 
       <h2>🛠️ 技术栈</h2>
       <div class="about-projects">
         <div class="project-card">
-          <h3>⚡ Astro</h3>
-          <p>现代静态站点生成器，零 JS 默认输出，内容优先架构。</p>
+          <h3>⚡ 前端开发</h3>
+          <p>Astro / React / TypeScript，追求极致的性能和用户体验。</p>
           <div class="project-links">
-            <a href="https://astro.build" target="_blank" class="tag">官网</a>
+            <a href="https://astro.build" target="_blank" class="tag">Astro</a>
+            <a href="https://react.dev" target="_blank" class="tag">React</a>
+            <a href="https://www.typescriptlang.org" target="_blank" class="tag">TypeScript</a>
           </div>
         </div>
         <div class="project-card">
-          <h3>📘 TypeScript</h3>
-          <p>类型安全的开发体验，编辑器智能提示，内容 Schema 校验。</p>
+          <h3>🌐 部署与运维</h3>
+          <p>GitHub Pages / Cloudflare Pages / Docker，让网站 7×24 在线。</p>
           <div class="project-links">
-            <a href="https://www.typescriptlang.org" target="_blank" class="tag">官网</a>
+            <a href="https://pages.github.com" target="_blank" class="tag">GitHub Pages</a>
+            <a href="https://pages.cloudflare.com" target="_blank" class="tag">Cloudflare</a>
+            <a href="https://www.docker.com" target="_blank" class="tag">Docker</a>
           </div>
         </div>
         <div class="project-card">
-          <h3>🐙 GitHub Pages</h3>
-          <p>免费静态站点托管，GitHub Actions 自动构建部署。</p>
+          <h3>🔧 开发工具</h3>
+          <p>Neovim / GitHub Actions / Shell Script，高效的工作流自动化。</p>
           <div class="project-links">
-            <a href="https://pages.github.com" target="_blank" class="tag">官网</a>
+            <a href="https://github.com/features/actions" target="_blank" class="tag">GitHub Actions</a>
+            <a href="https://neovim.io" target="_blank" class="tag">Neovim</a>
+            <a href="https://www.gnu.org/software/bash/" target="_blank" class="tag">Bash</a>
           </div>
         </div>
       </div>
 
-      <h2>💬 联系我</h2>
-      <p>如果你对这个项目感兴趣，欢迎 Star 或 Fork！</p>
+      <h2>📬 联系我</h2>
+      <p>通过以下方式找到我，欢迎交流技术、分享想法。</p>
       <div class="about-links">
         {SOCIAL_LINKS.github && <a href={SOCIAL_LINKS.github} target="_blank" class="btn btn-secondary">GitHub</a>}
+        {SOCIAL_LINKS.twitter && <a href={SOCIAL_LINKS.twitter} target="_blank" class="btn btn-secondary">Twitter</a>}
         {SOCIAL_LINKS.email && <a href={SOCIAL_LINKS.email} class="btn btn-secondary">Email</a>}
       </div>
     </div>

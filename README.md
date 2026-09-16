@@ -495,7 +495,7 @@ src/pages/links.astro        → /links
 
 | 微信 | 支付宝 |
 |------|--------|
-| <img src="https://zz3656.github.io/Atom/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://zz3656.github.io/Atom/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
+| <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
 
 每一分支持都是对开源项目的最大鼓励 ❤️
 
