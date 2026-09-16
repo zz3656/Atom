@@ -47,8 +47,9 @@ const categoryPosts = (await getCollection('blog'))
           <PostCard
             slug={blogSlug(post.slug)}
             title={post.data.title}
+          description={post.data.description}
+          body={post.body}
             pubDate={post.data.pubDate}
-            description={post.data.description}
             category={category}
             tags={post.data.tags}
           />
