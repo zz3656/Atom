@@ -52,7 +52,8 @@ Atom/
 ├── .github_disabled/            # GitHub Actions config (rename to .github/)
 │   └── deploy.yml               # Auto-deploy workflow
 ├── public/
-│   ├── favicon.svg              # Site favicon
+│   ├── favicon.svg              # Browser favicon
+│   ├── logos/                   # Navbar logo files (.svg / .png / .webp)
 │   └── robots.txt               # Search engine crawling rules
 ├── scripts/
 │   └── generate-rss.mjs         # Post-build RSS + Sitemap generator
@@ -196,9 +197,8 @@ export const SITE_NAME = 'MyBlog';               // Name shown in navbar
 export const SITE_DESCRIPTION = 'Your blog description';
 export const AUTHOR = 'Your Name';
 
-// Logo — replace the inline SVG to change the navbar icon
-export const SITE_LOGO_SVG = `<svg>...</svg>`;   // Navbar SVG logo
-export const SITE_FAVICON = '/favicon.svg';      // Favicon path (replace public/favicon.svg)
+export const SITE_LOGO = '/logos/logo.svg';      // Navbar logo file path
+export const SITE_FAVICON = '/favicon.svg';      // Browser favicon file path
 
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
@@ -207,7 +207,10 @@ export const SOCIAL_LINKS = {
 };
 ```
 
-> 💡 **To replace Logo and Favicon**: just update `SITE_LOGO_SVG` and `SITE_FAVICON` in `consts.ts`, then put your new favicon file in `public/`. No need to touch any component code!
+> 💡 **Logo and Favicon are independent**:
+> 1. **Logo** (navbar): put in `public/logos/logo.svg` (supports .svg / .png / .webp), update `SITE_LOGO`
+> 2. **Favicon** (browser tab): put in `public/favicon.svg`, update `SITE_FAVICON`
+> No need to touch any component code!
 
 ### Deploy URL
 

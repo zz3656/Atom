@@ -89,7 +89,8 @@ Atom/
 │   ├── generate-rss.mjs       # RSS + Sitemap 生成脚本
 │   └── README.md              # 脚本使用文档
 ├── public/
-│   ├── favicon.svg            # 网站图标
+│   ├── favicon.svg            # 浏览器标签页图标
+│   ├── logos/                 # 导航栏 Logo 文件（支持 .svg / .png / .webp）
 │   ├── robots.txt             # 搜索引擎爬虫规则
 │   └── medias/reward/         # 打赏二维码（可选）
 ├── src/
@@ -354,9 +355,8 @@ export const SITE_NAME = 'MyBlog';                       // 导航栏显示的�
 export const SITE_DESCRIPTION = '我的个人博客';           // 站点描述
 export const AUTHOR = '张三';                            // 作者名
 
-// Logo — 修改此处即可替换导航栏左侧图标
-export const SITE_LOGO_SVG = `<svg>...</svg>`;          // 导航栏 SVG Logo
-export const SITE_FAVICON = '/favicon.svg';              // Favicon 路径（替换 public/favicon.svg 即可）
+export const SITE_LOGO = '/logos/logo.svg';              // 导航栏 Logo 文件路径
+export const SITE_FAVICON = '/favicon.svg';              // 浏览器 Favicon 文件路径
 
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
@@ -365,9 +365,9 @@ export const SOCIAL_LINKS = {
 };
 ```
 
-> 💡 **替换 Logo 和 Favicon 只需两步**：
-> 1. 修改 `SITE_LOGO_SVG`（导航栏）和 `SITE_FAVICON`（ consts.ts ）
-> 2. 将新的 favicon 文件放入 `public/favicon.svg`
+> 💡 **替换 Logo 和 Favicon 各独立**：
+> 1. **Logo**（导航栏）：放入 `public/logos/logo.svg`（支持 .svg / .png / .webp），修改 `SITE_LOGO`
+> 2. **Favicon**（浏览器标签页）：放入 `public/favicon.svg`，修改 `SITE_FAVICON`
 > 3. 不需要再修改任何组件代码！
 
 ### 2. 部署平台

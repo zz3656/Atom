@@ -296,14 +296,10 @@ html.dark .site-header {
 }
 
 .site-logo {
-  display: flex;
-  align-items: center;
-  line-height: 1;
-}
-
-.site-logo :global(.atom-icon) {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
 }
 
 .site-name-text {

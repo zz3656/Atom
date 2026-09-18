@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_NAME, SITE_LOGO_SVG } from '../consts';
+import { SITE_TITLE, SITE_NAME, SITE_LOGO, SITE_FAVICON } from '../consts';
 
 const base = import.meta.env.BASE_URL;
 const isRootBase = base === '/' || base === '';
@@ -20,7 +20,7 @@ const linkPaths = isRootBase ? ['/', '/blog', '/categories', '/tags', '/about'] 
 <header class="site-header">
   <nav class="nav-container">
     <a href={linkPaths[0]} class="site-title">
-      <span class="site-logo">{SITE_LOGO_SVG}</span>
+      <img src={SITE_LOGO} alt="Logo" class="site-logo" />
       <span class="site-name-text">{SITE_NAME}</span>
     </a>
 
