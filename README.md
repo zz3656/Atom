@@ -85,13 +85,13 @@
 Atom/
 ├── scripts/
 │   ├── atom-cli.mjs           # 🤖 CLI 本地构建工具
-│   ├── convert-hexo.mjs       # Hexo → Atom 转换工具
-│   ├── generate-rss.mjs       # RSS + Sitemap 生成脚本
-│   └── README.md              # 脚本使用文档
+│   ├── generate-rss.mjs       # RSS + 搜索索引生成
+│   └── fix-links.mjs          # 路径修复（根路径部署）
 ├── public/
 │   ├── favicon.svg            # 浏览器标签页图标
-│   ├── logos/                 # 导航栏 Logo 文件（支持 .svg / .png / .webp）
+│   ├── manifest.json          # PWA 支持
 │   ├── robots.txt             # 搜索引擎爬虫规则
+│   ├── logos/                 # 导航栏 Logo 文件
 │   └── medias/reward/         # 打赏二维码（可选）
 ├── src/
 │   ├── components/            # Astro 组件
@@ -99,12 +99,19 @@ Atom/
 │   │   ├── Footer.astro       # 页脚 + 社交链接
 │   │   ├── PostCard.astro     # 文章卡片
 │   │   └── FormattedDate.astro # 日期格式化组件
-│   ├── content/
-│   │   ├── config.ts          # 文章 Schema 校验
-│   │   └── blog/              # 📝 Markdown 文章目录
-│   ├── layouts/
-│   │   ├── BaseLayout.astro   # 全局布局（head + nav + footer）
-│   │   └── BlogPost.astro     # 文章布局（SEO + 进度条 + prev/next）
+│   ├── utils/                 # 工具函数
+│   │   ├── path.ts            # 路径处理工具
+│   │   ├── date.ts            # 日期格式化
+│   │   └── blog.ts            # 文章数据工具
+│   ├── styles/                # 样式模块（已拆分）
+│   │   ├── global.css         # 主入口（20 个 @import）
+│   │   └── _modules/          # 20 个 CSS 模块
+│   ├── content/               # 📝 Markdown 文章
+│   │   ├── blog/              # 文章目录
+│   │   └── config.ts          # 内容 Schema
+│   ├── layouts/               # 布局模板
+│   │   ├── BaseLayout.astro   # 全局布局
+│   │   └── BlogPost.astro     # 文章布局
 │   ├── pages/                 # 路由页面
 │   │   ├── index.astro        # 首页
 │   │   ├── about.astro        # 关于页
@@ -114,8 +121,6 @@ Atom/
 │   │   ├── category/          # 分类详情
 │   │   ├── tags/              # 标签列表
 │   │   └── tag/               # 标签详情
-│   ├── styles/
-│   │   └── global.css         # 全局样式 + CSS 变量
 │   ├── consts.ts              # 站点配置
 │   └── env.d.ts               # TypeScript 类型声明
 ├── astro.config.mjs           # Astro 配置
@@ -280,24 +285,16 @@ reward: true                # 可选：显示打赏码
 | `updatedDate` | `date` | ❌ | 更新日期，显示在文章标题下方 |
 | `reward` | `boolean` | ❌ | 是否在文末显示打赏码（默认关闭） |
 
-### CSS 样式自定义
+### 样式自定义
 
-编辑 `src/styles/global.css`，移动端断点也已集成在同一个文件中：
+CSS 已按功能拆分为 20 个模块（`src/styles/_modules/`），编辑对应的 `.css` 文件即可：
 
-```css
-/* 768px 断点：汉堡菜单 + 纵向卡片 */
-@media (max-width: 768px) {
-  .nav-toggle { display: flex; }        /* 汉堡按钮显示 */
-  .nav-links   { display: none; }        /* 导航隐藏 */
-  .nav-links.open { display: flex; }     /* 打开时显示 */
-}
+- `_variables.css` — 颜色变量（亮色/暗色主题）
+- `_header.css` — 导航栏样式
+- `_postcards.css` — 文章卡片样式
+- `_responsive.css` — 响应式断点（768px / 480px）
 
-/* 480px 断点：极小屏幕进一步缩放 */
-@media (max-width: 480px) {
-  .hero h1         { font-size: 1.6rem; }
-  .post-card-title { font-size: 1.05rem; }
-}
-```
+所有样式通过 `src/styles/global.css` 入口文件统一导入。
 
 ### 导航栏
 
@@ -318,21 +315,16 @@ reward: true                # 可选：显示打赏码
 
 ### 自动部署（推荐）
 
-项目已准备好 GitHub Actions 配置，只需：
+项目已配置 GitHub Actions，推送 `main` 分支即可自动构建部署：
 
-1. **Fork 或推送** 到你的 GitHub 仓库
-2. 将 `.github_disabled/` 重命名为 `.github/`：
-   ```bash
-   mv .github_disabled .github
-   git add . && git commit -m "enable github actions" && git push
-   ```
-3. 进入 **Settings → Pages → Source → 选择 GitHub Actions**
-4. 进入 **Settings → Actions → General → Workflow permissions → 选择 Read repository permissions and write permissions**
-5. 推送代码到 `main` 分支 ✅
+1. **推送代码** 到你的 GitHub 仓库
+2. 进入 **Settings → Pages → Source → 选择 GitHub Actions**
+3. 进入 **Settings → Actions → General → Workflow permissions → 选择 Read and write**
+4. 推送代码到 `main` 分支 ✅
 
-> 💡 **Fork 后注意**：GitHub Actions 会自动从仓库名推导 base 路径。如果仓库名为 `my-blog`，则部署到 `https://username.github.io/my-blog/`。如需自定义，在 `.github/workflows/deploy.yml` 中设置 `REPO_NAME` 环境变量。
+> 💡 **子路径仓库**：如果仓库名为 `my-blog`，则自动部署到 `https://username.github.io/my-blog/`。
 
-> 💡 `.github_disabled/` 是因为 Token 权限限制无法推送 workflow 文件，手动启用即可。
+> 💡 **Cloudflare Pages**：将 Secrets 中设置 `DEPLOY_TARGET=cf`，并配置 `CF_PAGES_TOKEN`、`CF_ACCOUNT_ID`、`CF_PROJECT_NAME`。
 
 Actions 会自动：`安装依赖 → 构建 → 部署`
 
@@ -428,20 +420,24 @@ export default defineConfig({
   base: '/',                        // 子路径仓库填 '/your-repo-name'
   markdown: {
     shikiConfig: {
-      theme: 'github-dark',      // 代码高亮主题（可选 'github-light'）
+      // 自动根据暗色模式切换主题
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
       wrap: true,
     },
   },
 });
 ```
 
-### 4. 导航栏
+### 3. 导航栏
 
 导航栏项在 `src/components/Header.astro` 中配置，修改 `navLinks` 数组即可增删导航项。
 
 布局：Logo + 站点名称在左侧，导航链接居中，搜索和主题切换在右侧。页脚已包含 RSS 订阅链接。
 
-### 5. 页脚
+### 4. 页脚
 
 编辑 `src/components/Footer.astro`：
 
@@ -453,7 +449,7 @@ export default defineConfig({
 </footer>
 ```
 
-### 6. 打赏二维码
+### 5. 打赏二维码
 
 二维码图片放在 `public/medias/reward/` 目录下：
 
@@ -465,9 +461,9 @@ public/medias/reward/
 
 在文章 frontmatter 中设置 `reward: true` 即可在文章末尾显示打赏码。
 
-### 7. 样式主题
+### 6. 样式主题
 
-编辑 `src/styles/global.css`，所有颜色通过 CSS 变量控制：
+编辑 `src/styles/_modules/_variables.css`，所有颜色通过 CSS 变量控制：
 
 **日间模式**（默认，`:root`）：
 ```css
@@ -490,7 +486,7 @@ html.dark {
 }
 ```
 
-### 8. 添加新页面
+### 7. 添加新页面
 
 在 `src/pages/` 下新建 `.astro` 文件即可自动注册路由：
 

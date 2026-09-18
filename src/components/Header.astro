@@ -1,26 +1,24 @@
 ---
 import { SITE_TITLE, SITE_NAME, SITE_LOGO } from '../consts';
+import { baseAssetsPath } from '../utils/path';
 
-const base = import.meta.env.BASE_URL;
-const isRootBase = base === '/' || base === '';
+const logoSrc = baseAssetsPath(SITE_LOGO);
 
-const currentPage = Astro.url.pathname.replace(base, '').replace(/\/$/, '') || '';
+// Active path detection
+const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { label: '首页', active: currentPage === '' },
-  { label: '文章', active: currentPage.startsWith('blog') },
-  { label: '分类', active: currentPage === 'categories' },
-  { label: '标签', active: currentPage === 'tags' },
-  { label: '关于', active: currentPage === 'about' },
+  { label: '首页', href: '/', active: currentPath === '/' || currentPath === baseAssetsPath('/') },
+  { label: '文章', href: '/blog', active: currentPath === baseAssetsPath('/blog') || currentPath === baseAssetsPath('/blog/') || currentPath.startsWith('/blog/') },
+  { label: '分类', href: '/categories', active: currentPath === baseAssetsPath('/categories') || currentPath === baseAssetsPath('/categories/') },
+  { label: '标签', href: '/tags', active: currentPath === baseAssetsPath('/tags') || currentPath === baseAssetsPath('/tags/') },
+  { label: '关于', href: '/about', active: currentPath === baseAssetsPath('/about') || currentPath === baseAssetsPath('/about/') },
 ];
-
-const linkPaths = isRootBase ? ['/', '/blog', '/categories', '/tags', '/about'] : [base, base + '/blog', base + '/categories', base + '/tags', base + '/about'];
-const logoSrc = isRootBase ? SITE_LOGO : base + SITE_LOGO;
 ---
 
 <header class="site-header">
   <nav class="nav-container">
-    <a href={linkPaths[0]} class="site-title">
+    <a href={baseAssetsPath('/')} class="site-title">
       <img src={logoSrc} alt="Logo" class="site-logo" />
       <span class="site-name-text">{SITE_NAME}</span>
     </a>
@@ -34,7 +32,7 @@ const logoSrc = isRootBase ? SITE_LOGO : base + SITE_LOGO;
 
     <div class="nav-links" id="nav-links">
       {navLinks.map((link, i) => (
-        <a href={linkPaths[i]} class:list={['nav-link', link.active && 'active']}>{link.label}</a>
+        <a href={baseAssetsPath(link.href)} class:list={['nav-link', link.active && 'active']}>{link.label}</a>
       ))}
     </div>
     <div class="nav-actions">

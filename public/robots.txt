@@ -1,4 +1,5 @@
+# Atom Blog robots.txt
+# Sitemap is auto-discovered via https://github.com/zz3656/Atom
+# For custom deployments, update the Sitemap line with the correct URL.
 User-agent: *
 Allow: /
-
-Sitemap: https://zz3656.github.io/atom/sitemap.xml

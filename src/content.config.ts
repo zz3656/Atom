@@ -12,6 +12,8 @@ const blog = defineCollection({
     heroImage: z.string().optional(),
     category: z.string().default(''),
     tags: z.array(z.string()).default([]),
+    redirect: z.string().optional(),    // URL 迁移重定向
+    featuredImage: z.string().optional(), // SEO 专用封面图（替代 heroImage）
   }),
 });
 

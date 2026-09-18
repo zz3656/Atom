@@ -1,0 +1,42 @@
+/* Atom Blog — Section Headers */
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  position: relative;
+}
+
+.section-title::before {
+  content: '';
+  display: inline-block;
+  width: 3px;
+  height: 1.1em;
+  background: var(--accent-gradient);
+  border-radius: 2px;
+}
+
+html:not(.dark) .section-title::before { box-shadow: none; }
+html.dark .section-title::before { box-shadow: 0 0 8px var(--accent-glow); }
+
+.section-count {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.accent {
+  color: var(--accent);
+  font-weight: 700;
+  font-family: var(--font-mono);
+}

@@ -1,0 +1,154 @@
+/* Atom Blog — Header & Navigation */
+
+/* Sticky header with glass effect */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(240, 242, 245, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-light);
+  height: var(--header-height);
+  transition: background 0.3s ease;
+}
+
+html.dark .site-header {
+  background: rgba(10, 10, 15, 0.85);
+}
+
+/* Glowing bottom border */
+.site-header::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.5;
+}
+
+/* Navigation container: title (left) + links (center) + actions (right) */
+.nav-container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+@media (min-width: 769px) {
+  .nav-container { justify-content: space-between; gap: 0; }
+  .nav-links { flex: 1; justify-content: center; }
+}
+
+/* Site title with logo */
+.site-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  letter-spacing: -0.5px;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.site-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+html:not(.dark) .site-title:hover { color: var(--accent); }
+html.dark .site-title:hover { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+
+/* Navigation links */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.nav-link.active {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+html:not(.dark) .nav-link.active { background: var(--accent-glow-strong); }
+
+html:not(.dark) .nav-link::after { content: none; }
+
+html.dark .nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 60%;
+  height: 1px;
+  background: var(--accent);
+  transition: transform 0.3s ease;
+}
+
+html.dark .nav-link.active::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+html.dark .nav-link:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.35rem 0.55rem;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.25s ease;
+  margin-left: 0.5rem;
+  color: var(--text-secondary);
+}
+
+html:not(.dark) .theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: rotate(15deg);
+}
+
+html.dark .theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transform: rotate(15deg);
+}

@@ -1,29 +1,21 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { createCategoryFilter, normalizeCategory } from '../../utils/blog';
 
-const base = import.meta.env.BASE_URL;
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
 
-// Collect all unique categories — normalize empty → '未分类'
+// Collect all unique categories
 const categoryMap = new Map<string, typeof posts>();
 posts.forEach((post) => {
-  const cat = (post.data.category && post.data.category.trim()) ? post.data.category : '未分类';
+  const cat = normalizeCategory(post.data.category);
   if (!categoryMap.has(cat)) categoryMap.set(cat, []);
   categoryMap.get(cat)!.push(post);
 });
 
 const sortedCategories = [...categoryMap.entries()].sort((a, b) => b[1].length - a[1].length);
-
-// Filtered posts for each category use the same normalization
-function getCategoryFilter(category: string): (post: any) => boolean {
-  if (category === '未分类') {
-    return (post) => (!post.data.category || !post.data.category.trim());
-  }
-  return (post) => post.data.category === category;
-}
 ---
 
 <BaseLayout title="所有分类 | Atom Blog">
@@ -36,7 +28,7 @@ function getCategoryFilter(category: string): (post: any) => boolean {
     {sortedCategories.length > 0 ? (
       <div class="category-grid">
         {sortedCategories.map(([category, catPosts]) => (
-          <a href={`${base}/category/${category}/`} class="category-card">
+          <a href={`/category/${encodeURIComponent(category)}/`} class="category-card">
             <span class="category-card-name">📁 {category}</span>
             <span class="category-card-count">{catPosts.length}</span>
           </a>

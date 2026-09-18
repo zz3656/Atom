@@ -1,0 +1,59 @@
+/* Atom Blog — Footer */
+
+.site-footer {
+  background: var(--bg-secondary);
+  border-top: 1px solid var(--border-light);
+  padding: 1.2rem 1.5rem;
+  margin-top: auto;
+  position: relative;
+  transition: background 0.3s ease;
+}
+
+html:not(.dark) .site-footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--accent-gradient);
+  opacity: 0.15;
+}
+
+html.dark .site-footer::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0.3;
+}
+
+.footer-content {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.footer-links { display: flex; gap: 1.5rem; }
+
+html:not(.dark) .footer-links a,
+html.dark .footer-links a {
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+html:not(.dark) .footer-links a:hover { color: var(--accent); }
+html.dark .footer-links a:hover {
+  color: var(--accent);
+  text-shadow: 0 0 8px var(--accent-glow);
+}

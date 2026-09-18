@@ -2,13 +2,13 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
 import { getCollection } from 'astro:content';
+import { normalizeCategory } from '../../utils/blog';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
   const allCategories = new Set<string>();
   posts.forEach((post) => {
-    const cat = (post.data.category && post.data.category.trim()) ? post.data.category : '未分类';
-    allCategories.add(cat);
+    allCategories.add(normalizeCategory(post.data.category));
   });
 
   return [...allCategories].map((category) => ({
@@ -16,21 +16,10 @@ export async function getStaticPaths() {
   }));
 }
 
-const base = import.meta.env.BASE_URL;
-const isRootBase = base === '/' || base === '';
-function blogSlug(slug: string) { return isRootBase ? `/blog/${slug}/` : `${base}/blog/${slug}/`; }
 const { category } = Astro.params;
 
-// Same normalization as categories page
-function getCategoryFilter(category: string): (post: any) => boolean {
-  if (category === '未分类') {
-    return (post) => (!post.data.category || !post.data.category.trim());
-  }
-  return (post) => post.data.category === category;
-}
-
 const categoryPosts = (await getCollection('blog'))
-  .filter(getCategoryFilter(category))
+  .filter((post) => normalizeCategory(post.data.category) === category)
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
@@ -45,10 +34,10 @@ const categoryPosts = (await getCollection('blog'))
       <ul class="post-list">
         {categoryPosts.map((post) => (
           <PostCard
-            slug={blogSlug(post.id)}
+            slug={`/blog/${post.id}/`}
             title={post.data.title}
-          description={post.data.description}
-          body={post.body}
+            description={post.data.description}
+            body={post.body}
             pubDate={post.data.pubDate}
             category={category}
             tags={post.data.tags}
@@ -63,7 +52,7 @@ const categoryPosts = (await getCollection('blog'))
     )}
 
     <div class="view-all">
-      <a href={isRootBase ? '/categories' : base + '/categories'}>← 返回所有分类</a>
+      <a href="/categories">← 返回所有分类</a>
     </div>
   </section>
 </BaseLayout>

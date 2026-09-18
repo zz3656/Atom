@@ -1,0 +1,123 @@
+/* Atom Blog — Post Extras: Reward & Navigation */
+
+/* Reward section */
+.post-reward {
+  margin-top: 3rem;
+  padding: 2rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.reward-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 1.2rem;
+}
+
+.reward-qr {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.reward-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reward-item img {
+  width: 140px;
+  height: 140px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-color);
+  transition: transform 0.2s;
+}
+
+.reward-item img:hover { transform: scale(1.05); }
+
+.reward-item span {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  font-family: var(--font-mono);
+}
+
+/* Post navigation */
+.post-nav {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-light);
+  text-align: center;
+}
+
+.post-nav a {
+  font-weight: 500;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.5rem 1.2rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  transition: all 0.25s;
+  color: var(--accent);
+}
+
+html:not(.dark) .post-nav a:hover { color: var(--accent); }
+html.dark .post-nav a:hover { color: var(--accent); }
+
+.post-nav-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding-top: 1rem;
+  text-align: center;
+}
+
+.post-nav-link {
+  display: block;
+  padding: 0.9rem 1.1rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+}
+
+html:not(.dark) .post-nav-link:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  color: var(--accent);
+  box-shadow: var(--shadow);
+  transform: translateY(-1px);
+}
+
+html.dark .post-nav-link:hover {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+  color: var(--accent);
+  box-shadow: 0 0 10px var(--accent-glow);
+  transform: translateY(-1px);
+}
+
+.post-nav-link.prev, .post-nav-link.next { text-align: center; }
+
+.nav-label {
+  display: block;
+  font-weight: 600;
+  color: var(--text-primary);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.post-nav-link:hover .nav-label { color: var(--accent); }

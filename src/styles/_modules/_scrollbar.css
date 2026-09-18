@@ -1,0 +1,12 @@
+/* Atom Blog — Scrollbar */
+/* 自定义滚动条样式 */
+
+html:not(.dark) ::-webkit-scrollbar { width: 6px; }
+html:not(.dark) ::-webkit-scrollbar-track { background: var(--bg-secondary); }
+html:not(.dark) ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+html:not(.dark) ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+html.dark ::-webkit-scrollbar { width: 5px; }
+html.dark ::-webkit-scrollbar-track { background: var(--bg-primary); }
+html.dark ::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 3px; }
+html.dark ::-webkit-scrollbar-thumb:hover { background: var(--accent); }

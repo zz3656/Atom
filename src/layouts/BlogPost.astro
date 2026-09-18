@@ -2,11 +2,7 @@
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 import { AUTHOR } from '../consts';
-
-const base = import.meta.env.BASE_URL;
-const isRootBase = base === '/' || base === '';
-function blogPath(slug: string) { return isRootBase ? `/blog/${slug}` : `${base}/blog/${slug}`; }
-function rootPath() { return isRootBase ? '/' : base; }
+import { blogPath, rootPath } from '../utils/path';
 
 interface Props {
   title: string;
@@ -24,7 +20,7 @@ interface Props {
 const { title, pubDate, updatedDate, description, heroImage, category = '', tags = [], reward = false, prevPost, nextPost } = Astro.props;
 ---
 
-<BaseLayout title={title} description={description} type="article">
+<BaseLayout title={title} description={description} image={heroImage || undefined} type="article">
   <fragment slot="head">
     <script type="application/ld+json">
       {JSON.stringify({

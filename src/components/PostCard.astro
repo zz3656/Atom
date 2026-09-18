@@ -3,7 +3,7 @@ interface Props {
   slug: string;
   title: string;
   pubDate: Date;
-  description: string;
+  description?: string;
   category?: string;
   tags?: string[];
   index?: number | undefined;
@@ -11,21 +11,14 @@ interface Props {
 }
 
 import FormattedDate from './FormattedDate.astro';
+import { extractSummary } from '../utils/blog';
+import { formatDateCN } from '../utils/date';
 
 const { slug, title, pubDate, description, category = '', tags = [], index, body = '' } = Astro.props;
 const idx = 'index' in Astro.props ? Astro.props.index : undefined;
 
 // Auto-extract description from body if description is empty
-let postDesc = description;
-if (!postDesc && body) {
-  let content = body.replace(/^---[\s\S]*?---/, '').trim();
-  content = content.replace(/^\s*>.*$/gm, '').replace(/^\s*\n/gm, '').trim();
-  const paragraphs = content.split(/\n\s*\n/);
-  if (paragraphs.length > 0) {
-    let para = paragraphs[0].replace(/[#*`_~\[\]()!&\x3e]/g, '').trim();
-    postDesc = para.length > 120 ? para.slice(0, 120) + '\u2026' : para;
-  }
-}
+const postDesc = description || extractSummary(body);
 ---
 
 <li class="post-card">
@@ -39,7 +32,7 @@ if (!postDesc && body) {
       <div class="post-card-meta">
         <div class="meta-top">
           <time datetime={pubDate.toISOString()} class="post-card-date">
-            {pubDate.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit' })}
+            {formatDateCN(pubDate)}
           </time>
           {category && (
             <span class="post-card-category">{category}</span>

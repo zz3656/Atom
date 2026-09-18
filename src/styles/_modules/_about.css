@@ -1,0 +1,195 @@
+/* Atom Blog — About Page */
+
+.about { max-width: var(--content-width); margin: 0 auto; }
+
+.about-content {
+  margin-top: 1rem;
+  line-height: 1.8;
+  text-align: left;
+}
+
+.about-content h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.8rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  text-align: left;
+  padding-left: 0.2rem;
+}
+
+.about-bio {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text-secondary);
+}
+
+.about-content p,
+.about-content li { color: var(--text-secondary); }
+
+.about-content p { margin-bottom: 1rem; }
+
+.about-content ul {
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.about-content li { margin-bottom: 0.5rem; }
+
+.about-links {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+/* About — Projects */
+.about-projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  min-height: 160px;
+}
+
+html:not(.dark) .project-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-md);
+}
+html.dark .project-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
+}
+
+.project-emoji { font-size: 1.8rem; margin-bottom: 0.5rem; line-height: 1; }
+
+.project-card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-bright);
+}
+
+.project-card p {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: auto;
+}
+
+.project-card p code {
+  background: var(--bg-inline-code);
+  padding: 0.12rem 0.3rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.project-links {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border-light);
+}
+
+html:not(.dark) .project-links .tag,
+html.dark .project-links .tag {
+  font-size: 0.78rem;
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  transition: all 0.2s;
+}
+html:not(.dark) .project-links .tag:hover,
+html.dark .project-links .tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* About — Topics */
+.about-topics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.topic-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.3rem;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 130px;
+}
+
+html:not(.dark) .topic-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-md);
+}
+html.dark .topic-card:hover {
+  border-color: var(--border-glow);
+  box-shadow: var(--shadow-glow);
+}
+
+.topic-icon { font-size: 1.6rem; margin-bottom: 0.5rem; line-height: 1; }
+
+.topic-info strong {
+  display: block;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-bright);
+  margin-bottom: 0.4rem;
+}
+
+.topic-info span {
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* About — Skills */
+.about-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.skill-tag {
+  display: inline-block;
+  padding: 0.35rem 0.85rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  cursor: default;
+}
+
+html:not(.dark) .skill-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+html.dark .skill-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: var(--shadow-glow);
+}

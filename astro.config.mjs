@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
 // 部署目标自动检测:
 //   DEPLOY_TARGET=github → GitHub Pages（需要仓库名前缀）
@@ -20,11 +21,21 @@ const site = isGitHubPages
   : `https://${process.env.CF_DOMAIN || 'atom.inte8.top'}`;
 
 export default defineConfig({
+  integrations: [sitemap()],
   site,
   base,
+  // HTML 压缩优化
+  build: {
+    compressHTML: true,
+  },
+
   markdown: {
     shikiConfig: {
-      theme: 'github-dark',
+      // Shiki 会自动检测 html.dark 类并切换为 github-light 主题
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
       wrap: true,
     },
   },

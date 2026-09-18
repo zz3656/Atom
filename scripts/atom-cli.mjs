@@ -260,7 +260,7 @@ async function syncSourceToBlogRepo() {
     'src/components/FormattedDate.astro',
     'src/styles/global.css',
     'src/consts.ts',
-    'src/content/config.ts',
+    'src/content.config.ts',
     'src/env.d.ts',
     'src/pages/index.astro',
     'src/pages/about.astro',
@@ -271,7 +271,7 @@ async function syncSourceToBlogRepo() {
     'src/pages/category/[...category].astro',
     'src/pages/tags/index.astro',
     'src/pages/tag/[...tag].astro',
-    'src/pages/[...page].astro',
+    'src/pages/index.astro',
   ];
 
   for (const rel of syncFiles) {

@@ -1,0 +1,27 @@
+/* Atom Blog — Reading Progress */
+
+.reading-progress-container {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  z-index: 200;
+  background: transparent;
+  height: 2px;
+}
+
+.reading-progress {
+  height: 2px;
+  width: 100%;
+  background: transparent;
+}
+
+.reading-progress-fill {
+  height: 2px;
+  width: 0%;
+  background: var(--accent-gradient);
+  transition: width 0.08s linear;
+}
+
+html:not(.dark) .reading-progress-fill { box-shadow: none; }
+html.dark .reading-progress-fill { box-shadow: 0 0 6px var(--accent); }

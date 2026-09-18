@@ -1,0 +1,53 @@
+/* Atom Blog — Tags */
+
+.tag {
+  display: inline-block;
+  padding: 0.12rem 0.5rem;
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  border: 1px solid var(--tag-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  transition: all 0.2s ease;
+  line-height: 1.4;
+  white-space: nowrap;
+}
+
+html:not(.dark) .tag:hover {
+  background: var(--tag-active-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+html.dark .tag:hover {
+  background: var(--tag-active-bg);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+}
+
+.post-category-tag {
+  display: inline-block;
+  padding: 0.12rem 0.5rem;
+  background: var(--cat-bg);
+  color: var(--cat-text);
+  border: 1px solid var(--cat-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: var(--font-mono);
+  transition: all 0.2s ease;
+}
+
+html:not(.dark) .post-category-tag:hover {
+  background: var(--cat-active-bg);
+  border-color: var(--cat-text);
+}
+html.dark .post-category-tag:hover {
+  background: var(--cat-active-bg);
+  border-color: var(--cat-text);
+}
+
+.post-tags-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
+.post-tags { margin-top: 0.8rem; display: flex; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }

@@ -1,13 +1,22 @@
 {
   "name": "atom",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "postbuild": "node scripts/generate-rss.mjs && node scripts/fix-links.mjs"
   },
+  "engines": {
+    "node": ">=20.3",
+    "npm": ">=9.6"
+  },
   "dependencies": {
     "astro": "^7.3.3"
-  }
+  },
+  "devDependencies": {
+    "@astrojs/sitemap": "^3.7.4"
+  },
+  "license": "MIT"
 }

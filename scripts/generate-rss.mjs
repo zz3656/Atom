@@ -44,12 +44,11 @@ if (astroFiles.length > 0) {
   }
 }
 
-// 从 GitHub repo 名推断站点 URL
-var repoName = 'Atom-blog';
-var siteUrl = 'https://zz3656.github.io';
+// 从 GitHub 环境变量推断站点 URL
+var siteUrl = process.env.SITE_URL || 'https://zz3656.github.io';
 var prefix = base;
 
-// --- Generate RSS ---
+// --- Generate RSS + Search Index ---
 var blogDir = 'src/content/blog';
 var files = readdirSync(blogDir).filter(function(f) { return f.endsWith('.md'); });
 var posts = files.map(function(f) {
@@ -81,12 +80,12 @@ var items = posts.map(function(p) {
 
 var rss = [
   '<?xml version="1.0" encoding="UTF-8" ?>',
-  '<rss version="2.0" xmlns:Atom="http://www.w3.org/2005/Atom">',
+  '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
   '  <channel>',
   '    <title>Atom Blog</title>',
   '    <description>A modern, lightweight blog built with Astro</description>',
   '    <link>' + siteUrl + prefix + '/</link>',
-  '    <Atom:link href="' + siteUrl + prefix + '/rss.xml" rel="self" type="application/rss+xml" />',
+  '    <atom:link href="' + siteUrl + prefix + '/rss.xml" rel="self" type="application/rss+xml" />',
   items,
   '  </channel>',
   '</rss>',
@@ -94,26 +93,6 @@ var rss = [
 
 writeFileSync('dist/rss.xml', rss, 'utf-8');
 console.log('RSS generated: dist/rss.xml');
-
-// --- Generate Sitemap ---
-var sitemapItems = [
-  '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
-  '  <url><loc>' + siteUrl + prefix + '/</loc><priority>1.0</priority></url>',
-  '  <url><loc>' + siteUrl + prefix + '/blog/</loc><priority>0.8</priority></url>',
-  '  <url><loc>' + siteUrl + prefix + '/about/</loc><priority>0.7</priority></url>',
-  '  <url><loc>' + siteUrl + prefix + '/404.html</loc><priority>0.1</priority></url>',
-];
-
-posts.forEach(function(p) {
-  var url = siteUrl + prefix + '/blog/' + p.slug + '/';
-  var lastmod = p.updatedDate ? p.updatedDate.toISOString().slice(0, 10) : p.pubDate.toISOString().slice(0, 10);
-  sitemapItems.push('  <url><loc>' + url + '</loc><lastmod>' + lastmod + '</lastmod><priority>0.6</priority></url>');
-});
-
-sitemapItems.push('</urlset>');
-
-writeFileSync('dist/sitemap.xml', sitemapItems.join('\n'), 'utf-8');
-console.log('Sitemap generated: dist/sitemap.xml');
 
 // --- Generate Search Index ---
 var searchIndex = posts.map(function(p) {

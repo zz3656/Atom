@@ -30,6 +30,12 @@
         "type": "string"
       }
     },
+    "redirect": {
+      "type": "string"
+    },
+    "featuredImage": {
+      "type": "string"
+    },
     "$schema": {
       "type": "string"
     }

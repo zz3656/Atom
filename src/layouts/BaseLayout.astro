@@ -3,6 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, AUTHOR, SITE_FAVICON } from '../consts';
+import { rssUrl, baseAssetsPath } from '../utils/path';
 
 interface Props {
   title: string;
@@ -14,13 +15,12 @@ interface Props {
 const { title, description, image, type = 'website' } = Astro.props;
 const fullTitle = title;
 const desc = description || SITE_DESCRIPTION;
-const base = import.meta.env.BASE_URL;
-const isRootBase = base === '/' || base === '';
-const rssLink = isRootBase ? '/rss.xml' : `${base}/rss.xml`;
-const faviconLink = isRootBase ? SITE_FAVICON : base + SITE_FAVICON; // 适配 GitHub Pages 子路径
-const searchBase = isRootBase ? '/' : base;
+const rssLink = rssUrl();
+const faviconLink = baseAssetsPath(SITE_FAVICON);
+const searchBase = baseAssetsPath('/');
 
-const siteUrl = Astro.site || (isRootBase ? 'https://atom.inte8.top' : 'https://zz3656.github.io/Atom-blog');
+// Site URL for OG/Twitter images and RSS
+const siteUrl = Astro.site || 'https://zz3656.github.io/Atom';
 const ogImage = image
   ? `${siteUrl}${image}`
   : `${siteUrl}/favicon.svg`;
@@ -30,7 +30,10 @@ const ogImage = image
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!-- CSP & Security -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
     <meta name="description" content={desc} />
     <meta name="generator" content={Astro.generator} />
     <meta name="author" content={AUTHOR} />
@@ -55,6 +58,14 @@ const ogImage = image
     <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={rssLink} />
 
     <link rel="icon" type="image/svg+xml" href={faviconLink} />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href={baseAssetsPath('/manifest.json')} />
+
+    <!-- Font preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Noto+Serif+SC:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <title>{fullTitle}</title>
     <slot name="head" />
   </head>
@@ -64,107 +75,109 @@ const ogImage = image
       <slot />
     </main>
     <Footer />
-    <script>
+    <script is:inline>
       // 加载搜索索引
-      const base = JSON.parse(JSON.stringify(searchBase));
-      const searchInput = document.getElementById('search-input');
-      const searchResults = document.getElementById('search-results');
-      let searchIndex = [];
+      (function() {
+        var searchInput = document.getElementById('search-input');
+        var searchResults = document.getElementById('search-results');
+        var searchIndex = [];
+        var searchBase = '/';
 
-      async function loadSearchIndex() {
-        try {
-          const res = await fetch(base + '/_assets/search-index.json');
-          searchIndex = await res.json();
-        } catch (e) {
-          console.warn('Search index not loaded');
-        }
-      }
-      loadSearchIndex();
-
-      function highlightText(text, query) {
-        if (!query) return text;
-        var regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-        return text.replace(regex, '<mark>$1</mark>');
-      }
-
-      if (searchInput) {
-        let debounceTimer;
-        searchInput.addEventListener('input', function() {
-          clearTimeout(debounceTimer);
-          var query = searchInput.value.trim().toLowerCase();
-          if (!query) {
-            searchResults.classList.remove('active');
-            return;
+        async function loadSearchIndex() {
+          try {
+            var res = await fetch(searchBase + '/_assets/search-index.json');
+            searchIndex = await res.json();
+          } catch (e) {
+            console.warn('Search index not loaded');
           }
+        }
+        loadSearchIndex();
 
-          debounceTimer = setTimeout(function() {
-            var results = [];
-            for (var i = 0; i < searchIndex.length; i++) {
-              var item = searchIndex[i];
-              var score = 0;
-              if (item.content.includes(query)) score += 10;
-              if (item.title.toLowerCase().includes(query)) score += 20;
-              if (item.categories && item.categories.includes(query)) score += 5;
-              if (item.tags) {
-                for (var j = 0; j < item.tags.length; j++) {
-                  if (item.tags[j].includes(query)) score += 8;
+        function highlightText(text, query) {
+          if (!query) return text;
+          var regex = new RegExp('(' + query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+          return text.replace(regex, '<mark>$1</mark>');
+        }
+
+        if (searchInput) {
+          var debounceTimer;
+          searchInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            var query = searchInput.value.trim().toLowerCase();
+            if (!query) {
+              searchResults.classList.remove('active');
+              return;
+            }
+
+            debounceTimer = setTimeout(function() {
+              var results = [];
+              for (var i = 0; i < searchIndex.length; i++) {
+                var item = searchIndex[i];
+                var score = 0;
+                if (item.content.includes(query)) score += 10;
+                if (item.title.toLowerCase().includes(query)) score += 20;
+                if (item.categories && item.categories.includes(query)) score += 5;
+                if (item.tags) {
+                  for (var j = 0; j < item.tags.length; j++) {
+                    if (item.tags[j].includes(query)) score += 8;
+                  }
+                }
+                if (score > 0) {
+                  results.push({ item: item, score: score });
                 }
               }
-              if (score > 0) {
-                results.push({ item: item, score: score });
+              results.sort(function(a, b) { return b.score - a.score; });
+              results = results.slice(0, 10);
+
+              if (results.length === 0) {
+                searchResults.innerHTML = '<div class="search-no-result">没有找到相关结果</div>';
+              } else {
+                searchResults.innerHTML = results.map(function(r) {
+                  var url = searchBase + 'blog/' + r.item.slug + '/';
+                  var title = highlightText(r.item.title, query);
+                  var desc = highlightText(r.item.description, query);
+                  return '<a href="' + url + '" class="search-result-item">' +
+                    '<div class="search-result-title">' + title + '</div>' +
+                    '<div class="search-result-desc">' + desc + '</div>' +
+                    '</a>';
+                }).join('');
               }
+              searchResults.classList.add('active');
+            }, 200);
+          });
+
+          // 点击外部关闭
+          document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-wrapper')) {
+              searchResults.classList.remove('active');
             }
-            results.sort(function(a, b) { return b.score - a.score; });
-            results = results.slice(0, 10);
+          });
 
-            if (results.length === 0) {
-              searchResults.innerHTML = '<div class="search-no-result">没有找到相关结果</div>';
-            } else {
-              searchResults.innerHTML = results.map(function(r) {
-                var url = base + 'blog/' + r.item.slug + '/';
-                var title = highlightText(r.item.title, query);
-                var desc = highlightText(r.item.description, query);
-                return '<a href="' + url + '" class="search-result-item">' +
-                  '<div class="search-result-title">' + title + '</div>' +
-                  '<div class="search-result-desc">' + desc + '</div>' +
-                  '</a>';
-              }).join('');
+          // ESC 关闭
+          searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+              searchResults.classList.remove('active');
+              searchInput.blur();
             }
-            searchResults.classList.add('active');
-          }, 200);
-        });
-
-        // 点击外部关闭
-        document.addEventListener('click', function(e) {
-          if (!e.target.closest('.search-wrapper')) {
-            searchResults.classList.remove('active');
-          }
-        });
-
-        // ESC 关闭
-        searchInput.addEventListener('keydown', function(e) {
-          if (e.key === 'Escape') {
-            searchResults.classList.remove('active');
-            searchInput.blur();
-          }
-        });
-      }
+          });
+        }
+      })();
     </script>
     <script is:inline>
       (function() {
-        const toggle = document.getElementById('theme-toggle');
-        const html = document.documentElement;
-        const saved = localStorage.getItem('theme');
+        var toggle = document.getElementById('theme-toggle');
+        var html = document.documentElement;
+        var saved = localStorage.getItem('theme');
         if (saved === 'dark' || (!saved && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
           html.classList.add('dark');
-          if (toggle) toggle.textContent = '☀️';
+          if (toggle) toggle.textContent = '\u2600\uFE0F';
         }
         if (toggle) {
-          toggle.addEventListener('click', () => {
+          toggle.addEventListener('click', function() {
             html.classList.toggle('dark');
-            const isDark = html.classList.contains('dark');
+            var isDark = html.classList.contains('dark');
             localStorage.setItem('theme', isDark ? 'dark' : 'light');
-            toggle.textContent = isDark ? '☀️' : '🌙';
+            toggle.textContent = isDark ? '\u2600\uFE0F' : '\uD83C\uDF19';
           });
         }
       })();
