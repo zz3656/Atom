@@ -9,8 +9,8 @@
     "postbuild": "node scripts/generate-rss.mjs && node scripts/fix-links.mjs"
   },
   "engines": {
-    "node": ">=20.3",
-    "npm": ">=9.6"
+    "node": ">=22.12",
+    "npm": ">=10.8"
   },
   "dependencies": {
     "astro": "^7.3.3"
