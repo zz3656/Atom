@@ -186,20 +186,28 @@ Actions will automatically: `Install deps → Build → Deploy`
 
 ## ⚙️ Customize
 
-### Site Info
+### Site Info, Logo & Favicon
 
-Edit `src/consts.ts`:
+**All customization in a single file** — edit `src/consts.ts`:
 
 ```typescript
-export const SITE_TITLE = 'Your Blog Name';
+export const SITE_TITLE = 'Your Blog Name';     // Site title (SEO, OG, RSS, footer)
+export const SITE_NAME = 'MyBlog';               // Name shown in navbar
 export const SITE_DESCRIPTION = 'Your blog description';
 export const AUTHOR = 'Your Name';
+
+// Logo — replace the inline SVG to change the navbar icon
+export const SITE_LOGO_SVG = `<svg>...</svg>`;   // Navbar SVG logo
+export const SITE_FAVICON = '/favicon.svg';      // Favicon path (replace public/favicon.svg)
+
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
-  twitter: 'https://twitter.com/yourusername',
-  email: 'mailto:your@email.com',
+  twitter: '',
+  email: '',
 };
 ```
+
+> 💡 **To replace Logo and Favicon**: just update `SITE_LOGO_SVG` and `SITE_FAVICON` in `consts.ts`, then put your new favicon file in `public/`. No need to touch any component code!
 
 ### Deploy URL
 
@@ -249,7 +257,7 @@ src/pages/blog/index.astro → /blog
 
 | Solution | Output Size | JS Deps | Build Time | SEO / RSS / Sitemap | Learning Curve |
 |----------|-------------|---------|------------|-----------|----------------|
-| **Atom (This)** | **~3 KB** | **0** | **~1s** | **RSS/Sitemap/JSON-LD auto-generated, RSS accessible from 📡 nav button and footer** | Minimal |
+| **Atom (This)** | **~3 KB** | **0** | **~1s** | **RSS/Sitemap/JSON-LD auto-generated, RSS in footer** | Minimal |
 | Hexo + Matery | ~15 MB | Dozens of libs | ~5s | Needs plugin | Medium |
 | Hugo | ~2 MB | 0 | ~0.5s | Needs plugin | Medium (Hugo syntax) |
 | Jekyll | ~3 MB | Minimal | ~3s | Built-in | Medium (Ruby) |
@@ -263,6 +271,7 @@ src/pages/blog/index.astro → /blog
 - **Minimal builds** — RSS / Sitemap generated post-build with zero config
 - **1-second build** — Fast compared to Hexo's 5s+
 - **TypeScript safety** — Content validated via Astro Content Collections Schema
+- **Centered navbar** — Logo left, nav links centered, actions right
 - **Dark mode** — CSS variable based, auto-remembers user preference
 
 ### Limitations

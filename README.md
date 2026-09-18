@@ -48,6 +48,12 @@
 - 卡片网格布局：展示标题、描述、日期、分类、标签
 - 日间 / 夜间模式一键切换
 
+### 导航栏
+- 左侧：自定义 SVG Logo + 站点名称
+- 居中：导航链接（首页、文章、分类、标签、关于）
+- 右侧：搜索框 + 暗黑模式切换按钮
+- 页脚包含 RSS 订阅链接
+
 ### 移动端体验
 - **汉堡菜单**：768px 断点自动折叠导航为抽屉式菜单，带 X 形切换动画
 - **横向卡片转纵向**：文章列表在移动端自动切换为纵向卡片
@@ -338,21 +344,31 @@ Actions 会自动：`安装依赖 → 构建 → 部署`
 
 ## ⚙️ 自定义
 
-### 1. 站点基本信息
+### 1. 站点基本信息 / Logo / Favicon
 
-编辑 `src/consts.ts`：
+**所有站点客制化只需编辑 `src/consts.ts` 一个文件**：
 
 ```typescript
-export const SITE_TITLE = '我的博客';          // 站点标题
-export const SITE_DESCRIPTION = '我的个人博客';  // 站点描述
-export const AUTHOR = '张三';                   // 作者名
+export const SITE_TITLE = '我的博客';                    // 站点标题（SEO、OG 标签、RSS、页脚等）
+export const SITE_NAME = 'MyBlog';                       // 导航栏显示的名称
+export const SITE_DESCRIPTION = '我的个人博客';           // 站点描述
+export const AUTHOR = '张三';                            // 作者名
+
+// Logo — 修改此处即可替换导航栏左侧图标
+export const SITE_LOGO_SVG = `<svg>...</svg>`;          // 导航栏 SVG Logo
+export const SITE_FAVICON = '/favicon.svg';              // Favicon 路径（替换 public/favicon.svg 即可）
 
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/yourusername',   // GitHub 地址
-  twitter: 'https://twitter.com/yourusername', // Twitter 地址（留空则不显示）
-  email: 'mailto:your@email.com',              // 邮箱地址（留空则不显示）
+  github: 'https://github.com/yourusername',
+  twitter: '',
+  email: '',
 };
 ```
+
+> 💡 **替换 Logo 和 Favicon 只需两步**：
+> 1. 修改 `SITE_LOGO_SVG`（导航栏）和 `SITE_FAVICON`（ consts.ts ）
+> 2. 将新的 favicon 文件放入 `public/favicon.svg`
+> 3. 不需要再修改任何组件代码！
 
 ### 2. 部署平台
 
@@ -421,17 +437,9 @@ export default defineConfig({
 
 ### 4. 导航栏
 
-导航栏在 `src/components/Header.astro` 中配置，修改 `navLinks` 数组即可增删导航项：
+导航栏项在 `src/components/Header.astro` 中配置，修改 `navLinks` 数组即可增删导航项。
 
-```typescript
-const navLinks = [
-  { href: base, label: '首页', active: currentPage === '' },
-  { href: base + '/blog', label: '文章', active: currentPage.startsWith('blog') },
-  { href: base + '/categories', label: '分类', active: currentPage === 'categories' },
-  { href: base + '/tags', label: '标签', active: currentPage === 'tags' },
-  { href: base + '/about', label: '关于', active: currentPage === 'about' },
-];
-```
+布局：Logo + 站点名称在左侧，导航链接居中，搜索和主题切换在右侧。页脚已包含 RSS 订阅链接。
 
 ### 5. 页脚
 

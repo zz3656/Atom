@@ -275,6 +275,14 @@ html.dark .site-header {
   justify-content: space-between;
 }
 
+/* Desktop: site-title (left) + nav-links (center) + actions (right) */
+@media (min-width: 769px) {
+  .nav-links {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
 .site-title {
   display: flex;
   align-items: center;
@@ -284,6 +292,22 @@ html.dark .site-header {
   color: var(--text-bright);
   letter-spacing: -0.5px;
   transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  line-height: 1;
+}
+
+.site-logo :global(.atom-icon) {
+  width: 24px;
+  height: 24px;
+}
+
+.site-name-text {
+  display: inline;
 }
 
 html:not(.dark) .site-title:hover {
@@ -303,6 +327,7 @@ html.dark .site-title:hover {
   display: flex;
   align-items: center;
   gap: 0.25rem;
+  /* Desktop: center via media query above; Mobile: stretch */
 }
 
 .nav-actions {
