@@ -46,8 +46,9 @@ describe('path helpers (root base)', () => {
     expect(tagsUrl()).toBe('/tags');
   });
 
-  it('rootPath returns /', () => {
-    expect(rootPath()).toBe('/');
+  it('rootPath returns path without trailing slash (avoid double-slash when concatenated)', () => {
+    expect(rootPath()).toBe('');
+    expect(rootPath() + '/blog').toBe('/blog');
   });
 
   it('aboutUrl returns /about', () => {

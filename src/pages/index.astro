@@ -4,7 +4,7 @@ import PostCard from '../components/PostCard.astro';
 import HeroIcon from '../components/HeroIcon.astro';
 import { SITE_TITLE, SITE_DESCRIPTION, POSTS_PER_PAGE } from '../consts';
 import { getPublishedPosts } from '../utils/collection';
-import { blogPostUrl, rootPath, blogListUrl } from '../utils/path';
+import { blogPostUrl, blogListUrl, aboutUrl } from '../utils/path';
 const allPosts = await getPublishedPosts();
 const pagePosts = allPosts.slice(0, POSTS_PER_PAGE);
 
@@ -23,10 +23,10 @@ const totalPosts = allPosts.length;
       满分，为你的内容而生。
     </p>
     <div class="hero-actions">
-      <a href={rootPath() + '/blog'} class="btn btn-primary">
+      <a href={blogListUrl()} class="btn btn-primary">
         浏览文章 →
       </a>
-      <a href={rootPath() + '/about'} class="btn btn-secondary">
+      <a href={aboutUrl()} class="btn btn-secondary">
         关于此博客
       </a>
     </div>

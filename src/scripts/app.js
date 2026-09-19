@@ -278,7 +278,7 @@
       for (var i = 0; i < results.length; i++) {
         var r = results[i];
         var link = document.createElement('a');
-        link.href = searchBase + 'blog/' + r.item.slug + '/';
+        link.href = searchBase.replace(/\/+$/, '') + '/blog/' + r.item.slug + '/';
         link.className = 'search-result-item';
         var titleEl = document.createElement('div');
         titleEl.className = 'search-result-title';

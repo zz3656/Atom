@@ -71,7 +71,9 @@ if (!siteUrl) {
   }
 }
 if (!siteUrl) siteUrl = 'https://zz3656.github.io';
-var prefix = base;
+// 重要: siteUrl 已包含 base (从 og:url 提取的完整 URL)，不要再叠加 prefix。
+// 之前的 bug: siteUrl + prefix 导致 /Atom//Atom/ 双前缀。
+var sitePath = new URL(siteUrl).pathname.replace(/\/$/, '');
 
 // --- Generate RSS + Search Index ---
 var blogDir = 'src/content/blog';
@@ -105,7 +107,7 @@ var posts = files
 
 var items = posts
   .map(function (p) {
-    var url = siteUrl + prefix + '/blog/' + p.slug + '/';
+    var url = siteUrl.replace(/\/$/, '') + '/blog/' + p.slug + '/';
     var lastBuild = p.updatedDate
       ? '\n      <lastBuildDate>' + p.updatedDate.toUTCString() + '</lastBuildDate>'
       : '';
@@ -143,8 +145,8 @@ var rss = [
   '    <description>' +
     escapeXml(process.env.SITE_DESCRIPTION || 'A modern, lightweight blog built with Astro') +
     '</description>',
-  '    <link>' + siteUrl + prefix + '/</link>',
-  '    <atom:link href="' + siteUrl + prefix + '/rss.xml" rel="self" type="application/rss+xml" />',
+  '    <link>' + siteUrl.replace(/\/$/, '') + '/</link>',
+  '    <atom:link href="' + siteUrl.replace(/\/$/, '') + '/rss.xml" rel="self" type="application/rss+xml" />',
   items,
   '  </channel>',
   '</rss>',

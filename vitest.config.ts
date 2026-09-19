@@ -9,7 +9,9 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'html', 'json-summary'],
       include: ['src/utils/**'],
-      exclude: ['src/utils/date.ts', 'src/utils/path.ts', 'src/utils/collection.ts'],
+      // 不再 exclude：所有 utils 都应被覆盖。collection.ts 之前被排除导致
+      // getPublishedPosts 等核心函数 0 覆盖；path.ts 的子路径场景测试缺失
+      // 导致 P0-16（首页按钮 /Atom//blog 双斜杠）漏检。
     },
   },
 });

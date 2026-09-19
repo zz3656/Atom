@@ -61,10 +61,10 @@ export function tagsUrl(): string {
 }
 
 /**
- * 首页 URL
+ * 首页 URL（不带 trailing slash，避免与其它路径拼接时产生双斜杠）
  */
 export function rootPath(): string {
-  return withBase('/');
+  return withBase('');
 }
 
 /**

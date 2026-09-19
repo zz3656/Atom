@@ -7,12 +7,9 @@
 //   同时源代码仍受 ESLint/Prettier 控制。
 //
 // 为什么需要在 build 之前跑（prebuild 而不是 postbuild）？
-//   Astro 7 在部署到子路径（如 GitHub Pages /repo）时，会把页面路由放到
-//   dist/<base>/ 下，但 public/ 目录的内容会原样复制到 dist/js/ —
-//   二者不对齐，会导致 <script src="/<base>/js/app.js"> 找不到文件。
-//   本脚本通过 env DEPLOY_TARGET + REPO_NAME 推导 base，提前把 app.js
-//   放到 public/<base>/js/app.js，让 Astro 把两个位置都生成出来。
-//   因此必须在 astro build 之前执行（package.json prebuild 链）。
+//   public/ 下的文件会被 Astro 原样复制到 dist/，但 public/js/app.js
+//   不存在（.gitignore 排除）。本脚本从 src/scripts/app.js 生成并
+//   esbuild 压缩到 public/js/app.js 让 Astro build 时能找到。
 
 import { build } from 'esbuild';
 import { copyFileSync, existsSync, mkdirSync, statSync } from 'node:fs';
@@ -52,17 +49,5 @@ try {
   console.warn('app.js minification failed:', err.message);
   // 失败时把开发版留下，保证 dist 至少能跑
 }
-
-// ===== 子路径兼容：把压缩后的 app.js 复制到 public/<base>/js/app.js =====
-// 与 astro.config.mjs 的 base 计算保持一致：仅当 DEPLOY_TARGET=github 时使用子路径
-const isGitHubPages =
-  process.env.DEPLOY_TARGET === 'github' || process.env.PAGES_ENV === 'true';
-const REPO_NAME = process.env.REPO_NAME || 'Atom';
-const base = isGitHubPages ? `/${REPO_NAME}` : '';
-
-if (base) {
-  const baseDst = join(process.cwd(), 'public', base, 'js', 'app.js');
-  mkdirSync(dirname(baseDst), { recursive: true });
-  copyFileSync(DST, baseDst);
-  console.log(`Also copied to public${base}/js/app.js (for GitHub Pages subpath)`);
-}
+// (子路径兼容逻辑已移除：dist/<base>/js/app.js 是冗余产物，
+//  HTML 引用 /<base>/js/app.js 对应 dist/js/app.js，已足够)
