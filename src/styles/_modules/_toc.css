@@ -1,35 +1,82 @@
-/* Atom Blog — Table of Contents (文章目录) */
+/* Atom Blog — Table of Contents (文章目录)
+ *
+ * 布局策略（响应式三档）:
+ *   - 桌面端 (>=1280px): TOC 固定浮动在文章左侧空白区，不挤压文章
+ *   - 平板端 (1100-1279px): TOC 作为左列 (200px)，文章缩小适配
+ *   - 移动端 (<1100px): TOC 顶部水平折叠菜单
+ *
+ * 为什么 1280px 是分界:
+ *   视口 ≥ 1280px → 文章居中 760px，两侧各有 ≥260px 空白 → 足够放 220px TOC
+ *   视口 < 1280px → 文章两侧空间不足，TOC 改用左列
+ */
 
 .post-content-wrapper {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2rem;
-  align-items: start;
+  display: block;
+  position: relative;
 }
 
-/* 大屏幕下：双列布局，左边 TOC 右边内容 */
-@media (min-width: 1100px) {
+/* 平板：左列布局（覆盖单 block） */
+@media (min-width: 1100px) and (max-width: 1279px) {
   .post-content-wrapper {
-    grid-template-columns: 220px minmax(0, 1fr);
+    display: grid;
+    grid-template-columns: 200px minmax(0, 1fr);
+    gap: 2rem;
+    align-items: start;
+    max-width: var(--max-width);
+    margin: 0 auto;
   }
 }
 
+/* ===== TOC 基础样式（移动端为主） ===== */
 .toc {
-  position: sticky;
-  top: calc(var(--header-height) + 1rem);
-  align-self: start;
   background: var(--bg-card);
   border: 1px solid var(--border-color);
   border-radius: var(--radius);
   padding: 0.75rem 1rem;
-  max-height: calc(100vh - var(--header-height) - 2rem);
-  overflow-y: auto;
 }
 
-.toc details {
-  /* 去掉默认 marker */
+/* 平板端：sticky 左列 */
+@media (min-width: 1100px) and (max-width: 1279px) {
+  .toc {
+    position: sticky;
+    top: calc(var(--header-height) + 1rem);
+    align-self: start;
+    max-height: calc(100vh - var(--header-height) - 2rem);
+    overflow-y: auto;
+  }
 }
 
+/* 桌面端：固定浮动在文章左侧空白区
+ *
+ * 几何计算:
+ *   - 文章 .post 宽度 = --content-width = 760px，居中
+ *   - 文章中心 = 视口 50%
+ *   - 文章左边缘 = 50% - 380px
+ *   - TOC 右侧 = 文章左边缘 - 1.5rem(gap) = 50% - 380px - 1.5rem
+ *   - TOC 左侧 = TOC 右侧 - 220px(width) = 50% - 600px - 1.5rem
+ */
+@media (min-width: 1280px) {
+  .toc {
+    position: fixed;
+    top: calc(var(--header-height) + 1.5rem);
+    left: calc(50% - 600px - 1.5rem); /* 文章左外侧 - gap */
+    width: 220px;
+    max-height: calc(100vh - var(--header-height) - 3rem);
+    overflow-y: auto;
+    z-index: 10; /* 在背景之上，但低于 header (z-index:100) */
+  }
+}
+
+/* 移动端：去掉一切定位，回归文档流 */
+@media (max-width: 1099px) {
+  .toc {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
+}
+
+/* ===== details/summary 样式 ===== */
 .toc-title {
   cursor: pointer;
   font-weight: 700;
@@ -102,18 +149,6 @@
   padding-left: 1.5rem;
   font-size: 0.82rem;
   margin-left: -1.7rem;
-}
-
-/* 移动端：TOC 变为顶部水平折叠菜单 */
-@media (max-width: 1099px) {
-  .toc {
-    position: static;
-    max-height: none;
-  }
-
-  .toc-title::before {
-    margin-right: 0.3rem;
-  }
 }
 
 @media (max-width: 768px) {
