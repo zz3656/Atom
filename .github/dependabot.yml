@@ -33,3 +33,8 @@ updates:
     ignore:
       - dependency-name: "astro"
         update-types: ["version-update:semver-major"]
+      # typescript major 需要等 @astrojs/check 兼容：
+      # @astrojs/check@0.9.10 peer 要求 typescript ^5.0.0 || ^6.0.0，
+      # 升到 7.x 会触发 npm ERESOLVE
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
