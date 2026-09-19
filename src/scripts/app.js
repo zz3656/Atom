@@ -91,14 +91,20 @@
     syncThemeUI();
   }
   // 当前主题是否支持 dark 模式（由 data-has-dark 标记决定）
+  // data-has-dark 属性：
+  //   "1"   → 支持 dark（双模式）
+  //   "0"   → 仅 light（单模式）
+  //   缺失   → 默认支持 dark（向后兼容旧 DOM/第三方主题）
   function currentThemeSupportsDark() {
     var opts = themeMenu.querySelectorAll('[data-theme-id]');
     for (var i = 0; i < opts.length; i++) {
       if (opts[i].getAttribute('data-theme-id') === currentThemeId()) {
-        return opts[i].getAttribute('data-has-dark') === '1';
+        var hasDark = opts[i].getAttribute('data-has-dark');
+        if (hasDark === null) return true; // 属性缺失则默认双模式
+        return hasDark === '1';
       }
     }
-    return true; // 找不到则默认双模式
+    return true; // 找不到当前主题也默认双模式
   }
 
   // 同步按钮图标 + 菜单选中态

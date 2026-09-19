@@ -75,7 +75,7 @@ export function scanThemes(): ThemeManifest[] {
  * 路径安全：所有主题 ID 必须匹配此正则。
  * 防止 XSS 或文件系统遍历。
  */
-const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,32}$/;
+const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,31}$/;
 export function isValidThemeId(id: string): boolean {
   return SAFE_ID.test(id);
 }

@@ -25,7 +25,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, '..');
 const THEMES_DIR = join(ROOT, 'src', 'themes');
 
-const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,32}$/;
+const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,31}$/;
 const COLORS = {
   indigo: '#6366f1',
   cyan: '#00e5ff',

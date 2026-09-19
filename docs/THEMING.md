@@ -199,7 +199,7 @@ html[data-theme='<your-theme-id>'] {
 | `modes` | array | ✅ | `['light']` 或 `['light', 'dark']` |
 | `preview` | path | ❌ | 预览图（相对 `public/`） |
 
-**id 校验**：`^[a-z0-9][a-z0-9_-]{0,32}$`（防 XSS / 文件系统遍历）
+**id 校验**：`^[a-z0-9][a-z0-9_-]{0,31}$`（防 XSS / 文件系统遍历，最多 32 字符）
 
 ---
 

@@ -23,7 +23,7 @@ const OUT_CSS = join(OUT_DIR, 'themes.css');
  * 主题 ID 合法性校验（与 src/utils/themes.ts 保持同步）。
  * 防止 XSS 或文件系统遍历。
  */
-const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,32}$/;
+const SAFE_ID = /^[a-z0-9][a-z0-9_-]{0,31}$/;
 function isValidThemeId(id) {
   return SAFE_ID.test(id);
 }
