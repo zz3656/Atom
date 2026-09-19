@@ -15,6 +15,7 @@
     "format:check": "prettier --check \"**/*.{ts,tsx,js,mjs,cjs,astro,css,json,md,yml,yaml}\" --ignore-path .prettierignore",
     "new": "node scripts/atom-cli.mjs new",
     "list": "node scripts/atom-cli.mjs list",
+    "theme:create": "node scripts/create-theme.mjs",
     "postbuild": "node scripts/generate-rss.mjs && node scripts/fix-links.mjs && node scripts/fix-sitemap.mjs && node scripts/minify-app-js.mjs"
   },
   "engines": {

@@ -28,12 +28,8 @@
 /* 1. Shared variables (layout, typography, radius — 跨主题共享) */
 @import './_modules/_variables.css';
 
-/* 2. Themes (每个主题提供自己的颜色 token 集合) */
-@import '../themes/atom-default/light.css';
-@import '../themes/atom-default/dark.css';
-@import '../themes/solarized/light.css';
-@import '../themes/solarized/dark.css';
-@import '../themes/sepia/light.css';
+/* 2. Themes (所有主题通过自动生成的汇总入口加载 — 新增主题无需改本文件) */
+@import '../generated/themes.css';
 
 /* 3. Reset */
 @import './_modules/_reset.css';

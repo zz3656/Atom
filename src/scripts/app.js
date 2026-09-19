@@ -90,10 +90,27 @@
     try { localStorage.setItem('themeMode', mode); } catch (e) {}
     syncThemeUI();
   }
+  // 当前主题是否支持 dark 模式（由 data-has-dark 标记决定）
+  function currentThemeSupportsDark() {
+    var opts = themeMenu.querySelectorAll('[data-theme-id]');
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].getAttribute('data-theme-id') === currentThemeId()) {
+        return opts[i].getAttribute('data-has-dark') === '1';
+      }
+    }
+    return true; // 找不到则默认双模式
+  }
+
   // 同步按钮图标 + 菜单选中态
   function syncThemeUI() {
     var mode = currentMode();
-    if (themeToggleIcon) themeToggleIcon.textContent = mode === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    var supportsDark = currentThemeSupportsDark();
+    // 单模式主题：图标强制为月，免跰用户跰跰不协调
+    if (themeToggleIcon) {
+      themeToggleIcon.textContent = !supportsDark
+        ? '\uD83C\uDF19'
+        : (mode === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19');
+    }
     if (!themeMenu) return;
     var opts = themeMenu.querySelectorAll('[data-theme-id]');
     for (var i = 0; i < opts.length; i++) {
@@ -102,8 +119,15 @@
     }
     var modeOpts = themeMenu.querySelectorAll('[data-mode]');
     for (var j = 0; j < modeOpts.length; j++) {
-      var isCurrentMode = modeOpts[j].getAttribute('data-mode') === mode;
-      modeOpts[j].classList.toggle('active', isCurrentMode);
+      var modeOpt = modeOpts[j];
+      var isDarkOpt = modeOpt.getAttribute('data-mode') === 'dark';
+      var isCurrentMode = modeOpt.getAttribute('data-mode') === mode;
+      modeOpt.classList.toggle('active', isCurrentMode);
+      // 单模式主题：dark 选项变灰、不可点
+      var disableDark = isDarkOpt && !supportsDark;
+      modeOpt.classList.toggle('disabled', disableDark);
+      modeOpt.setAttribute('aria-disabled', disableDark ? 'true' : 'false');
+      modeOpt.disabled = disableDark;
     }
   }
 
@@ -129,7 +153,12 @@
       // 模式选项
       var modeBtn = e.target && e.target.closest ? e.target.closest('[data-mode]') : null;
       if (modeBtn) {
-        setMode(modeBtn.getAttribute('data-mode'));
+        // 单模式主题：点击 dark 选项被冸默 + 自动跳回 light
+        var requestedMode = modeBtn.getAttribute('data-mode');
+        if (requestedMode === 'dark' && !currentThemeSupportsDark()) {
+          requestedMode = 'light';
+        }
+        setMode(requestedMode);
         themeMenu.hidden = true;
         themeToggle.setAttribute('aria-expanded', 'false');
       }

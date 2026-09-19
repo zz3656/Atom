@@ -276,12 +276,17 @@ html[data-theme='ocean'][data-mode='light'] {
 
 类似但用深色背景。
 
-### 4. 注册到 global.css
+### 4. 注册主题（零配置）
 
-```css
-/* src/styles/global.css */
-@import '../themes/ocean/light.css';
-@import '../themes/ocean/dark.css';
+**无需修改任何文件** — `astro-plugins/theme-loader.mjs` 会在 `dev` / `build` 时自动扫描 `src/themes/<id>/` 并生成 `src/generated/themes.css`，然后 `src/styles/global.css` 自动 `@import` 进去。
+
+只需 `npm run dev`（或 `npm run build`）即可生效，新主题立即出现在右上角菜单。
+
+如果你不想手写脚手架：
+
+```bash
+npm run theme:create ocean             # 双模式模板
+npm run theme:create ocean --no-dark   # 单模式模板
 ```
 
 ### 5. 测试

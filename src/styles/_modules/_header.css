@@ -239,6 +239,14 @@ html.dark .theme-toggle:hover {
   font-weight: 600;
 }
 
+/* 单模式主题下被禁用的 dark 切换选项 */
+.theme-option.disabled,
+.theme-option[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 .theme-option-name {
   flex: 1;
 }

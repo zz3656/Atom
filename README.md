@@ -29,7 +29,7 @@
 | 特性                   | 说明                                                                           |
 | ---------------------- | ------------------------------------------------------------------------------ |
 | ⚡ **Astro 驱动**      | 零 JS 输出，纯 HTML，加载极快                                                  |
-| 🎨 **双主题切换**      | 日间明亮模式 + 夜间赛博朋克风格，一键切换，自动记忆                            |
+| 🎨 **多主题切换**      | 3 套内置主题（Atom 默认 / Solarized / 羊皮纸）+ 自定义开发，一键切换，自动记忆                |
 | 📱 **响应式设计**      | 手机汉堡菜单、平板、桌面完美适配，iOS 安全区域支持                             |
 | 📝 **Markdown 写作**   | 原生支持，Shiki 代码语法高亮                                                   |
 | 🤖 **CLI 工具**        | `atom new` / `atom list` / `atom build` — 本地创建文章、一键构建推送           |
@@ -47,7 +47,7 @@
 
 - Hero 区域：Atom 原子图标（紫色渐变轨道球体）+ 渐变大标题 + 背景光晕
 - 卡片网格布局：展示标题、描述、日期、分类、标签
-- 日间 / 夜间模式一键切换
+- 主题下拉菜单：3 套内置主题 + 浅色/深色独立切换；新主题 `npm run theme:create <id>` 即可上线
 
 ### 导航栏
 
@@ -476,32 +476,24 @@ public/medias/reward/
 
 在文章 frontmatter 中设置 `reward: true` 即可在文章末尾显示打赏码。
 
-### 6. 样式主题
+### 6. 主题 / 换肤
 
-编辑 `src/styles/_modules/_variables.css`，所有颜色通过 CSS 变量控制：
+3 套内置主题：**Atom 默认**（紫罗兰 + 赛博青）/ **Solarized**（Ethan Schoonover 经典）/ **羊皮纸**（复古护眼）。
+站点颜色全部通过 CSS 变量控制；布局/字体等变量位于 `src/styles/_modules/_variables.css`。
 
-**日间模式**（默认，`:root`）：
+**添加自定义主题**（零配置）：
 
-```css
-:root {
-  --bg-primary: #f0f2f5; /* 页面背景 */
-  --accent: #6366f1; /* 主色调 */
-  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
-  --radius: 10px; /* 圆角大小 */
-  --font-sans: 'Inter', -apple-system, sans-serif;
-  --font-mono: 'JetBrains Mono', monospace;
-}
+```bash
+# 一键生成主题脚手架（含 manifest + 全部必需 token）
+npm run theme:create ocean
+
+# 单模式主题（不需要 dark）
+npm run theme:create ocean --no-dark
 ```
 
-**夜间模式**（`html.dark`）：
+然后编辑 `src/themes/ocean/light.css`（及 dark.css）。`npm run dev` 后主题会自动出现在右上角菜单中，无需修改任何其他文件。
 
-```css
-html.dark {
-  --bg-primary: #0a0a0f;
-  --accent: #00e5ff; /* 赛博朋克青 */
-  --accent-gradient: linear-gradient(135deg, #00e5ff, #a78bfa);
-}
-```
+完整开发指南（必需 token 列表、选择器约定、最佳实践）见 **[docs/THEMING.md](./docs/THEMING.md)**。
 
 ### 7. 添加新页面
 
