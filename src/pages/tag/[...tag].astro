@@ -1,10 +1,11 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PostCard from '../../components/PostCard.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../../utils/collection';
+import { blogPostUrl, tagsUrl } from '../../utils/path';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getPublishedPosts();
   const allTags = new Set<string>();
   posts.forEach((post) => {
     (post.data.tags || []).forEach((tag) => allTags.add(tag));
@@ -17,23 +18,23 @@ export async function getStaticPaths() {
 
 const { tag } = Astro.params;
 
-const tagPosts = (await getCollection('blog'))
-  .filter((post) => post.data.tags?.includes(tag))
-  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const tagPosts = (await getPublishedPosts()).filter((post) => post.data.tags?.includes(tag));
 ---
 
 <BaseLayout title={`${tag} | Atom Blog`}>
   <section class="listing-page">
     <div class="unified-page-header">
       <h1>{tag}</h1>
-      <p class="unified-page-subtitle">共 <span class="accent">{tagPosts.length}</span> 篇文章</p>
+      <p class="unified-page-subtitle">
+        共 <span class="accent">{tagPosts.length}</span> 篇文章
+      </p>
     </div>
 
     {tagPosts.length > 0 ? (
       <ul class="post-list">
         {tagPosts.map((post) => (
           <PostCard
-            slug={`/blog/${post.id}/`}
+            slug={blogPostUrl(post.id)}
             title={post.data.title}
             description={post.data.description}
             body={post.body}
@@ -50,7 +51,7 @@ const tagPosts = (await getCollection('blog'))
     )}
 
     <div class="view-all">
-      <a href="/tags">← 返回所有标签</a>
+      <a href={tagsUrl()}>← 返回所有标签</a>
     </div>
   </section>
 </BaseLayout>

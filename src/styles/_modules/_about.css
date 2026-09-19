@@ -1,6 +1,9 @@
 /* Atom Blog — About Page */
 
-.about { max-width: var(--content-width); margin: 0 auto; }
+.about {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
 
 .about-content {
   margin-top: 1rem;
@@ -25,16 +28,22 @@
 }
 
 .about-content p,
-.about-content li { color: var(--text-secondary); }
+.about-content li {
+  color: var(--text-secondary);
+}
 
-.about-content p { margin-bottom: 1rem; }
+.about-content p {
+  margin-bottom: 1rem;
+}
 
 .about-content ul {
   margin-bottom: 1rem;
   padding-left: 1.5rem;
 }
 
-.about-content li { margin-bottom: 0.5rem; }
+.about-content li {
+  margin-bottom: 0.5rem;
+}
 
 .about-links {
   display: flex;
@@ -74,7 +83,11 @@ html.dark .project-card:hover {
   box-shadow: var(--shadow-glow);
 }
 
-.project-emoji { font-size: 1.8rem; margin-bottom: 0.5rem; line-height: 1; }
+.project-emoji {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
 
 .project-card h3 {
   font-size: 1.05rem;
@@ -148,7 +161,11 @@ html.dark .topic-card:hover {
   box-shadow: var(--shadow-glow);
 }
 
-.topic-icon { font-size: 1.6rem; margin-bottom: 0.5rem; line-height: 1; }
+.topic-icon {
+  font-size: 1.6rem;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
 
 .topic-info strong {
   display: block;

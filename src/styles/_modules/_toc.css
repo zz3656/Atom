@@ -1,0 +1,128 @@
+/* Atom Blog — Table of Contents (文章目录) */
+
+.post-content-wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+/* 大屏幕下：双列布局，左边 TOC 右边内容 */
+@media (min-width: 1100px) {
+  .post-content-wrapper {
+    grid-template-columns: 220px minmax(0, 1fr);
+  }
+}
+
+.toc {
+  position: sticky;
+  top: calc(var(--header-height) + 1rem);
+  align-self: start;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  max-height: calc(100vh - var(--header-height) - 2rem);
+  overflow-y: auto;
+}
+
+.toc details {
+  /* 去掉默认 marker */
+}
+
+.toc-title {
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-bright);
+  user-select: none;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.toc-title::before {
+  content: '▾';
+  font-size: 0.75rem;
+  color: var(--accent);
+  transition: transform 0.2s;
+}
+
+.toc details:not([open]) .toc-title::before {
+  transform: rotate(-90deg);
+}
+
+.toc-title::-webkit-details-marker {
+  display: none;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  border-left: 2px solid var(--border-light);
+  padding-left: 0.75rem;
+}
+
+.toc-item {
+  margin: 0;
+}
+
+.toc-link {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid transparent;
+  margin-left: -0.95rem;
+  padding-left: 0.75rem;
+  transition: all 0.2s;
+  line-height: 1.5;
+}
+
+.toc-link:hover {
+  color: var(--accent);
+  background: var(--accent-glow);
+}
+
+.toc-link.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-glow);
+  font-weight: 600;
+}
+
+.toc-depth-3 .toc-link {
+  padding-left: 1.5rem;
+  font-size: 0.82rem;
+  margin-left: -1.7rem;
+}
+
+/* 移动端：TOC 变为顶部水平折叠菜单 */
+@media (max-width: 1099px) {
+  .toc {
+    position: static;
+    max-height: none;
+  }
+
+  .toc-title::before {
+    margin-right: 0.3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .toc-link {
+    font-size: 0.8rem;
+  }
+  .toc-depth-3 .toc-link {
+    padding-left: 1.2rem;
+    margin-left: -1.4rem;
+    font-size: 0.78rem;
+  }
+}

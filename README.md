@@ -26,35 +26,38 @@
 
 ## ✨ 特性
 
-| 特性 | 说明 |
-|------|------|
-| ⚡ **Astro 驱动** | 零 JS 输出，纯 HTML，加载极快 |
-| 🎨 **双主题切换** | 日间明亮模式 + 夜间赛博朋克风格，一键切换，自动记忆 |
-| 📱 **响应式设计** | 手机汉堡菜单、平板、桌面完美适配，iOS 安全区域支持 |
-| 📝 **Markdown 写作** | 原生支持，Shiki 代码语法高亮 |
-| 🤖 **CLI 工具** | `atom new` / `atom list` / `atom build` — 本地创建文章、一键构建推送 |
-| 📁 **分类 + 标签** | 分类（单数）组织文章大类，标签（可多）标注细分主题 |
-| 🚀 **双平台部署** | GitHub Actions 自动构建，支持 GitHub Pages / Cloudflare Pages |
-| 🔍 **SEO 友好** | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
-| 📦 **超小体积** | HTML 仅 ~3KB（单页） |
-| 💯 **Lighthouse 满分** | 性能、无障碍、SEO 全 100 |
+| 特性                   | 说明                                                                           |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| ⚡ **Astro 驱动**      | 零 JS 输出，纯 HTML，加载极快                                                  |
+| 🎨 **双主题切换**      | 日间明亮模式 + 夜间赛博朋克风格，一键切换，自动记忆                            |
+| 📱 **响应式设计**      | 手机汉堡菜单、平板、桌面完美适配，iOS 安全区域支持                             |
+| 📝 **Markdown 写作**   | 原生支持，Shiki 代码语法高亮                                                   |
+| 🤖 **CLI 工具**        | `atom new` / `atom list` / `atom build` — 本地创建文章、一键构建推送           |
+| 📁 **分类 + 标签**     | 分类（单数）组织文章大类，标签（可多）标注细分主题                             |
+| 🚀 **双平台部署**      | GitHub Actions 自动构建，支持 GitHub Pages / Cloudflare Pages                  |
+| 🔍 **SEO 友好**        | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
+| 📦 **超小体积**        | HTML 仅 ~3KB（单页）                                                           |
+| 💯 **Lighthouse 满分** | 性能、无障碍、SEO 全 100                                                       |
 
 ---
 
 ## 🖼️ 页面预览
 
 ### 首页
+
 - Hero 区域：Atom 原子图标（紫色渐变轨道球体）+ 渐变大标题 + 背景光晕
 - 卡片网格布局：展示标题、描述、日期、分类、标签
 - 日间 / 夜间模式一键切换
 
 ### 导航栏
+
 - 左侧：自定义 SVG Logo + 站点名称
 - 居中：导航链接（首页、文章、分类、标签、关于）
 - 右侧：搜索框 + 暗黑模式切换按钮
 - 页脚包含 RSS 订阅链接
 
 ### 移动端体验
+
 - **汉堡菜单**：768px 断点自动折叠导航为抽屉式菜单，带 X 形切换动画
 - **横向卡片转纵向**：文章列表在移动端自动切换为纵向卡片
 - **安全区域适配**：支持 iPhone 刘海屏、底部横条等安全区域
@@ -62,11 +65,13 @@
 - **字体自适应**：多断点（768px / 480px）渐进式字体缩放
 
 ### 文章页
+
 - **居中渐变标题** → 描述 → 日期 / 更新日 → 分类 + 标签
 - 阅读进度条
 - 上一篇 / 下一篇导航（卡片式）
 
 ### 分类 & 标签页
+
 - 📁 **分类列表**：紧凑标签云风格，分类名 + 文章数
 - 📁 **分类详情**：列表展示该分类下所有文章
 - 🏷️ **标签列表**：紧凑标签云风格，标签名 + 文章数
@@ -74,6 +79,7 @@
 - 所有页面标题统一为**渐变标题 + 底部发光装饰线**
 
 ### 关于页
+
 - 统一渐变标题
 - 内容居中，项目卡片网格
 
@@ -157,16 +163,16 @@ parent/
 node scripts/atom-cli.mjs --help
 ```
 
-| 命令 | 说明 |
-|------|------|
-| `new <标题>` | 创建新文章（交互式填写 frontmatter） |
-| `new <标题> -c 分类` | 指定分类 |
-| `new <标题> -t 标签1,标签2` | 指定标签 |
-| `new <标题> -d 2026-01-01` | 指定发布日期 |
-| `new <标题> -i /images/cover.jpg` | 指定封面图 |
-| `new <标题> --draft` | 创建为草稿 |
-| `list` | 列出所有文章 |
-| `build` | 同步源文件 → 构建 → 推送上线 |
+| 命令                              | 说明                                 |
+| --------------------------------- | ------------------------------------ |
+| `new <标题>`                      | 创建新文章（交互式填写 frontmatter） |
+| `new <标题> -c 分类`              | 指定分类                             |
+| `new <标题> -t 标签1,标签2`       | 指定标签                             |
+| `new <标题> -d 2026-01-01`        | 指定发布日期                         |
+| `new <标题> -i /images/cover.jpg` | 指定封面图                           |
+| `new <标题> --draft`              | 创建为草稿                           |
+| `list`                            | 列出所有文章                         |
+| `build`                           | 同步源文件 → 构建 → 推送上线         |
 
 ### 交互式创建
 
@@ -206,18 +212,19 @@ node scripts/atom-cli.mjs build
 ```
 
 自动执行：
+
 1. 同步 `src/` 下所有 `.astro` 源文件到 `Atom-blog/`
 2. 在 `Atom-blog/` 执行 `npx astro build`（支持 GitHub Pages / Cloudflare Pages 两种模式）
 3. `git add -A && git commit && git push origin main`
 
 ### 与 Hexo / Hugo 对比
 
-| Hexo | Hugo | Atom |
-|------|------|------|
-| `hexo new "标题"` | `hugo new content posts/标题.md` | `node atom-cli.mjs new "标题"` |
-| `hexo generate` | `hugo` | `node atom-cli.mjs build` |
-| `hexo deploy` | (手动) | `node atom-cli.mjs build`（内置推送） |
-| `hexo server` | `hugo server` | `npm run dev` |
+| Hexo              | Hugo                             | Atom                                  |
+| ----------------- | -------------------------------- | ------------------------------------- |
+| `hexo new "标题"` | `hugo new content posts/标题.md` | `node atom-cli.mjs new "标题"`        |
+| `hexo generate`   | `hugo`                           | `node atom-cli.mjs build`             |
+| `hexo deploy`     | (手动)                           | `node atom-cli.mjs build`（内置推送） |
+| `hexo server`     | `hugo server`                    | `npm run dev`                         |
 
 ---
 
@@ -225,8 +232,8 @@ node scripts/atom-cli.mjs build
 
 ### 前置要求
 
-- Node.js >= 20.3
-- npm >= 9.6
+- Node.js >= 22.12
+- npm >= 10.8
 
 ### 1. 克隆项目
 
@@ -262,11 +269,13 @@ npm run preview  # 本地预览构建结果
 title: 文章标题
 description: 简短描述（显示在文章卡片上，建议不超过 80 字）
 pubDate: 2026-09-13
-category: 技术笔记         # 每篇文章一个分类
-tags: [JavaScript, Astro]  # 建议不超过 4 个标签，避免过长
-heroImage: /images/cover.jpg  # 可选：封面图
-updatedDate: 2026-09-14     # 可选：更新日期
-reward: true                # 可选：显示打赏码
+category: 技术笔记 # 每篇文章一个分类
+tags: [JavaScript, Astro] # 建议不超过 4 个标签，避免过长
+heroImage: /images/cover.jpg # 可选：文章头部封面图
+featuredImage: /images/og.jpg # 可选：SEO 专用封面图（OG / Twitter Card，1200x630）
+updatedDate: 2026-09-14 # 可选：更新日期
+reward: true # 可选：显示打赏码
+draft: false # 可选：草稿标记（true 时不发布）
 ---
 
 正文使用 Markdown 语法...
@@ -274,16 +283,18 @@ reward: true                # 可选：显示打赏码
 
 ### Frontmatter 字段
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `title` | `string` | ✅ | 文章标题 |
-| `description` | `string` | ✅ | 简短描述，显示在文章卡片（建议不超过 80 字，用户可自定义） |
-| `pubDate` | `date` | ✅ | 发布日期 |
-| `category` | `string` | ❌ | 分类名称（每篇文章只能一个） |
-| `tags` | `string[]` | ❌ | 标签列表（建议不超过 4 个，每个标签不超过 6 个字符，过长/过多会导致卡片排版错乱） |
-| `heroImage` | `string` | ❌ | 封面图片路径，放在 `public/` 下 |
-| `updatedDate` | `date` | ❌ | 更新日期，显示在文章标题下方 |
-| `reward` | `boolean` | ❌ | 是否在文末显示打赏码（默认关闭） |
+| 字段            | 类型       | 必填 | 说明                                                                                    |
+| --------------- | ---------- | ---- | --------------------------------------------------------------------------------------- |
+| `title`         | `string`   | ✅   | 文章标题                                                                                |
+| `description`   | `string`   | ✅   | 简短描述，显示在文章卡片（建议不超过 80 字，用户可自定义）                              |
+| `pubDate`       | `date`     | ✅   | 发布日期                                                                                |
+| `category`      | `string`   | ❌   | 分类名称（每篇文章只能一个）                                                            |
+| `tags`          | `string[]` | ❌   | 标签列表（建议不超过 4 个，每个标签不超过 6 个字符，过长/过多会导致卡片排版错乱）       |
+| `heroImage`     | `string`   | ❌   | 文章头部封面图，放在 `public/` 下                                                       |
+| `featuredImage` | `string`   | ❌   | SEO 专用封面图（OG / Twitter Card）。优先于 `heroImage` 用于社交分享。尺寸建议 1200×630 |
+| `updatedDate`   | `date`     | ❌   | 更新日期，显示在文章标题下方。同时作为 sitemap 的 lastmod                               |
+| `reward`        | `boolean`  | ❌   | 是否在文末显示打赏码（默认关闭）                                                        |
+| `draft`         | `boolean`  | ❌   | 草稿标记。`true` 时文章不会出现在列表、RSS、搜索索引中                                  |
 
 ### 样式自定义
 
@@ -302,12 +313,12 @@ CSS 已按功能拆分为 20 个模块（`src/styles/_modules/`），编辑对�
 
 ### 分类 vs 标签
 
-| | **分类 (Category)** | **标签 (Tag)** |
-|---|---|---|
-| 数量 | 每篇文章**只能一个** | 每篇文章可以**多个** |
+|      | **分类 (Category)**                      | **标签 (Tag)**                              |
+| ---- | ---------------------------------------- | ------------------------------------------- |
+| 数量 | 每篇文章**只能一个**                     | 每篇文章可以**多个**                        |
 | 用途 | 组织文章的大类（如"技术笔记""生活随笔"） | 标注文章的细分主题（如"JavaScript""Astro"） |
-| 展示 | 📁 分类列表页 + 分类详情页 | 🏷️ 标签列表页 + 标签详情页 |
-| 关系 | **相互独立**，不互相影响 | |
+| 展示 | 📁 分类列表页 + 分类详情页               | 🏷️ 标签列表页 + 标签详情页                  |
+| 关系 | **相互独立**，不互相影响                 |                                             |
 
 ---
 
@@ -342,13 +353,13 @@ Actions 会自动：`安装依赖 → 构建 → 部署`
 **所有站点客制化只需编辑 `src/consts.ts` 一个文件**：
 
 ```typescript
-export const SITE_TITLE = '我的博客';                    // 站点标题（SEO、OG 标签、RSS、页脚等）
-export const SITE_NAME = 'MyBlog';                       // 导航栏显示的名称
-export const SITE_DESCRIPTION = '我的个人博客';           // 站点描述
-export const AUTHOR = '张三';                            // 作者名
+export const SITE_TITLE = '我的博客'; // 站点标题（SEO、OG 标签、RSS、页脚等）
+export const SITE_NAME = 'MyBlog'; // 导航栏显示的名称
+export const SITE_DESCRIPTION = '我的个人博客'; // 站点描述
+export const AUTHOR = '张三'; // 作者名
 
-export const SITE_LOGO = '/logos/logo.svg';              // 导航栏 Logo 文件路径
-export const SITE_FAVICON = '/favicon.svg';              // 浏览器 Favicon 文件路径
+export const SITE_LOGO = '/logos/logo.svg'; // 导航栏 Logo 文件路径
+export const SITE_FAVICON = '/favicon.svg'; // 浏览器 Favicon 文件路径
 
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
@@ -358,6 +369,7 @@ export const SOCIAL_LINKS = {
 ```
 
 > 💡 **替换 Logo 和 Favicon 各独立**：
+>
 > 1. **Logo**（导航栏）：放入 `public/logos/logo.svg`（支持 .svg / .png / .webp），修改 `SITE_LOGO`
 > 2. **Favicon**（浏览器标签页）：放入 `public/favicon.svg`，修改 `SITE_FAVICON`
 > 3. 不需要再修改任何组件代码！
@@ -383,12 +395,12 @@ Atom 支持 **GitHub Pages** 和 **Cloudflare Pages** 两种部署方式，通�
 2. 连接 GitHub 仓库
 3. 配置构建设置：
 
-| 设置项 | 值 |
-|--------|---|
-| **Framework preset** | Astro |
-| **Build command** | `npm run build` |
-| **Build output directory** | `dist` |
-| **Environment variables** | `DEPLOY_TARGET` = `cf` |
+| 设置项                     | 值                     |
+| -------------------------- | ---------------------- |
+| **Framework preset**       | Astro                  |
+| **Build command**          | `npm run build`        |
+| **Build output directory** | `dist`                 |
+| **Environment variables**  | `DEPLOY_TARGET` = `cf` |
 
 4. 点击 **Save and Deploy**
 
@@ -406,6 +418,7 @@ npx wrangler pages deploy dist
 ```
 
 > 💡 **环境变量说明**：
+>
 > - `DEPLOY_TARGET=github` — GitHub Pages 模式（需要 `REPO_NAME`）
 > - `DEPLOY_TARGET=cf` — Cloudflare Pages 模式（需要 `CF_DOMAIN`）
 > - 不设置 — 自动检测，优先 GitHub Pages
@@ -416,8 +429,8 @@ npx wrangler pages deploy dist
 
 ```javascript
 export default defineConfig({
-  site: 'https://yourdomain.com',   // 你的网站域名
-  base: '/',                        // 子路径仓库填 '/your-repo-name'
+  site: 'https://yourdomain.com', // 你的网站域名
+  base: '/', // 子路径仓库填 '/your-repo-name'
   markdown: {
     shikiConfig: {
       // 自动根据暗色模式切换主题
@@ -444,7 +457,9 @@ export default defineConfig({
 ```astro
 <footer class="site-footer">
   <div class="footer-content">
-    <p>© {year} <a href={SOCIAL_LINKS.github}>Atom Blog</a>. Powered by <a href="https://astro.build">Astro</a></p>
+    <p>
+      © {year} <a href={SOCIAL_LINKS.github}>Atom Blog</a>. Powered by <a href="https://astro.build">Astro</a>
+    </p>
   </div>
 </footer>
 ```
@@ -466,22 +481,24 @@ public/medias/reward/
 编辑 `src/styles/_modules/_variables.css`，所有颜色通过 CSS 变量控制：
 
 **日间模式**（默认，`:root`）：
+
 ```css
 :root {
-  --bg-primary: #f0f2f5;     /* 页面背景 */
-  --accent: #6366f1;         /* 主色调 */
+  --bg-primary: #f0f2f5; /* 页面背景 */
+  --accent: #6366f1; /* 主色调 */
   --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
-  --radius: 10px;            /* 圆角大小 */
+  --radius: 10px; /* 圆角大小 */
   --font-sans: 'Inter', -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
 }
 ```
 
 **夜间模式**（`html.dark`）：
+
 ```css
 html.dark {
   --bg-primary: #0a0a0f;
-  --accent: #00e5ff;         /* 赛博朋克青 */
+  --accent: #00e5ff; /* 赛博朋克青 */
   --accent-gradient: linear-gradient(135deg, #00e5ff, #a78bfa);
 }
 ```
@@ -499,14 +516,14 @@ src/pages/links.astro        → /links
 
 ## 📊 静态博客方案对比
 
-| 方案 | 构建输出 | JS 依赖 | 构建时间 | SEO / RSS / Sitemap | 学习成本 |
-|------|---------|---------|---------|-----------|----------|
-| **Atom（本项目）** | **~3 KB** | **0** | **~1s** | **RSS/Sitemap/JSON-LD 自动生成** | 极低 |
-| Hexo + Matery | ~15 MB | 数十个库 | ~5s | 需插件 | 中 |
-| Hugo | ~2 MB | 0 | ~0.5s | 需插件 | 中 |
-| Jekyll | ~3 MB | 少量 | ~3s | 内置 | 中 |
-| Eleventy | ~500 KB | 0 | ~2s | 需插件 | 中 |
-| VitePress | ~2 MB | 需水合 | ~2s | 需插件 | 低（偏文档） |
+| 方案               | 构建输出  | JS 依赖  | 构建时间 | SEO / RSS / Sitemap              | 学习成本     |
+| ------------------ | --------- | -------- | -------- | -------------------------------- | ------------ |
+| **Atom（本项目）** | **~3 KB** | **0**    | **~1s**  | **RSS/Sitemap/JSON-LD 自动生成** | 极低         |
+| Hexo + Matery      | ~15 MB    | 数十个库 | ~5s      | 需插件                           | 中           |
+| Hugo               | ~2 MB     | 0        | ~0.5s    | 需插件                           | 中           |
+| Jekyll             | ~3 MB     | 少量     | ~3s      | 内置                             | 中           |
+| Eleventy           | ~500 KB   | 0        | ~2s      | 需插件                           | 中           |
+| VitePress          | ~2 MB     | 需水合   | ~2s      | 需插件                           | 低（偏文档） |
 
 ### 本项目的优势
 
@@ -529,8 +546,8 @@ src/pages/links.astro        → /links
 
 如果你喜欢 Atom 博客，欢迎扫码打赏，给了我加个 🥤 饮料！
 
-| 微信 | 支付宝 |
-|------|--------|
+| 微信                                                                                                                          | 支付宝                                                                                                                          |
+| ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
 
 每一分支持都是对开源项目的最大鼓励 ❤️

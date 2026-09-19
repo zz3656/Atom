@@ -28,15 +28,17 @@
 Atom 是一个**轻量级、零依赖**的静态博客，使用 [Astro](https://astro.build) 构建，专为 GitHub Pages 部署优化。项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom — 小巧、精准、充满力量。
 
 **核心设计理念：**
+
 - **快** — 零 JavaScript 输出，Lighthouse 满分
 - **简** — 无后端、无数据库、无构建依赖
 - **全** — SEO 开箱即用：RSS、Sitemap、JSON-LD、Open Graph
 
 ### English
 
-Atom is a **lightweight, zero-dependency** static blog built with [Astro](https://astro.build), optimized for GitHub Pages deployment. Inspired by Atom, the boxing robot from *Real Steel* — compact, precise, full of power.
+Atom is a **lightweight, zero-dependency** static blog built with [Astro](https://astro.build), optimized for GitHub Pages deployment. Inspired by Atom, the boxing robot from _Real Steel_ — compact, precise, full of power.
 
 **Core design philosophy:**
+
 - **Fast** — Zero JavaScript output, Lighthouse 100
 - **Simple** — No backend, no database, no build dependencies
 - **Complete** — SEO out of the box: RSS, Sitemap, JSON-LD, Open Graph
@@ -47,25 +49,25 @@ Atom is a **lightweight, zero-dependency** static blog built with [Astro](https:
 
 ### 中文
 
-| 层 | 技术 | 原因 |
-|----|------|------|
-| 框架 | Astro 7.x | 零 JS 默认输出，Content Collections Schema |
-| 语言 | TypeScript | 类型安全，编辑器提示 |
-| 样式 | 原生 CSS + CSS Variables | 无框架依赖，暗黑模式轻松实现 |
-| 代码高亮 | Shiki | 内置 Astro，支持 GitHub Dark 主题 |
-| RSS / Sitemap | 自定义 postbuild 脚本 | 零 npm 依赖，构建后自动生成 |
-| 部署 | GitHub Pages + Actions | 免费、自动化 |
+| 层            | 技术                     | 原因                                       |
+| ------------- | ------------------------ | ------------------------------------------ |
+| 框架          | Astro 7.x                | 零 JS 默认输出，Content Collections Schema |
+| 语言          | TypeScript               | 类型安全，编辑器提示                       |
+| 样式          | 原生 CSS + CSS Variables | 无框架依赖，暗黑模式轻松实现               |
+| 代码高亮      | Shiki                    | 内置 Astro，支持 GitHub Dark 主题          |
+| RSS / Sitemap | 自定义 postbuild 脚本    | 零 npm 依赖，构建后自动生成                |
+| 部署          | GitHub Pages + Actions   | 免费、自动化                               |
 
 ### English
 
-| Layer | Technology | Reason |
-|-------|------------|--------|
-| Framework | Astro 7.x | Zero JS output, Content Collections Schema |
-| Language | TypeScript | Type safety, IDE hints |
-| Styling | Native CSS + CSS Variables | No framework dependency, easy dark mode |
-| Syntax Highlight | Shiki | Built-in Astro, GitHub Dark theme support |
-| RSS / Sitemap | Custom postbuild script | Zero npm deps, auto-generated post-build |
-| Hosting | GitHub Pages + Actions | Free, automated |
+| Layer            | Technology                 | Reason                                     |
+| ---------------- | -------------------------- | ------------------------------------------ |
+| Framework        | Astro 7.x                  | Zero JS output, Content Collections Schema |
+| Language         | TypeScript                 | Type safety, IDE hints                     |
+| Styling          | Native CSS + CSS Variables | No framework dependency, easy dark mode    |
+| Syntax Highlight | Shiki                      | Built-in Astro, GitHub Dark theme support  |
+| RSS / Sitemap    | Custom postbuild script    | Zero npm deps, auto-generated post-build   |
+| Hosting          | GitHub Pages + Actions     | Free, automated                            |
 
 ---
 
@@ -109,6 +111,11 @@ npm run build
 
 # 5. Preview the build
 npm run preview
+
+# 6. Type check + tests + build verification
+npm run check   # TypeScript strict type check
+npm run test    # Vitest unit tests
+npm run build   # Full build with all post-processing
 ```
 
 ---
@@ -225,15 +232,15 @@ reward: true
 
 ### Frontmatter 字段
 
-| 字段 | 类型 | 必填 | 说明 |
-|------|------|------|------|
-| `title` | `string` | ✅ | 文章标题 |
-| `description` | `string` | ✅ | 卡片描述（约 1-2 行） |
-| `pubDate` | `date` | ✅ | 发布日期 |
-| `tags` | `string[]` | ❌ | 标签列表 |
-| `heroImage` | `string` | ❌ | 封面图片（相对于 `public/`） |
-| `updatedDate` | `date` | ❌ | 更新日期（可选） |
-| `reward` | `boolean` | ❌ | 显示打赏码（默认 `false`） |
+| 字段          | 类型       | 必填 | 说明                         |
+| ------------- | ---------- | ---- | ---------------------------- |
+| `title`       | `string`   | ✅   | 文章标题                     |
+| `description` | `string`   | ✅   | 卡片描述（约 1-2 行）        |
+| `pubDate`     | `date`     | ✅   | 发布日期                     |
+| `tags`        | `string[]` | ❌   | 标签列表                     |
+| `heroImage`   | `string`   | ❌   | 封面图片（相对于 `public/`） |
+| `updatedDate` | `date`     | ❌   | 更新日期（可选）             |
+| `reward`      | `boolean`  | ❌   | 显示打赏码（默认 `false`）   |
 
 ### 添加封面图片
 
@@ -261,9 +268,9 @@ heroImage: /images/cover.jpg
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #1a1a2e;
-  --accent: #6366f1;        /* 主色 */
+  --accent: #6366f1; /* 主色 */
   --accent-hover: #4f46e5;
-  --radius: 12px;           /* 圆角 */
+  --radius: 12px; /* 圆角 */
 }
 
 html.dark {
@@ -310,7 +317,7 @@ Edit `src/styles/global.css`, adjust CSS variables:
   /* Light mode */
   --bg-primary: #ffffff;
   --text-primary: #1a1a2e;
-  --accent: #6366f1;        /* Primary color */
+  --accent: #6366f1; /* Primary color */
   --accent-hover: #4f46e5;
 }
 
@@ -357,14 +364,14 @@ export const AUTHOR = 'Your Name';
 
 ### 转换规则摘要
 
-| Hexo (matery) 字段 | Astro 字段 | 转换规则 |
-|---|---|---|
-| `title` | `title` | 直接保留 |
-| `date: 2025-07-14 05:23:30` | `pubDate: 2025-07-14` | 只取日期 |
-| `categories` (单值/列表) | `category` | 列表取第一个 |
-| `tags: [- x]` | `tags: [x]` | YAML → inline |
-| `summary` / `description` | `description` | 自动提取正文第一段（160字符） |
-| `img` / `cover` / `top_img` | `heroImage` | 统一映射，路径规范化 |
+| Hexo (matery) 字段          | Astro 字段            | 转换规则                      |
+| --------------------------- | --------------------- | ----------------------------- |
+| `title`                     | `title`               | 直接保留                      |
+| `date: 2025-07-14 05:23:30` | `pubDate: 2025-07-14` | 只取日期                      |
+| `categories` (单值/列表)    | `category`            | 列表取第一个                  |
+| `tags: [- x]`               | `tags: [x]`           | YAML → inline                 |
+| `summary` / `description`   | `description`         | 自动提取正文第一段（160字符） |
+| `img` / `cover` / `top_img` | `heroImage`           | 统一映射，路径规范化          |
 
 丢弃字段：`top`、`hide`、`password`、`toc`、`mathjax`、`keywords`、`reprintPolicy`、`author`、`coverImg` 及 matery 非官方字段（`swiper_index`、`top_group_index` 等）。
 
@@ -392,7 +399,7 @@ export const AUTHOR = 'Your Name';
 
 ```javascript
 var siteUrl = 'https://yourdomain.com';
-var repoName = 'my-blog';  // 仓库名（根站点用空字符串）
+var repoName = 'my-blog'; // 仓库名（根站点用空字符串）
 ```
 
 ### 打赏功能

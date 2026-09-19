@@ -1,6 +1,9 @@
 /* Atom Blog — Blog Post Content */
 
-.post { max-width: var(--content-width); margin: 0 auto; }
+.post {
+  max-width: var(--content-width);
+  margin: 0 auto;
+}
 
 .post-header {
   margin-bottom: 2.5rem;
@@ -53,9 +56,16 @@ html.dark .post-header h1 {
   font-family: var(--font-mono);
 }
 
-.post-meta span { display: flex; align-items: center; gap: 0.3rem; }
+.post-meta span {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
 
-.updated { font-size: 0.8rem; color: var(--warning); }
+.updated {
+  font-size: 0.8rem;
+  color: var(--warning);
+}
 
 .post-meta-extra {
   display: flex;
@@ -110,20 +120,27 @@ html.dark .post-header h1 {
   color: var(--text-bright);
 }
 
-.post-content p { margin-bottom: 1.2rem; }
+.post-content p {
+  margin-bottom: 1.2rem;
+}
 
-.post-content ul, .post-content ol {
+.post-content ul,
+.post-content ol {
   margin-bottom: 1.2rem;
   padding-left: 1.5rem;
 }
 
-.post-content ul li::marker { color: var(--accent); }
+.post-content ul li::marker {
+  color: var(--accent);
+}
 .post-content ol li::marker {
   color: var(--accent);
   font-weight: 700;
 }
 
-.post-content li { margin-bottom: 0.4rem; }
+.post-content li {
+  margin-bottom: 0.4rem;
+}
 
 .post-content blockquote {
   border-left: 3px solid var(--accent);
@@ -135,7 +152,9 @@ html.dark .post-header h1 {
   font-style: italic;
 }
 
-.post-content blockquote p { margin-bottom: 0; }
+.post-content blockquote p {
+  margin-bottom: 0;
+}
 
 html:not(.dark) .post-content code {
   background: var(--bg-inline-code);
@@ -165,8 +184,12 @@ html.dark .post-content pre {
   border: 1px solid var(--border-color);
 }
 
-html:not(.dark) .post-content pre { box-shadow: inset 0 1px 3px rgba(0,0,0,0.04); }
-html.dark .post-content pre { box-shadow: inset 0 1px 3px rgba(0,0,0,0.3); }
+html:not(.dark) .post-content pre {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+html.dark .post-content pre {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+}
 
 html:not(.dark) .post-content pre::before {
   content: '';
@@ -237,7 +260,8 @@ html.dark .post-content a {
   border: 1px solid var(--border-color);
 }
 
-.post-content th, .post-content td {
+.post-content th,
+.post-content td {
   border: 1px solid var(--border-color);
   padding: 0.6rem 1rem;
   text-align: left;
@@ -252,4 +276,116 @@ html.dark .post-content th {
   font-size: 0.82rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+}
+
+/* ===== Code Copy Button ===== */
+.code-wrapper {
+  position: relative;
+}
+
+.code-copy-btn {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.6rem;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+  z-index: 5;
+}
+
+.code-wrapper:hover .code-copy-btn,
+.code-copy-btn:focus-visible {
+  opacity: 1;
+}
+
+.code-copy-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.code-copy-btn.copied {
+  background: var(--success);
+  color: #fff;
+  border-color: var(--success);
+  opacity: 1;
+}
+
+html.dark .code-copy-btn {
+  background: var(--bg-card);
+}
+
+/* 在移动端始终可见 */
+@media (max-width: 768px) {
+  .code-copy-btn {
+    opacity: 1;
+  }
+}
+
+/* ===== Image Zoom (Lightbox) ===== */
+.image-zoom-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+  animation: fadeIn 0.2s ease;
+}
+
+.image-zoom-overlay .image-zoom-img {
+  max-width: 95vw;
+  max-height: 95vh;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  cursor: default;
+}
+
+.image-zoom-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease;
+}
+
+.image-zoom-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

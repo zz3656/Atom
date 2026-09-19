@@ -1,6 +1,9 @@
 # 构建输出
 dist/
 
+# 构建产物中的临时资产（search-index.json 会被重新生成）
+public/_assets/
+
 # 依赖
 node_modules/
 
@@ -15,3 +18,6 @@ Thumbs.db
 # 日志
 *.log
 npm-debug.log*
+
+# 测试覆盖率
+coverage/

@@ -10,10 +10,11 @@ const blog = defineCollection({
     pubDate: z.coerce.date(),
     updatedDate: z.coerce.date().optional(),
     heroImage: z.string().optional(),
+    featuredImage: z.string().optional(), // SEO 专用封面图（优先于 heroImage 用于 OG）
     category: z.string().default(''),
     tags: z.array(z.string()).default([]),
-    redirect: z.string().optional(),    // URL 迁移重定向
-    featuredImage: z.string().optional(), // SEO 专用封面图（替代 heroImage）
+    reward: z.boolean().optional(), // 是否在文末显示打赏码
+    draft: z.boolean().optional(), // 草稿（构建时过滤）
   }),
 });
 

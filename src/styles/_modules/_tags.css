@@ -49,5 +49,16 @@ html.dark .post-category-tag:hover {
   border-color: var(--cat-text);
 }
 
-.post-tags-row { display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap; }
-.post-tags { margin-top: 0.8rem; display: flex; justify-content: center; gap: 0.4rem; flex-wrap: wrap; }
+.post-tags-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.post-tags {
+  margin-top: 0.8rem;
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}

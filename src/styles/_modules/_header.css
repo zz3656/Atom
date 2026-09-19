@@ -42,8 +42,14 @@ html.dark .site-header {
 }
 
 @media (min-width: 769px) {
-  .nav-container { justify-content: space-between; gap: 0; }
-  .nav-links { flex: 1; justify-content: center; }
+  .nav-container {
+    justify-content: space-between;
+    gap: 0;
+  }
+  .nav-links {
+    flex: 1;
+    justify-content: center;
+  }
 }
 
 /* Site title with logo */
@@ -66,8 +72,13 @@ html.dark .site-header {
   flex-shrink: 0;
 }
 
-html:not(.dark) .site-title:hover { color: var(--accent); }
-html.dark .site-title:hover { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+html:not(.dark) .site-title:hover {
+  color: var(--accent);
+}
+html.dark .site-title:hover {
+  color: var(--accent);
+  text-shadow: 0 0 20px var(--accent-glow);
+}
 
 /* Navigation links */
 .nav-links {
@@ -103,9 +114,13 @@ html.dark .site-title:hover { color: var(--accent); text-shadow: 0 0 20px var(--
   font-weight: 600;
 }
 
-html:not(.dark) .nav-link.active { background: var(--accent-glow-strong); }
+html:not(.dark) .nav-link.active {
+  background: var(--accent-glow-strong);
+}
 
-html:not(.dark) .nav-link::after { content: none; }
+html:not(.dark) .nav-link::after {
+  content: none;
+}
 
 html.dark .nav-link::after {
   content: '';

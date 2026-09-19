@@ -26,8 +26,12 @@
   border-radius: 2px;
 }
 
-html:not(.dark) .section-title::before { box-shadow: none; }
-html.dark .section-title::before { box-shadow: 0 0 8px var(--accent-glow); }
+html:not(.dark) .section-title::before {
+  box-shadow: none;
+}
+html.dark .section-title::before {
+  box-shadow: 0 0 8px var(--accent-glow);
+}
 
 .section-count {
   font-size: 0.85rem;

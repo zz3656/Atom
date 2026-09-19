@@ -29,7 +29,7 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const HEXO_POSTS_DIR = join(__dirname, '../../zz3656.github.io/source/_posts');
-const ATOM_BLOG_DIR  = join(__dirname, '../../Atom-blog/src/content/blog');
+const ATOM_BLOG_DIR = join(__dirname, '../../Atom-blog/src/content/blog');
 
 // ─── Hexo frontmatter 解析 ────────────────────────────────────
 function parseFrontmatter(content) {
@@ -74,7 +74,10 @@ function parseFrontmatter(content) {
       // Inline array [...]
       if (val.startsWith('[') && val.endsWith(']')) {
         const inner = val.slice(1, -1);
-        fields[key] = inner.split(',').map(s => s.trim()).filter(Boolean);
+        fields[key] = inner
+          .split(',')
+          .map((s) => s.trim())
+          .filter(Boolean);
         key = null; // consumed
       } else {
         buf = val || '';
@@ -204,7 +207,7 @@ function buildAstroFrontmatter(fields, body) {
   if (fields.tags) {
     let tags;
     if (Array.isArray(fields.tags)) {
-      tags = fields.tags.map(t => String(t).trim()).filter(Boolean);
+      tags = fields.tags.map((t) => String(t).trim()).filter(Boolean);
     } else {
       tags = [String(fields.tags).trim()];
     }
@@ -224,13 +227,14 @@ function buildAstroFrontmatter(fields, body) {
 // ─── 主流程 ────────────────────────────────────────────────────
 async function convert() {
   const files = await readdir(HEXO_POSTS_DIR);
-  const mdFiles = files.filter(f => f.endsWith('.md'));
+  const mdFiles = files.filter((f) => f.endsWith('.md'));
 
   console.log(`找到 ${mdFiles.length} 篇 Hexo 文章，开始转换...\n`);
 
   await mkdir(ATOM_BLOG_DIR, { recursive: true });
 
-  let ok = 0, skip = 0;
+  let ok = 0,
+    skip = 0;
 
   for (const file of mdFiles) {
     const inPath = join(HEXO_POSTS_DIR, file);
@@ -257,4 +261,7 @@ async function convert() {
   console.log(`输出: ${ATOM_BLOG_DIR}`);
 }
 
-convert().catch(err => { console.error(err); process.exit(1); });
+convert().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

@@ -1,7 +1,9 @@
 /* Atom Blog — CSS Reset */
 /* 统一浏览器默认样式，避免跨平台差异 */
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -38,7 +40,9 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition:
+    background 0.3s ease,
+    color 0.3s ease;
   will-change: background, color;
 }
 

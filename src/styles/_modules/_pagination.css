@@ -36,7 +36,11 @@ html.dark .page-btn:hover {
   box-shadow: 0 0 15px var(--accent-glow);
 }
 
-.page-numbers { display: flex; align-items: center; gap: 0.35rem; }
+.page-numbers {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
 
 .page-link {
   display: inline-flex;
@@ -68,4 +72,6 @@ html.dark .page-btn:hover {
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
-html.dark .page-link.active { box-shadow: 0 0 15px var(--accent-glow); }
+html.dark .page-link.active {
+  box-shadow: 0 0 15px var(--accent-glow);
+}

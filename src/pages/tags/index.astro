@@ -1,10 +1,9 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
+import { getPublishedPosts } from '../../utils/collection';
+import { getTagUrl } from '../../utils/path';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = await getPublishedPosts();
 
 // Collect all unique tags
 const tagMap = new Map<string, typeof posts>();
@@ -22,13 +21,16 @@ const sortedTags = [...tagMap.entries()].sort((a, b) => b[1].length - a[1].lengt
   <section class="listing-page">
     <div class="unified-page-header">
       <h1>所有标签</h1>
-      <p class="unified-page-subtitle">共 <span class="accent">{sortedTags.length}</span> 个标签 · <span class="accent">{posts.length}</span> 篇文章</p>
+      <p class="unified-page-subtitle">
+        共 <span class="accent">{sortedTags.length}</span> 个标签 ·{' '}
+        <span class="accent">{posts.length}</span> 篇文章
+      </p>
     </div>
 
     {sortedTags.length > 0 ? (
       <div class="tag-grid">
         {sortedTags.map(([tag, tagPosts]) => (
-          <a href={`/tag/${encodeURIComponent(tag)}/`} class="tag-card">
+          <a href={getTagUrl(tag)} class="tag-card">
             <span class="tag-card-label">{tag}</span>
             <span class="tag-card-count">{tagPosts.length}</span>
           </a>

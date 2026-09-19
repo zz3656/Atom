@@ -4,7 +4,7 @@
 
 **A modern blog built with Astro** — Powerful like Atom, reliable like steel.
 
-> Inspired by Atom, the box-off robot from *Real Steel* — compact, precise, full of power.
+> Inspired by Atom, the box-off robot from _Real Steel_ — compact, precise, full of power.
 
 [![Astro](https://img.shields.io/badge/Astro-4.x-ff5d01?logo=astro&logoColor=white)](https://astro.build)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
@@ -18,18 +18,18 @@
 
 ## ✨ Features
 
-| Feature | Description |
-|---------|-------------|
-| ⚡ **Astro-Powered** | Zero JavaScript output, pure HTML, blazing fast |
-| 🌑 **Cyberpunk Theme** | Dark futuristic UI, neon glow, grid background |
-| 📱 **Responsive** | Perfect on mobile, tablet, and desktop |
-| 🎯 **Base Path Fix** | Supports GitHub Pages subpath deployment |
-| 📝 **Markdown Writing** | Native support with code syntax highlighting |
-| 🏷️ **Tag System** | Automatic tag display on article cards |
-| 🚀 **GitHub Actions** | Automatic build and deploy on push |
-| 🔍 **SEO Friendly** | Semantic HTML, Open Graph / Twitter Card / JSON-LD Structured Data, Sitemap, RSS Feed (📡 in nav bar and footer) |
-| 📦 **Tiny Size** | ~3KB HTML per page |
-| 💯 **Lighthouse 100** | Performance, Accessibility, SEO all perfect |
+| Feature                 | Description                                                                                                      |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| ⚡ **Astro-Powered**    | Zero JavaScript output, pure HTML, blazing fast                                                                  |
+| 🌑 **Cyberpunk Theme**  | Dark futuristic UI, neon glow, grid background                                                                   |
+| 📱 **Responsive**       | Perfect on mobile, tablet, and desktop                                                                           |
+| 🎯 **Base Path Fix**    | Supports GitHub Pages subpath deployment                                                                         |
+| 📝 **Markdown Writing** | Native support with code syntax highlighting                                                                     |
+| 🏷️ **Tag System**       | Automatic tag display on article cards                                                                           |
+| 🚀 **GitHub Actions**   | Automatic build and deploy on push                                                                               |
+| 🔍 **SEO Friendly**     | Semantic HTML, Open Graph / Twitter Card / JSON-LD Structured Data, Sitemap, RSS Feed (📡 in nav bar and footer) |
+| 📦 **Tiny Size**        | ~3KB HTML per page                                                                                               |
+| 💯 **Lighthouse 100**   | Performance, Accessibility, SEO all perfect                                                                      |
 
 ## 📸 Preview
 
@@ -135,9 +135,9 @@ title: Your Post Title
 description: A short description shown on article cards
 pubDate: 2026-09-13
 tags: [tag1, tag2]
-heroImage: /images/cover.jpg   # Optional
-updatedDate: 2026-09-14        # Optional
-reward: true                   # Optional: show reward QR codes
+heroImage: /images/cover.jpg # Optional
+updatedDate: 2026-09-14 # Optional
+reward: true # Optional: show reward QR codes
 ---
 
 Body content using Markdown syntax. Supports:
@@ -151,15 +151,15 @@ Body content using Markdown syntax. Supports:
 
 ### Frontmatter Fields
 
-| Field | Type | Required | Description |
-|-------|------|----------|-------------|
-| `title` | string | ✅ | Post title |
-| `description` | string | ✅ | Short description for article cards |
-| `pubDate` | date | ✅ | Publication date |
-| `tags` | string[] | ❌ | Tag list |
-| `heroImage` | string | ❌ | Cover image path |
-| `updatedDate` | date | ❌ | Last updated date |
-| `reward` | boolean | ❌ | Show reward QR codes at post end (default: off) |
+| Field         | Type     | Required | Description                                     |
+| ------------- | -------- | -------- | ----------------------------------------------- |
+| `title`       | string   | ✅       | Post title                                      |
+| `description` | string   | ✅       | Short description for article cards             |
+| `pubDate`     | date     | ✅       | Publication date                                |
+| `tags`        | string[] | ❌       | Tag list                                        |
+| `heroImage`   | string   | ❌       | Cover image path                                |
+| `updatedDate` | date     | ❌       | Last updated date                               |
+| `reward`      | boolean  | ❌       | Show reward QR codes at post end (default: off) |
 
 ## 🐙 Deploy to GitHub Pages
 
@@ -192,13 +192,13 @@ Actions will automatically: `Install deps → Build → Deploy`
 **All customization in a single file** — edit `src/consts.ts`:
 
 ```typescript
-export const SITE_TITLE = 'Your Blog Name';     // Site title (SEO, OG, RSS, footer)
-export const SITE_NAME = 'MyBlog';               // Name shown in navbar
+export const SITE_TITLE = 'Your Blog Name'; // Site title (SEO, OG, RSS, footer)
+export const SITE_NAME = 'MyBlog'; // Name shown in navbar
 export const SITE_DESCRIPTION = 'Your blog description';
 export const AUTHOR = 'Your Name';
 
-export const SITE_LOGO = '/logos/logo.svg';      // Navbar logo file path
-export const SITE_FAVICON = '/favicon.svg';      // Browser favicon file path
+export const SITE_LOGO = '/logos/logo.svg'; // Navbar logo file path
+export const SITE_FAVICON = '/favicon.svg'; // Browser favicon file path
 
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
@@ -208,9 +208,10 @@ export const SOCIAL_LINKS = {
 ```
 
 > 💡 **Logo and Favicon are independent**:
+>
 > 1. **Logo** (navbar): put in `public/logos/logo.svg` (supports .svg / .png / .webp), update `SITE_LOGO`
 > 2. **Favicon** (browser tab): put in `public/favicon.svg`, update `SITE_FAVICON`
-> No need to touch any component code!
+>    No need to touch any component code!
 
 ### Deploy URL
 
@@ -218,8 +219,8 @@ Edit `astro.config.mjs`:
 
 ```javascript
 export default defineConfig({
-  site: 'https://yourusername.github.io',  // Your GitHub Pages URL
-  base: '/Atom',                            // Repo name ('/' for root site)
+  site: 'https://yourusername.github.io', // Your GitHub Pages URL
+  base: '/Atom', // Repo name ('/' for root site)
 });
 ```
 
@@ -229,9 +230,9 @@ Edit CSS variables in `src/styles/global.css`:
 
 ```css
 :root {
-  --accent: #6366f1;        /* Primary color */
-  --accent-hover: #4f46e5;  /* Hover color */
-  --radius: 12px;           /* Border radius */
+  --accent: #6366f1; /* Primary color */
+  --accent-hover: #4f46e5; /* Hover color */
+  --radius: 12px; /* Border radius */
   --font-sans: 'Inter', ...; /* Font family */
 }
 ```
@@ -258,14 +259,14 @@ src/pages/blog/index.astro → /blog
 
 ## 📊 Comparison with Other Static Blog Solutions
 
-| Solution | Output Size | JS Deps | Build Time | SEO / RSS / Sitemap | Learning Curve |
-|----------|-------------|---------|------------|-----------|----------------|
-| **Atom (This)** | **~3 KB** | **0** | **~1s** | **RSS/Sitemap/JSON-LD auto-generated, RSS in footer** | Minimal |
-| Hexo + Matery | ~15 MB | Dozens of libs | ~5s | Needs plugin | Medium |
-| Hugo | ~2 MB | 0 | ~0.5s | Needs plugin | Medium (Hugo syntax) |
-| Jekyll | ~3 MB | Minimal | ~3s | Built-in | Medium (Ruby) |
-| Eleventy | ~500 KB | 0 | ~2s | Needs plugin | Medium (Node) |
-| VitePress | ~2 MB | Hydration | ~2s | Needs plugin | Low (docs-focused) |
+| Solution        | Output Size | JS Deps        | Build Time | SEO / RSS / Sitemap                                   | Learning Curve       |
+| --------------- | ----------- | -------------- | ---------- | ----------------------------------------------------- | -------------------- |
+| **Atom (This)** | **~3 KB**   | **0**          | **~1s**    | **RSS/Sitemap/JSON-LD auto-generated, RSS in footer** | Minimal              |
+| Hexo + Matery   | ~15 MB      | Dozens of libs | ~5s        | Needs plugin                                          | Medium               |
+| Hugo            | ~2 MB       | 0              | ~0.5s      | Needs plugin                                          | Medium (Hugo syntax) |
+| Jekyll          | ~3 MB       | Minimal        | ~3s        | Built-in                                              | Medium (Ruby)        |
+| Eleventy        | ~500 KB     | 0              | ~2s        | Needs plugin                                          | Medium (Node)        |
+| VitePress       | ~2 MB       | Hydration      | ~2s        | Needs plugin                                          | Low (docs-focused)   |
 
 ### Advantages
 

@@ -6,8 +6,12 @@ const year = new Date().getFullYear();
 
 // Build social links dynamically (only render if URL is non-empty)
 const socialLinks = [
-  SOCIAL_LINKS.github ? { href: SOCIAL_LINKS.github, label: '🐙 GitHub', target: '_blank', rel: 'noopener' } : null,
-  SOCIAL_LINKS.twitter ? { href: SOCIAL_LINKS.twitter, label: '🐦 Twitter', target: '_blank', rel: 'noopener' } : null,
+  SOCIAL_LINKS.github
+    ? { href: SOCIAL_LINKS.github, label: '🐙 GitHub', target: '_blank', rel: 'noopener' }
+    : null,
+  SOCIAL_LINKS.twitter
+    ? { href: SOCIAL_LINKS.twitter, label: '🐦 Twitter', target: '_blank', rel: 'noopener' }
+    : null,
   SOCIAL_LINKS.email ? { href: `mailto:${SOCIAL_LINKS.email}`, label: '✉️ Email' } : null,
 ].filter(Boolean);
 ---
@@ -15,12 +19,28 @@ const socialLinks = [
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-links">
-      {socialLinks.map((link, i) => (
-        link && <a href={link.href} target={link.target || undefined} rel={link.rel || undefined}>{link.label}</a>
-      ))}
-      <a href={rssUrl()} target="_blank" rel="noopener">📡 RSS</a>
+      {socialLinks.map(
+        (link) =>
+          link && (
+            <a href={link.href} target={link.target || undefined} rel={link.rel || undefined}>
+              {link.label}
+            </a>
+          ),
+      )}
+      <a href={rssUrl()} target="_blank" rel="noopener">
+        📡 RSS
+      </a>
       <a href={aboutUrl()}>👤 关于</a>
     </div>
-    <p>© {year} <a href={socialLinks[0]?.href} target={socialLinks[0]?.target} rel={socialLinks[0]?.rel}>{SITE_TITLE}</a>. Powered by <a href="https://astro.build" target="_blank" rel="noopener">Astro</a></p>
+    <p>
+      © {year}{' '}
+      <a href={socialLinks[0]?.href} target={socialLinks[0]?.target} rel={socialLinks[0]?.rel}>
+        {SITE_TITLE}
+      </a>
+      . Powered by{' '}
+      <a href="https://astro.build" target="_blank" rel="noopener">
+        Astro
+      </a>
+    </p>
   </div>
 </footer>

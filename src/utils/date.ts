@@ -4,7 +4,12 @@
  * 中文格式化日期
  */
 export function formatDateCN(date: Date, options?: Intl.DateTimeFormatOptions): string {
-  return date.toLocaleDateString('zh-CN', { year: 'numeric', month: '2-digit', day: '2-digit', ...options });
+  return date.toLocaleDateString('zh-CN', {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    ...options,
+  });
 }
 
 /**

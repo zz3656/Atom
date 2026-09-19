@@ -19,6 +19,9 @@
     "heroImage": {
       "type": "string"
     },
+    "featuredImage": {
+      "type": "string"
+    },
     "category": {
       "default": "",
       "type": "string"
@@ -30,11 +33,11 @@
         "type": "string"
       }
     },
-    "redirect": {
-      "type": "string"
+    "reward": {
+      "type": "boolean"
     },
-    "featuredImage": {
-      "type": "string"
+    "draft": {
+      "type": "boolean"
     },
     "$schema": {
       "type": "string"

@@ -1,0 +1,35 @@
+version: 2
+updates:
+  # npm 依赖更新
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Shanghai"
+    open-pull-requests-limit: 5
+    # 自动分组 PR（一次性合并多个更新）
+    groups:
+      astro:
+        patterns:
+          - "astro*"
+          - "@astrojs/*"
+      testing:
+        patterns:
+          - "vitest*"
+          - "@vitest/*"
+          - "@types/*"
+      linting:
+        patterns:
+          - "eslint*"
+          - "@typescript-eslint/*"
+    labels:
+      - "dependencies"
+      - "automated"
+    commit-message:
+      prefix: "chore(deps)"
+    # 忽略 major 更新（手动审查）
+    ignore:
+      - dependency-name: "astro"
+        update-types: ["version-update:semver-major"]

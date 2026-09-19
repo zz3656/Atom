@@ -15,7 +15,12 @@
   transform: translateX(-50%);
   width: 500px;
   height: 350px;
-  background: radial-gradient(ellipse, var(--accent-glow) 0%, var(--purple-glow) 50%, transparent 70%);
+  background: radial-gradient(
+    ellipse,
+    var(--accent-glow) 0%,
+    var(--purple-glow) 50%,
+    transparent 70%
+  );
   pointer-events: none;
   z-index: -1;
 }
@@ -53,7 +58,9 @@ html.dark .unified-page-header h1 {
   border-radius: 1px;
 }
 
-html.dark .unified-page-header::after { box-shadow: 0 0 10px var(--accent-glow); }
+html.dark .unified-page-header::after {
+  box-shadow: 0 0 10px var(--accent-glow);
+}
 
 .unified-page-subtitle {
   font-size: 0.95rem;
@@ -62,7 +69,8 @@ html.dark .unified-page-header::after { box-shadow: 0 0 10px var(--accent-glow);
 }
 
 /* ===== Category / Tag Grid ===== */
-.category-grid, .tag-grid {
+.category-grid,
+.tag-grid {
   display: flex;
   flex-wrap: wrap;
   gap: 0.75rem;
@@ -70,7 +78,8 @@ html.dark .unified-page-header::after { box-shadow: 0 0 10px var(--accent-glow);
   padding: 1rem 0 2rem;
 }
 
-.category-card, .tag-card {
+.category-card,
+.tag-card {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -96,25 +105,31 @@ html.dark .tag-card:hover {
   transform: translateY(-1px);
 }
 
-.category-card-name, .tag-card-label {
+.category-card-name,
+.tag-card-label {
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-bright);
   font-family: var(--font-mono);
 }
 
-html:not(.dark) .category-card:hover .category-card-name { color: var(--accent); }
+html:not(.dark) .category-card:hover .category-card-name {
+  color: var(--accent);
+}
 html.dark .category-card:hover .category-card-name {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
-html:not(.dark) .tag-card:hover .tag-card-label { color: var(--accent); }
+html:not(.dark) .tag-card:hover .tag-card-label {
+  color: var(--accent);
+}
 html.dark .tag-card:hover .tag-card-label {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
 
-.category-card-count, .tag-card-count {
+.category-card-count,
+.tag-card-count {
   font-size: 0.78rem;
   color: var(--text-muted);
   background: var(--tag-bg);
@@ -125,7 +140,10 @@ html.dark .tag-card:hover .tag-card-label {
 }
 
 html.dark .category-card-count,
-html.dark .tag-card-count { color: var(--accent); opacity: 0.7; }
+html.dark .tag-card-count {
+  color: var(--accent);
+  opacity: 0.7;
+}
 
 html:not(.dark) .category-card:hover .category-card-count,
 html:not(.dark) .tag-card:hover .tag-card-count {
@@ -175,7 +193,10 @@ html.dark .empty-list-icon {
   font-size: 0.95rem;
 }
 
-.view-all { text-align: center; margin-top: 2rem; }
+.view-all {
+  text-align: center;
+  margin-top: 2rem;
+}
 
 html:not(.dark) .view-all a {
   font-weight: 600;

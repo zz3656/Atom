@@ -1,11 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import { createCategoryFilter, normalizeCategory } from '../../utils/blog';
+import { normalizeCategory } from '../../utils/blog';
+import { getPublishedPosts } from '../../utils/collection';
+import { getCategoryUrl } from '../../utils/path';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = await getPublishedPosts();
 
 // Collect all unique categories
 const categoryMap = new Map<string, typeof posts>();
@@ -22,13 +21,16 @@ const sortedCategories = [...categoryMap.entries()].sort((a, b) => b[1].length -
   <section class="listing-page">
     <div class="unified-page-header">
       <h1>所有分类</h1>
-      <p class="unified-page-subtitle">共 <span class="accent">{sortedCategories.length}</span> 个分类 · <span class="accent">{posts.length}</span> 篇文章</p>
+      <p class="unified-page-subtitle">
+        共 <span class="accent">{sortedCategories.length}</span> 个分类 ·{' '}
+        <span class="accent">{posts.length}</span> 篇文章
+      </p>
     </div>
 
     {sortedCategories.length > 0 ? (
       <div class="category-grid">
         {sortedCategories.map(([category, catPosts]) => (
-          <a href={`/category/${encodeURIComponent(category)}/`} class="category-card">
+          <a href={getCategoryUrl(category)} class="category-card">
             <span class="category-card-name">📁 {category}</span>
             <span class="category-card-count">{catPosts.length}</span>
           </a>

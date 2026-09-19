@@ -66,6 +66,9 @@
 /* 14. Post Extras (Reward, Navigation) */
 @import './_modules/_post-extras.css';
 
+/* 14b. Table of Contents */
+@import './_modules/_toc.css';
+
 /* 15. Pagination */
 @import './_modules/_pagination.css';
 

@@ -43,7 +43,10 @@ html.dark .site-footer::before {
   font-family: var(--font-mono);
 }
 
-.footer-links { display: flex; gap: 1.5rem; }
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
 
 html:not(.dark) .footer-links a,
 html.dark .footer-links a {
@@ -52,7 +55,9 @@ html.dark .footer-links a {
   transition: all 0.2s;
 }
 
-html:not(.dark) .footer-links a:hover { color: var(--accent); }
+html:not(.dark) .footer-links a:hover {
+  color: var(--accent);
+}
 html.dark .footer-links a:hover {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);

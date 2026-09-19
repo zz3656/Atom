@@ -39,7 +39,9 @@
   transition: transform 0.2s;
 }
 
-.reward-item img:hover { transform: scale(1.05); }
+.reward-item img:hover {
+  transform: scale(1.05);
+}
 
 .reward-item span {
   font-size: 0.82rem;
@@ -69,8 +71,12 @@
   color: var(--accent);
 }
 
-html:not(.dark) .post-nav a:hover { color: var(--accent); }
-html.dark .post-nav a:hover { color: var(--accent); }
+html:not(.dark) .post-nav a:hover {
+  color: var(--accent);
+}
+html.dark .post-nav a:hover {
+  color: var(--accent);
+}
 
 .post-nav-links {
   display: grid;
@@ -108,7 +114,10 @@ html.dark .post-nav-link:hover {
   transform: translateY(-1px);
 }
 
-.post-nav-link.prev, .post-nav-link.next { text-align: center; }
+.post-nav-link.prev,
+.post-nav-link.next {
+  text-align: center;
+}
 
 .nav-label {
   display: block;
@@ -120,4 +129,65 @@ html.dark .post-nav-link:hover {
   white-space: nowrap;
 }
 
-.post-nav-link:hover .nav-label { color: var(--accent); }
+.post-nav-link:hover .nav-label {
+  color: var(--accent);
+}
+
+/* ===== Related Posts ===== */
+.related-posts {
+  margin: 2.5rem 0 2rem;
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+}
+
+.related-title {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.related-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.related-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.related-link:hover {
+  background: var(--accent-glow);
+  border-color: var(--border-glow);
+  transform: translateX(2px);
+}
+
+.related-link-title {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.related-link-arrow {
+  color: var(--accent);
+  font-weight: 700;
+  flex-shrink: 0;
+}

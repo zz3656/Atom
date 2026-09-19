@@ -21,47 +21,47 @@ node scripts/convert-hexo.mjs
 
 依据 [hexo-theme-matery 官方文档](https://github.com/blinkfox/hexo-theme-matery#post-front-matter)：
 
-| 官方字段 | 类型 | 说明 |
-|---------|------|------|
-| `title` | string | 文章标题（推荐必填） |
-| `date` | datetime | 发布时间，格式如 `2018-09-07 09:25:00` |
-| `author` | string | 文章作者（默认使用站点配置） |
-| `img` | string | 文章封面图，如 `/source/images/xxx.jpg` |
-| `top` | boolean | 是否推荐为首页置顶文章 |
-| `hide` | boolean | 是否不在首页显示 |
-| `cover` | boolean | 是否加入首页轮播封面 |
-| `coverImg` | string | 首页轮播封面图路径 |
-| `password` | string | 文章阅读密码（SHA256 加密） |
-| `toc` | boolean | 是否开启目录 |
-| `mathjax` | boolean | 是否启用数学公式 |
-| `summary` | string | 文章摘要（自定义，为空时自动截取） |
-| `categories` | string/list | 文章分类（建议每篇只有一个） |
-| `tags` | list | 文章标签（可有多个） |
-| `keywords` | string | SEO 关键词（默认使用标题） |
-| `reprintPolicy` | string | 转载协议（cc_by 等） |
+| 官方字段        | 类型        | 说明                                    |
+| --------------- | ----------- | --------------------------------------- |
+| `title`         | string      | 文章标题（推荐必填）                    |
+| `date`          | datetime    | 发布时间，格式如 `2018-09-07 09:25:00`  |
+| `author`        | string      | 文章作者（默认使用站点配置）            |
+| `img`           | string      | 文章封面图，如 `/source/images/xxx.jpg` |
+| `top`           | boolean     | 是否推荐为首页置顶文章                  |
+| `hide`          | boolean     | 是否不在首页显示                        |
+| `cover`         | boolean     | 是否加入首页轮播封面                    |
+| `coverImg`      | string      | 首页轮播封面图路径                      |
+| `password`      | string      | 文章阅读密码（SHA256 加密）             |
+| `toc`           | boolean     | 是否开启目录                            |
+| `mathjax`       | boolean     | 是否启用数学公式                        |
+| `summary`       | string      | 文章摘要（自定义，为空时自动截取）      |
+| `categories`    | string/list | 文章分类（建议每篇只有一个）            |
+| `tags`          | list        | 文章标签（可有多个）                    |
+| `keywords`      | string      | SEO 关键词（默认使用标题）              |
+| `reprintPolicy` | string      | 转载协议（cc_by 等）                    |
 
 ### 2. Frontmatter 字段映射（实际使用）
 
-| Hexo 字段 | Astro 字段 | 转换规则 |
-|-----------|-----------|---------|
-| `title` | `title` | ✅ 直接保留 |
-| `date` | `pubDate` | `2025-07-14 05:23:30` → `2025-07-14`（只取日期） |
-| `summary` | `description` | 如果 source 有 summary 字段则直接用；否则自动提取正文 |
-| `categories` | `category` | 单值字符串直接映射；YAML 列表取**第一个值** |
-| `tags` | `tags` | YAML 列表 `- tag` → inline `[tag1, tag2]`；也支持 `tags: [a, b]` 内联格式 |
-| `img` | `heroImage` | 如果 source 有 img 字段则映射为 heroImage |
-| `cover` | `heroImage` | 如果 source 有 cover 字段（值为图片路径）则映射为 heroImage；路径规范化 `/medias/featureimages/` → `/images/` |
+| Hexo 字段    | Astro 字段    | 转换规则                                                                                                      |
+| ------------ | ------------- | ------------------------------------------------------------------------------------------------------------- |
+| `title`      | `title`       | ✅ 直接保留                                                                                                   |
+| `date`       | `pubDate`     | `2025-07-14 05:23:30` → `2025-07-14`（只取日期）                                                              |
+| `summary`    | `description` | 如果 source 有 summary 字段则直接用；否则自动提取正文                                                         |
+| `categories` | `category`    | 单值字符串直接映射；YAML 列表取**第一个值**                                                                   |
+| `tags`       | `tags`        | YAML 列表 `- tag` → inline `[tag1, tag2]`；也支持 `tags: [a, b]` 内联格式                                     |
+| `img`        | `heroImage`   | 如果 source 有 img 字段则映射为 heroImage                                                                     |
+| `cover`      | `heroImage`   | 如果 source 有 cover 字段（值为图片路径）则映射为 heroImage；路径规范化 `/medias/featureimages/` → `/images/` |
 
 ### 3. 图片字段的三种来源
 
 matery 主题有多种图片字段，实际使用中的优先级和映射规则：
 
-| 字段名 | 官方定义 | 实际出现在哪些文章中 | 映射为 Astro 的 |
-|--------|---------|-------------------|---------------|
-| `img` | ✅ 官方字段 | 0 篇 | `heroImage` |
-| `cover` | ✅ 官方字段 | 4 篇（有图片路径值的） | `heroImage` |
-| `coverImg` | ✅ 官方字段 | 0 篇 | — |
-| `top_img` | ❌ 非官方 | 23 篇（几乎每篇都有） | `heroImage` |
+| 字段名     | 官方定义    | 实际出现在哪些文章中   | 映射为 Astro 的 |
+| ---------- | ----------- | ---------------------- | --------------- |
+| `img`      | ✅ 官方字段 | 0 篇                   | `heroImage`     |
+| `cover`    | ✅ 官方字段 | 4 篇（有图片路径值的） | `heroImage`     |
+| `coverImg` | ✅ 官方字段 | 0 篇                   | —               |
+| `top_img`  | ❌ 非官方   | 23 篇（几乎每篇都有）  | `heroImage`     |
 
 > 脚本中三种图片字段（img / cover / top_img）统一映射为 Astro 的 `heroImage`。
 
@@ -117,9 +117,9 @@ mg                       → 非官方字段
 title: 文章标题
 description: 文章描述（summary 或自动提取）
 pubDate: 2025-07-14
-category: 分类名称      # 可选
-tags: [tag1, tag2]      # 可选
-heroImage: /images/xxx.jpg  # 可选
+category: 分类名称 # 可选
+tags: [tag1, tag2] # 可选
+heroImage: /images/xxx.jpg # 可选
 ---
 
 正文内容...
