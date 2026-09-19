@@ -1,0 +1,55 @@
+/* Atom Default Theme — Dark Mode
+ * 双主题（light + dark），夜间赛博朋克青主题
+ *
+ * 选择器约定: html[data-theme="atom-default"][data-mode="dark"]
+ */
+
+html[data-theme='atom-default'][data-mode='dark'] {
+  /* Backgrounds */
+  --bg-primary: #0a0a0f;
+  --bg-secondary: #12121a;
+  --bg-card: #16161f;
+  --bg-card-hover: #1a1a25;
+  --bg-inline-code: rgba(0, 229, 255, 0.06);
+
+  /* Text colors */
+  --text-primary: #e2e8f0;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-bright: #f8fafc;
+
+  /* Borders */
+  --border-color: rgba(99, 102, 241, 0.15);
+  --border-light: rgba(99, 102, 241, 0.08);
+  --border-glow: rgba(99, 102, 241, 0.4);
+
+  /* Accent colors (Cyberpunk style) */
+  --accent: #00e5ff;
+  --accent-hover: #00bcd4;
+  --accent-secondary: #a78bfa;
+  --accent-gradient: linear-gradient(135deg, #00e5ff, #a78bfa);
+  --accent-glow: rgba(0, 229, 255, 0.15);
+  --accent-glow-strong: rgba(0, 229, 255, 0.3);
+  --purple-glow: rgba(167, 139, 250, 0.15);
+
+  /* Tags & Categories */
+  --tag-bg: rgba(0, 229, 255, 0.08);
+  --tag-text: #00e5ff;
+  --tag-border: rgba(0, 229, 255, 0.2);
+  --tag-active-bg: rgba(0, 229, 255, 0.15);
+  --cat-bg: rgba(167, 139, 250, 0.08);
+  --cat-text: #a78bfa;
+  --cat-border: rgba(167, 139, 250, 0.2);
+  --cat-active-bg: rgba(167, 139, 250, 0.15);
+
+  /* Semantic colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+  --shadow-glow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 229, 255, 0.1);
+}

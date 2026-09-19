@@ -1,0 +1,56 @@
+/* Atom Default Theme — Light Mode
+ * 双主题（light + dark），日间紫罗兰主题
+ *
+ * 选择器约定: html[data-theme="atom-default"][data-mode="light"]
+ * 必需 token 见 docs/THEMING.md
+ */
+
+html[data-theme='atom-default'][data-mode='light'] {
+  /* Backgrounds */
+  --bg-primary: #f0f2f5;
+  --bg-secondary: #e8eaed;
+  --bg-card: #ffffff;
+  --bg-card-hover: #f8f9fc;
+  --bg-inline-code: rgba(99, 102, 241, 0.06);
+
+  /* Text colors */
+  --text-primary: #1a1d23;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
+  --text-bright: #1a202c;
+
+  /* Borders */
+  --border-color: rgba(99, 102, 241, 0.12);
+  --border-light: rgba(99, 102, 241, 0.06);
+  --border-glow: rgba(99, 102, 241, 0.25);
+
+  /* Accent colors */
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+  --accent-secondary: #8b5cf6;
+  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --accent-glow: rgba(99, 102, 241, 0.08);
+  --accent-glow-strong: rgba(99, 102, 241, 0.15);
+  --purple-glow: rgba(139, 92, 246, 0.06);
+
+  /* Tags & Categories */
+  --tag-bg: rgba(99, 102, 241, 0.06);
+  --tag-text: #6366f1;
+  --tag-border: rgba(99, 102, 241, 0.15);
+  --tag-active-bg: rgba(99, 102, 241, 0.12);
+  --cat-bg: rgba(139, 92, 246, 0.06);
+  --cat-text: #8b5cf6;
+  --cat-border: rgba(139, 92, 246, 0.15);
+  --cat-active-bg: rgba(139, 92, 246, 0.12);
+
+  /* Semantic colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 4px 20px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
+}

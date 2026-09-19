@@ -1,0 +1,9 @@
+{
+  "id": "solarized",
+  "name": "Solarized",
+  "author": "Atom Contributors",
+  "version": "1.0.0",
+  "description": "Solarized 配色方案（Ethan Schoonover）— 经典开发者配色",
+  "modes": ["light", "dark"],
+  "preview": ""
+}

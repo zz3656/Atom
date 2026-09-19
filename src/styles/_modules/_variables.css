@@ -1,56 +1,12 @@
-/* Atom Blog — CSS Variables */
-/* 所有颜色、间距、字体、圆角通过 CSS 变量控制，修改此处即可全局定制主题 */
+/* Atom Blog — 共享 CSS 变量
+ *
+ * 布局、间距、字体、圆角等"非视觉" token 在此定义（跨主题共享）
+ * 颜色 token 由 src/themes/<theme>/<mode>.css 提供
+ *
+ * 主题作者文档: docs/THEMING.md
+ */
 
-/* ===== Light Theme Variables ===== */
 :root {
-  /* Backgrounds */
-  --bg-primary: #f0f2f5;
-  --bg-secondary: #e8eaed;
-  --bg-card: #ffffff;
-  --bg-card-hover: #f8f9fc;
-  --bg-inline-code: rgba(99, 102, 241, 0.06);
-
-  /* Text colors */
-  --text-primary: #1a1d23;
-  --text-secondary: #4a5568;
-  --text-muted: #718096;
-  --text-bright: #1a202c;
-
-  /* Borders */
-  --border-color: rgba(99, 102, 241, 0.12);
-  --border-light: rgba(99, 102, 241, 0.06);
-  --border-glow: rgba(99, 102, 241, 0.25);
-
-  /* Accent colors */
-  --accent: #6366f1;
-  --accent-hover: #4f46e5;
-  --accent-secondary: #8b5cf6;
-  --accent-gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
-  --accent-glow: rgba(99, 102, 241, 0.08);
-  --accent-glow-strong: rgba(99, 102, 241, 0.15);
-  --purple-glow: rgba(139, 92, 246, 0.06);
-
-  /* Tags & Categories */
-  --tag-bg: rgba(99, 102, 241, 0.06);
-  --tag-text: #6366f1;
-  --tag-border: rgba(99, 102, 241, 0.15);
-  --tag-active-bg: rgba(99, 102, 241, 0.12);
-  --cat-bg: rgba(139, 92, 246, 0.06);
-  --cat-text: #8b5cf6;
-  --cat-border: rgba(139, 92, 246, 0.15);
-  --cat-active-bg: rgba(139, 92, 246, 0.12);
-
-  /* Semantic colors */
-  --success: #10b981;
-  --warning: #f59e0b;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
-  --shadow-glow: 0 4px 20px rgba(99, 102, 241, 0.08), 0 1px 3px rgba(0, 0, 0, 0.04);
-
   /* Border radius */
   --radius: 10px;
   --radius-lg: 14px;
@@ -65,55 +21,4 @@
   --max-width: 1200px;
   --content-width: 760px;
   --header-height: 56px;
-}
-
-/* ===== Dark Theme Variables ===== */
-html.dark {
-  /* Backgrounds */
-  --bg-primary: #0a0a0f;
-  --bg-secondary: #12121a;
-  --bg-card: #16161f;
-  --bg-card-hover: #1a1a25;
-  --bg-inline-code: rgba(0, 229, 255, 0.06);
-
-  /* Text colors */
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
-  --text-bright: #f8fafc;
-
-  /* Borders */
-  --border-color: rgba(99, 102, 241, 0.15);
-  --border-light: rgba(99, 102, 241, 0.08);
-  --border-glow: rgba(99, 102, 241, 0.4);
-
-  /* Accent colors (Cyberpunk style) */
-  --accent: #00e5ff;
-  --accent-hover: #00bcd4;
-  --accent-secondary: #a78bfa;
-  --accent-gradient: linear-gradient(135deg, #00e5ff, #a78bfa);
-  --accent-glow: rgba(0, 229, 255, 0.15);
-  --accent-glow-strong: rgba(0, 229, 255, 0.3);
-  --purple-glow: rgba(167, 139, 250, 0.15);
-
-  /* Tags & Categories */
-  --tag-bg: rgba(0, 229, 255, 0.08);
-  --tag-text: #00e5ff;
-  --tag-border: rgba(0, 229, 255, 0.2);
-  --tag-active-bg: rgba(0, 229, 255, 0.15);
-  --cat-bg: rgba(167, 139, 250, 0.08);
-  --cat-text: #a78bfa;
-  --cat-border: rgba(167, 139, 250, 0.2);
-  --cat-active-bg: rgba(167, 139, 250, 0.15);
-
-  /* Semantic colors */
-  --success: #10b981;
-  --warning: #f59e0b;
-
-  /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
-  --shadow-glow: 0 0 20px var(--accent-glow), 0 0 40px rgba(0, 229, 255, 0.1);
 }

@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import remarkImgLazy from './astro-plugins/remark-img-lazy.mjs';
+import themeLoader from './astro-plugins/theme-loader.mjs';
 
 // 部署目标自动检测:
 //   DEPLOY_TARGET=github → GitHub Pages（需要仓库名前缀）
@@ -37,6 +38,7 @@ export default defineConfig({
   },
   // 启用 Vite 预构建以加快冷启动
   vite: {
+    plugins: [themeLoader()],
     build: {
       // CSS 代码分割：每个页面只加载用到的 CSS
       cssCodeSplit: true,

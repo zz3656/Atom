@@ -4,6 +4,9 @@ dist/
 # 构建产物中的临时资产（search-index.json 会被重新生成）
 public/_assets/
 
+# postbuild minify 产物（源在 src/scripts/app.js，scripts/minify-app-js.mjs 生成这里）
+public/js/
+
 # 依赖
 node_modules/
 
@@ -21,3 +24,4 @@ npm-debug.log*
 
 # 测试覆盖率
 coverage/
+src/generated/

@@ -1,6 +1,7 @@
 ---
 import { SITE_NAME, SITE_LOGO } from '../consts';
 import { baseAssetsPath } from '../utils/path';
+import { themes } from '../generated/themes';
 
 const logoSrc = baseAssetsPath(SITE_LOGO);
 
@@ -58,14 +59,50 @@ const navLinks = [
         />
         <div id="search-results" class="search-results"></div>
       </div>
-      <button
-        class="theme-toggle"
-        id="theme-toggle"
-        aria-label="切换暗黑模式"
-        style="cursor:pointer;"
-      >
-        🌙
-      </button>
+
+      <!-- Theme picker (主题下拉) -->
+      <div class="theme-picker" id="theme-picker">
+        <button
+          type="button"
+          class="theme-toggle"
+          id="theme-toggle"
+          aria-label="切换主题"
+          aria-haspopup="menu"
+          aria-expanded="false"
+          style="cursor:pointer;"
+        >
+          <span id="theme-toggle-icon">🌙</span>
+        </button>
+        <div class="theme-menu" id="theme-menu" role="menu" hidden>
+          <div class="theme-menu-section">
+            <div class="theme-menu-label">主题</div>
+            {themes.map((theme) => (
+              <button
+                type="button"
+                class="theme-option"
+                role="menuitem"
+                data-theme-id={theme.id}
+                data-has-dark={theme.modes.includes('dark') ? '1' : '0'}
+                title={theme.description}
+              >
+                <span class="theme-option-name">{theme.name}</span>
+                {theme.modes.includes('dark')
+                  ? <span class="theme-option-badge">双模式</span>
+                  : <span class="theme-option-badge single">单模式</span>}
+              </button>
+            ))}
+          </div>
+          <div class="theme-menu-section" id="theme-mode-section">
+            <div class="theme-menu-label">外观</div>
+            <button type="button" class="theme-option" role="menuitem" data-mode="light">
+              <span class="theme-option-name">☀ 浅色</span>
+            </button>
+            <button type="button" class="theme-option" role="menuitem" data-mode="dark">
+              <span class="theme-option-name">🌙 深色</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </header>

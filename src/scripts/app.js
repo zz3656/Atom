@@ -66,31 +66,89 @@
   }
 
   // ============================================================
-  // 1. Theme toggle
+  // 1. Theme picker (多主题: data-theme + data-mode)
   // ============================================================
   var themeToggle = document.getElementById('theme-toggle');
+  var themeToggleIcon = document.getElementById('theme-toggle-icon');
+  var themePicker = document.getElementById('theme-picker');
+  var themeMenu = document.getElementById('theme-menu');
   var root = document.documentElement;
 
-  function applyTheme(isDark) {
-    if (isDark) {
-      root.classList.add('dark');
-      if (themeToggle) themeToggle.textContent = '\u2600\uFE0F';
-    } else {
-      root.classList.remove('dark');
-      if (themeToggle) themeToggle.textContent = '\uD83C\uDF19';
+  function currentThemeId() {
+    return root.getAttribute('data-theme') || 'atom-default';
+  }
+  function currentMode() {
+    return root.getAttribute('data-mode') || 'light';
+  }
+  function setThemeId(id) {
+    root.setAttribute('data-theme', id);
+    try { localStorage.setItem('themeId', id); } catch (e) {}
+    syncThemeUI();
+  }
+  function setMode(mode) {
+    root.setAttribute('data-mode', mode);
+    try { localStorage.setItem('themeMode', mode); } catch (e) {}
+    syncThemeUI();
+  }
+  // 同步按钮图标 + 菜单选中态
+  function syncThemeUI() {
+    var mode = currentMode();
+    if (themeToggleIcon) themeToggleIcon.textContent = mode === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19';
+    if (!themeMenu) return;
+    var opts = themeMenu.querySelectorAll('[data-theme-id]');
+    for (var i = 0; i < opts.length; i++) {
+      var isCurrent = opts[i].getAttribute('data-theme-id') === currentThemeId();
+      opts[i].classList.toggle('active', isCurrent);
+    }
+    var modeOpts = themeMenu.querySelectorAll('[data-mode]');
+    for (var j = 0; j < modeOpts.length; j++) {
+      var isCurrentMode = modeOpts[j].getAttribute('data-mode') === mode;
+      modeOpts[j].classList.toggle('active', isCurrentMode);
     }
   }
 
-  // 同步脚本已在 <head> 应用初始 class，这里只同步按钮图标
-  applyTheme(root.classList.contains('dark'));
+  if (themeToggle && themeMenu) {
+    syncThemeUI();
 
-  if (themeToggle) {
-    themeToggle.addEventListener('click', function () {
-      var isDark = !root.classList.contains('dark');
-      applyTheme(isDark);
-      try {
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      } catch (e) {}
+    themeToggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      var isOpen = !themeMenu.hidden;
+      themeMenu.hidden = isOpen;
+      themeToggle.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    // 主题选项
+    themeMenu.addEventListener('click', function (e) {
+      var target = e.target && e.target.closest ? e.target.closest('[data-theme-id]') : null;
+      if (target) {
+        setThemeId(target.getAttribute('data-theme-id'));
+        themeMenu.hidden = true;
+        themeToggle.setAttribute('aria-expanded', 'false');
+        return;
+      }
+      // 模式选项
+      var modeBtn = e.target && e.target.closest ? e.target.closest('[data-mode]') : null;
+      if (modeBtn) {
+        setMode(modeBtn.getAttribute('data-mode'));
+        themeMenu.hidden = true;
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // 点外面关闭
+    document.addEventListener('click', function (e) {
+      if (themePicker && !themePicker.contains(e.target)) {
+        themeMenu.hidden = true;
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // ESC 关闭
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !themeMenu.hidden) {
+        themeMenu.hidden = true;
+        themeToggle.setAttribute('aria-expanded', 'false');
+      }
     });
   }
 

@@ -25,7 +25,7 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/favicon.svg`;
 ---
 
 <!doctype html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="atom-default" data-mode="light">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -79,12 +79,19 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/favicon.svg`;
     <title>{fullTitle}</title>
     <script is:inline>
       // Apply theme synchronously before page render to avoid FOUC
+      // 多主题系统: localStorage.themeId (主题 ID) + localStorage.themeMode ('light'|'dark')
       (function () {
-        var saved = localStorage.getItem('theme');
-        var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        if (saved === 'dark' || (!saved && prefersDark)) {
-          document.documentElement.classList.add('dark');
+        var html = document.documentElement;
+        var DEFAULT_ID = 'atom-default';
+        var VALID_IDS = ['atom-default', 'solarized', 'sepia'];
+        var id = localStorage.getItem('themeId');
+        var mode = localStorage.getItem('themeMode');
+        if (!id || VALID_IDS.indexOf(id) === -1) id = DEFAULT_ID;
+        if (mode !== 'light' && mode !== 'dark') {
+          mode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
         }
+        html.setAttribute('data-theme', id);
+        html.setAttribute('data-mode', mode);
       })();
     </script>
     <slot name="head" />

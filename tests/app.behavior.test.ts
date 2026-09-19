@@ -43,8 +43,17 @@ beforeEach(() => {
  * 用 jsdom 装载一个最小可用的 DOM 骨架，然后执行 app.js。
  * 每次 beforeEach 都重新 setup，互不干扰。
  */
-function setupPage(html: string) {
-  document.documentElement.innerHTML = html;
+function setupPage(html: string, opts: { theme?: string; mode?: string } = {}) {
+  // jsdom 中 document.documentElement.innerHTML 重写不可靠
+  // 正确做法: 清 body + 手动设 html 属性 + 抽 <body>...</body> 内容到 body.innerHTML
+  document.body.innerHTML = '';
+  document.documentElement.setAttribute('data-theme', opts.theme || 'atom-default');
+  document.documentElement.setAttribute('data-mode', opts.mode || 'light');
+  var bodyContent = html
+    .replace(/^[\s\S]*?<body[^>]*>/, '')
+    .replace(/<\/body>[\s\S]*$/, '')
+    .trim();
+  document.body.innerHTML = bodyContent;
   // 重置 globalThis 状态
   // @ts-ignore
   delete (globalThis as any).__atomBlogInternals;
@@ -58,57 +67,107 @@ function setupPage(html: string) {
 afterEach(() => {
   vi.restoreAllMocks();
   // 清空 body 防止跨测试污染
-  document.documentElement.innerHTML = '';
+  document.body.innerHTML = '';
+  document.documentElement.setAttribute('data-theme', 'atom-default');
+  document.documentElement.setAttribute('data-mode', 'light');
 });
 
 // ============================================================
-// Theme toggle
+// Theme picker (multi-theme system)
 // ============================================================
-describe('theme toggle', () => {
+describe('theme picker', () => {
   beforeEach(() => {
-    setupPage(`
-      <html>
-        <body>
-          <button id="theme-toggle">🌙</button>
-        </body>
-      </html>
-    `);
+    setupPage(
+      `
+      <body>
+        <div class="theme-picker" id="theme-picker">
+          <button id="theme-toggle" aria-expanded="false">
+            <span id="theme-toggle-icon">🌙</span>
+          </button>
+          <div id="theme-menu" role="menu" hidden>
+            <button class="theme-option" data-theme-id="atom-default">Atom Default</button>
+            <button class="theme-option" data-theme-id="solarized">Solarized</button>
+            <button class="theme-option" data-theme-id="sepia">Sepia</button>
+            <button class="theme-option" data-mode="light">Light</button>
+            <button class="theme-option" data-mode="dark">Dark</button>
+          </div>
+        </div>
+      </body>
+    `,
+      { theme: 'atom-default', mode: 'light' },
+    );
   });
 
-  it('toggles .dark class on click', () => {
+  it('opens menu on toggle click', () => {
     const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
-    expect(document.documentElement.classList.contains('dark')).toBe(false);
+    const menu = document.getElementById('theme-menu') as HTMLElement;
+    expect(menu.hidden).toBe(true);
     btn.click();
-    expect(document.documentElement.classList.contains('dark')).toBe(true);
+    expect(menu.hidden).toBe(false);
+    expect(btn.getAttribute('aria-expanded')).toBe('true');
     btn.click();
-    expect(document.documentElement.classList.contains('dark')).toBe(false);
+    expect(menu.hidden).toBe(true);
+    expect(btn.getAttribute('aria-expanded')).toBe('false');
   });
 
-  it('updates button text on toggle', () => {
+  it('changes data-theme attribute on theme option click', () => {
     const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
     btn.click();
-    // dark mode → sun icon
-    expect(btn.textContent).toBe('\u2600\uFE0F');
-    btn.click();
-    // light mode → moon icon
-    expect(btn.textContent).toBe('\uD83C\uDF19');
+    const solarizedOpt = document.querySelector('[data-theme-id="solarized"]') as HTMLButtonElement;
+    solarizedOpt.click();
+    expect(document.documentElement.getAttribute('data-theme')).toBe('solarized');
+    expect(localStorage.getItem('themeId')).toBe('solarized');
+    // menu closes after selection
+    expect((document.getElementById('theme-menu') as HTMLElement).hidden).toBe(true);
   });
 
-  it('persists theme to localStorage', () => {
+  it('changes data-mode attribute on mode option click', () => {
     const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
     btn.click();
-    expect(localStorage.getItem('theme')).toBe('dark');
-    btn.click();
-    expect(localStorage.getItem('theme')).toBe('light');
+    const darkOpt = document.querySelector('[data-mode="dark"]') as HTMLButtonElement;
+    darkOpt.click();
+    expect(document.documentElement.getAttribute('data-mode')).toBe('dark');
+    expect(localStorage.getItem('themeMode')).toBe('dark');
   });
 
-  it('does not throw if button is missing', () => {
-    document.getElementById('theme-toggle')?.remove();
-    expect(() => {
-      // 重新执行 app.js 看是否正常
-      // @ts-ignore
-      eval(APP_JS);
-    }).not.toThrow();
+  it('updates toggle icon when mode changes', () => {
+    const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
+    btn.click();
+    const darkOpt = document.querySelector('[data-mode="dark"]') as HTMLButtonElement;
+    darkOpt.click();
+    const icon = document.getElementById('theme-toggle-icon');
+    expect(icon?.textContent).toBe('\u2600\uFE0F'); // sun in dark mode
+    btn.click();
+    const lightOpt = document.querySelector('[data-mode="light"]') as HTMLButtonElement;
+    lightOpt.click();
+    expect(icon?.textContent).toBe('\uD83C\uDF19'); // moon in light mode
+  });
+
+  it('closes menu on outside click', () => {
+    const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
+    btn.click();
+    const menu = document.getElementById('theme-menu') as HTMLElement;
+    expect(menu.hidden).toBe(false);
+    // click outside
+    document.body.click();
+    expect(menu.hidden).toBe(true);
+  });
+
+  it('closes menu on ESC key', () => {
+    const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
+    btn.click();
+    const menu = document.getElementById('theme-menu') as HTMLElement;
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+    expect(menu.hidden).toBe(true);
+  });
+
+  it('marks active theme option', () => {
+    const btn = document.getElementById('theme-toggle') as HTMLButtonElement;
+    btn.click();
+    const defaultOpt = document.querySelector('[data-theme-id="atom-default"]') as HTMLButtonElement;
+    expect(defaultOpt.classList.contains('active')).toBe(true);
+    const solarizedOpt = document.querySelector('[data-theme-id="solarized"]') as HTMLButtonElement;
+    expect(solarizedOpt.classList.contains('active')).toBe(false);
   });
 });
 

@@ -1,88 +1,96 @@
 /* Atom Blog — Global Styles */
 /* 主入口文件，按依赖顺序引入各模块 */
-/* 
+/*
  * 模块组织:
- *  1. _variables   → CSS 变量（颜色/间距/字体/圆角）
- *  2. _reset       → 浏览器默认样式重置
- *  3. _background  → 页面背景纹理
- *  4. _scrollbar   → 自定义滚动条
- *  5. _header      → 导航栏
- *  6. _search      → 搜索框
- *  7. _hero        → 首屏 Hero 区域
- *  8. _buttons     → 按钮
- *  9. _sections    → 页面标题/计数
- * 10. _postcards   → 文章卡片
- * 11. _tags        → 标签 & 分类
- * 12. _pages       → 分类/标签列表页
- * 13. _post        → 文章正文内容
- * 14. _post-extras → 打赏/上一篇下一篇
- * 15. _pagination  → 分页
- * 16. _progress    → 阅读进度条
- * 17. _about       → 关于页
- * 18. _footer      → 页脚
- * 19. _layout      → 全局布局 & 动画
- * 20. _responsive  → 响应式断点
+ *  1. _variables   → 共享 CSS 变量（间距/字体/圆角/布局）
+ *  2. themes       → 所有已注册主题（运行时按 data-theme 切换）
+ *  3. _reset       → 浏览器默认样式重置
+ *  4. _background  → 页面背景纹理
+ *  5. _scrollbar   → 自定义滚动条
+ *  6. _header      → 导航栏
+ *  7. _search      → 搜索框
+ *  8. _hero        → 首屏 Hero 区域
+ *  9. _buttons     → 按钮
+ * 10. _sections    → 页面标题/计数
+ * 11. _postcards   → 文章卡片
+ * 12. _tags        → 标签 & 分类
+ * 13. _pages       → 分类/标签列表页
+ * 14. _post        → 文章正文内容
+ * 15. _post-extras → 打赏/上一篇下一篇
+ * 16. _pagination  → 分页
+ * 17. _progress    → 阅读进度条
+ * 18. _about       → 关于页
+ * 19. _footer      → 页脚
+ * 20. _layout      → 全局布局 & 动画
+ * 21. _responsive  → 响应式断点
  */
 
-/* 1. CSS Variables */
+/* 1. Shared variables (layout, typography, radius — 跨主题共享) */
 @import './_modules/_variables.css';
 
-/* 2. Reset */
+/* 2. Themes (每个主题提供自己的颜色 token 集合) */
+@import '../themes/atom-default/light.css';
+@import '../themes/atom-default/dark.css';
+@import '../themes/solarized/light.css';
+@import '../themes/solarized/dark.css';
+@import '../themes/sepia/light.css';
+
+/* 3. Reset */
 @import './_modules/_reset.css';
 
-/* 3. Background */
+/* 4. Background */
 @import './_modules/_background.css';
 
-/* 4. Scrollbar */
+/* 5. Scrollbar */
 @import './_modules/_scrollbar.css';
 
-/* 5. Header & Navigation */
+/* 6. Header & Navigation */
 @import './_modules/_header.css';
 
-/* 6. Search */
+/* 7. Search */
 @import './_modules/_search.css';
 
-/* 7. Hero Section */
+/* 8. Hero Section */
 @import './_modules/_hero.css';
 
-/* 8. Buttons */
+/* 9. Buttons */
 @import './_modules/_buttons.css';
 
-/* 9. Section Headers */
+/* 10. Section Headers */
 @import './_modules/_sections.css';
 
-/* 10. Post Cards */
+/* 11. Post Cards */
 @import './_modules/_postcards.css';
 
-/* 11. Tags */
+/* 12. Tags */
 @import './_modules/_tags.css';
 
-/* 12. Pages (Category/Tag listing) */
+/* 13. Pages (Category/Tag listing) */
 @import './_modules/_pages.css';
 
-/* 13. Post Content (Markdown styles) */
+/* 14. Post Content (Markdown styles) */
 @import './_modules/_post.css';
 
-/* 14. Post Extras (Reward, Navigation) */
+/* 15. Post Extras (Reward, Navigation) */
 @import './_modules/_post-extras.css';
 
-/* 14b. Table of Contents */
+/* 15b. Table of Contents */
 @import './_modules/_toc.css';
 
-/* 15. Pagination */
+/* 16. Pagination */
 @import './_modules/_pagination.css';
 
-/* 16. Reading Progress */
+/* 17. Reading Progress */
 @import './_modules/_progress.css';
 
-/* 17. About Page */
+/* 18. About Page */
 @import './_modules/_about.css';
 
-/* 18. Footer */
+/* 19. Footer */
 @import './_modules/_footer.css';
 
-/* 19. Layout & Animations */
+/* 20. Layout & Animations */
 @import './_modules/_layout.css';
 
-/* 20. Responsive */
+/* 21. Responsive */
 @import './_modules/_responsive.css';
