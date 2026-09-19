@@ -6,6 +6,8 @@ public/_assets/
 
 # postbuild minify 产物（源在 src/scripts/app.js，scripts/minify-app-js.mjs 生成这里）
 public/js/
+# 同上：minify 脚本为子路径部署额外生成（public/<base>/js/app.js）
+public/*/js/
 
 # 依赖
 node_modules/
