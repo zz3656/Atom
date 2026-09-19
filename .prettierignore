@@ -1,0 +1,9 @@
+node_modules
+dist
+.astro
+coverage
+public/_assets
+public/js
+package-lock.json
+*.min.js
+*.min.css
