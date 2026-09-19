@@ -130,10 +130,13 @@
       var isCurrentMode = modeOpt.getAttribute('data-mode') === mode;
       modeOpt.classList.toggle('active', isCurrentMode);
       // 单模式主题：dark 选项变灰、不可点
+      // 重要：不能用 button.disabled = true 屏蔽点击！
+      // 那样会导致 click 事件根本不触发，后面的关闭菜单逻辑跑不到。
+      // 改为：仅设 aria-disabled + 依赖 CSS 的 pointer-events: none
       var disableDark = isDarkOpt && !supportsDark;
       modeOpt.classList.toggle('disabled', disableDark);
       modeOpt.setAttribute('aria-disabled', disableDark ? 'true' : 'false');
-      modeOpt.disabled = disableDark;
+      // 不设 modeOpt.disabled，避免屏蔽 click 事件
     }
   }
 
