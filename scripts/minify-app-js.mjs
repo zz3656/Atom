@@ -7,8 +7,8 @@
 //   同时源代码仍受 ESLint/Prettier 控制。
 
 import { build } from 'esbuild';
-import { copyFileSync, existsSync, statSync, unlinkSync } from 'node:fs';
-import { join } from 'node:path';
+import { copyFileSync, existsSync, mkdirSync, statSync, unlinkSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 
 const SRC = join(process.cwd(), 'src', 'scripts', 'app.js');
 const DST = join(process.cwd(), 'public', 'js', 'app.js');
@@ -17,6 +17,9 @@ if (!existsSync(SRC)) {
   console.log('No src/scripts/app.js found, skipping minification');
   process.exit(0);
 }
+
+// 确保目标目录存在（首次克隆的仓库因 .gitignore 排除 public/js/，可能没有该目录）
+mkdirSync(dirname(DST), { recursive: true });
 
 const before = statSync(SRC).size;
 
