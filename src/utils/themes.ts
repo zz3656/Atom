@@ -2,7 +2,7 @@
 // 扫描 src/themes/ 目录，构建类型安全的主题清单。
 
 import { readdirSync, readFileSync, statSync, existsSync } from 'node:fs';
-import { join, dirname, relative } from 'node:path';
+import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -85,11 +85,4 @@ export function isValidThemeId(id: string): boolean {
  */
 export function isValidMode(mode: string): mode is 'light' | 'dark' {
   return mode === 'light' || mode === 'dark';
-}
-
-/**
- * 计算主题 ID 的相对路径（在调试日志中显示用）。
- */
-export function themeDir(id: string): string {
-  return relative(process.cwd(), join(THEMES_DIR, id));
 }

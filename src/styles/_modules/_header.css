@@ -13,7 +13,7 @@
   transition: background 0.3s ease;
 }
 
-html.dark .site-header {
+html[data-mode="dark"] .site-header {
   background: rgba(10, 10, 15, 0.85);
 }
 
@@ -72,10 +72,10 @@ html.dark .site-header {
   flex-shrink: 0;
 }
 
-html:not(.dark) .site-title:hover {
+html:not([data-mode="dark"]) .site-title:hover {
   color: var(--accent);
 }
-html.dark .site-title:hover {
+html[data-mode="dark"] .site-title:hover {
   color: var(--accent);
   text-shadow: 0 0 20px var(--accent-glow);
 }
@@ -114,15 +114,15 @@ html.dark .site-title:hover {
   font-weight: 600;
 }
 
-html:not(.dark) .nav-link.active {
+html:not([data-mode="dark"]) .nav-link.active {
   background: var(--accent-glow-strong);
 }
 
-html:not(.dark) .nav-link::after {
+html:not([data-mode="dark"]) .nav-link::after {
   content: none;
 }
 
-html.dark .nav-link::after {
+html[data-mode="dark"] .nav-link::after {
   content: '';
   position: absolute;
   bottom: 0;
@@ -134,11 +134,11 @@ html.dark .nav-link::after {
   transition: transform 0.3s ease;
 }
 
-html.dark .nav-link.active::after {
+html[data-mode="dark"] .nav-link.active::after {
   transform: translateX(-50%) scaleX(1);
 }
 
-html.dark .nav-link:hover::after {
+html[data-mode="dark"] .nav-link:hover::after {
   transform: translateX(-50%) scaleX(1);
 }
 
@@ -155,13 +155,13 @@ html.dark .nav-link:hover::after {
   color: var(--text-secondary);
 }
 
-html:not(.dark) .theme-toggle:hover {
+html:not([data-mode="dark"]) .theme-toggle:hover {
   border-color: var(--accent);
   color: var(--accent);
   transform: rotate(15deg);
 }
 
-html.dark .theme-toggle:hover {
+html[data-mode="dark"] .theme-toggle:hover {
   border-color: var(--accent);
   color: var(--accent);
   box-shadow: 0 0 10px var(--accent-glow);

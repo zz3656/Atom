@@ -15,12 +15,12 @@
   white-space: nowrap;
 }
 
-html:not(.dark) .tag:hover {
+html:not([data-mode="dark"]) .tag:hover {
   background: var(--tag-active-bg);
   border-color: var(--accent);
   color: var(--accent);
 }
-html.dark .tag:hover {
+html[data-mode="dark"] .tag:hover {
   background: var(--tag-active-bg);
   border-color: var(--accent);
   color: var(--accent);
@@ -40,11 +40,11 @@ html.dark .tag:hover {
   transition: all 0.2s ease;
 }
 
-html:not(.dark) .post-category-tag:hover {
+html:not([data-mode="dark"]) .post-category-tag:hover {
   background: var(--cat-active-bg);
   border-color: var(--cat-text);
 }
-html.dark .post-category-tag:hover {
+html[data-mode="dark"] .post-category-tag:hover {
   background: var(--cat-active-bg);
   border-color: var(--cat-text);
 }

@@ -23,9 +23,9 @@
   transition: width 0.08s linear;
 }
 
-html:not(.dark) .reading-progress-fill {
+html:not([data-mode="dark"]) .reading-progress-fill {
   box-shadow: none;
 }
-html.dark .reading-progress-fill {
+html[data-mode="dark"] .reading-progress-fill {
   box-shadow: 0 0 6px var(--accent);
 }

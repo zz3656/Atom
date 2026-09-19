@@ -71,10 +71,10 @@
   color: var(--accent);
 }
 
-html:not(.dark) .post-nav a:hover {
+html:not([data-mode="dark"]) .post-nav a:hover {
   color: var(--accent);
 }
-html.dark .post-nav a:hover {
+html[data-mode="dark"] .post-nav a:hover {
   color: var(--accent);
 }
 
@@ -98,7 +98,7 @@ html.dark .post-nav a:hover {
   background: var(--bg-card);
 }
 
-html:not(.dark) .post-nav-link:hover {
+html:not([data-mode="dark"]) .post-nav-link:hover {
   border-color: var(--accent);
   background: var(--bg-card-hover);
   color: var(--accent);
@@ -106,7 +106,7 @@ html:not(.dark) .post-nav-link:hover {
   transform: translateY(-1px);
 }
 
-html.dark .post-nav-link:hover {
+html[data-mode="dark"] .post-nav-link:hover {
   border-color: var(--accent);
   background: var(--bg-card-hover);
   color: var(--accent);

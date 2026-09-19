@@ -179,6 +179,30 @@
         themeToggle.setAttribute('aria-expanded', 'false');
       }
     });
+
+    // 跟随系统主题：仅在用户从未手动设置过时生效。
+    // localStorage 键 'themeModeAuto' === '0' 表示用户明确选择过模式，不再跟随系统。
+    var mql = window.matchMedia('(prefers-color-scheme: dark)');
+    var handleSystemThemeChange = function (e) {
+      try {
+        if (localStorage.getItem('themeModeAuto') === '0') return;
+        setMode(e.matches ? 'dark' : 'light');
+      } catch (err) { /* localStorage 不可用，静默 */ }
+    };
+    // 现代浏览器用 addEventListener，旧版 Safari 兼容 addListener
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handleSystemThemeChange);
+    } else if (mql.addListener) {
+      mql.addListener(handleSystemThemeChange);
+    }
+
+    // 用户点击模式选项后，记录“已手动设置”，不再跟随系统主题。
+    // 复用原有菜单点击事件：检测到点击了 [data-mode] 按钮后写入标记。
+    themeMenu.addEventListener('click', function markManualMode(e) {
+      if (e.target && e.target.closest && e.target.closest('[data-mode]')) {
+        try { localStorage.setItem('themeModeAuto', '0'); } catch (err) {}
+      }
+    });
   }
 
   // ============================================================

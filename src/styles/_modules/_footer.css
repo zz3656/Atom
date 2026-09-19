@@ -9,7 +9,7 @@
   transition: background 0.3s ease;
 }
 
-html:not(.dark) .site-footer::before {
+html:not([data-mode="dark"]) .site-footer::before {
   content: '';
   position: absolute;
   top: -1px;
@@ -20,7 +20,7 @@ html:not(.dark) .site-footer::before {
   opacity: 0.15;
 }
 
-html.dark .site-footer::before {
+html[data-mode="dark"] .site-footer::before {
   content: '';
   position: absolute;
   top: -1px;
@@ -48,17 +48,17 @@ html.dark .site-footer::before {
   gap: 1.5rem;
 }
 
-html:not(.dark) .footer-links a,
-html.dark .footer-links a {
+html:not([data-mode="dark"]) .footer-links a,
+html[data-mode="dark"] .footer-links a {
   color: var(--text-muted);
   font-weight: 500;
   transition: all 0.2s;
 }
 
-html:not(.dark) .footer-links a:hover {
+html:not([data-mode="dark"]) .footer-links a:hover {
   color: var(--accent);
 }
-html.dark .footer-links a:hover {
+html[data-mode="dark"] .footer-links a:hover {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }

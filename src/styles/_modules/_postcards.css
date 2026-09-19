@@ -31,7 +31,7 @@
 }
 
 /* Top accent line on hover */
-html:not(.dark) .post-card a::before {
+html:not([data-mode="dark"]) .post-card a::before {
   content: '';
   position: absolute;
   top: 0;
@@ -42,7 +42,7 @@ html:not(.dark) .post-card a::before {
   opacity: 0;
   transition: opacity 0.3s;
 }
-html.dark .post-card a::before {
+html[data-mode="dark"] .post-card a::before {
   content: '';
   position: absolute;
   top: 0;
@@ -54,21 +54,21 @@ html.dark .post-card a::before {
   transition: opacity 0.3s;
 }
 
-html:not(.dark) .post-card a:hover {
+html:not([data-mode="dark"]) .post-card a:hover {
   transform: translateY(-3px);
   border-color: var(--border-glow);
   box-shadow: var(--shadow-md);
 }
-html:not(.dark) .post-card a:hover::before {
+html:not([data-mode="dark"]) .post-card a:hover::before {
   opacity: 0.6;
 }
 
-html.dark .post-card a:hover {
+html[data-mode="dark"] .post-card a:hover {
   transform: translateY(-3px);
   border-color: var(--border-glow);
   box-shadow: var(--shadow-glow);
 }
-html.dark .post-card a:hover::before {
+html[data-mode="dark"] .post-card a:hover::before {
   opacity: 0.6;
 }
 
@@ -92,10 +92,10 @@ html.dark .post-card a:hover::before {
   overflow: hidden;
 }
 
-html:not(.dark) .post-card a:hover .post-card-title {
+html:not([data-mode="dark"]) .post-card a:hover .post-card-title {
   color: var(--accent);
 }
-html.dark .post-card a:hover .post-card-title {
+html[data-mode="dark"] .post-card a:hover .post-card-title {
   color: var(--accent);
 }
 
@@ -172,24 +172,24 @@ html.dark .post-card a:hover .post-card-title {
   position: relative;
 }
 
-html:not(.dark) .post-list .post-card a {
+html:not([data-mode="dark"]) .post-list .post-card a {
   background: var(--bg-card);
   border: 1px solid var(--border-light);
   border-left: 2px solid transparent;
 }
-html:not(.dark) .post-list .post-card a:hover {
+html:not([data-mode="dark"]) .post-list .post-card a:hover {
   border-left-color: var(--accent);
   background: var(--accent-glow);
   box-shadow: none;
   transform: none;
 }
 
-html.dark .post-list .post-card a {
+html[data-mode="dark"] .post-list .post-card a {
   background: transparent;
   border: 1px solid transparent;
   border-left: 2px solid var(--border-color);
 }
-html.dark .post-list .post-card a:hover {
+html[data-mode="dark"] .post-list .post-card a:hover {
   border-left-color: var(--accent);
   background: var(--accent-glow);
   box-shadow:
@@ -212,16 +212,16 @@ html.dark .post-list .post-card a:hover {
   user-select: none;
 }
 
-html.dark .post-card-index {
+html[data-mode="dark"] .post-card-index {
   color: var(--accent);
   opacity: 0.5;
   text-shadow: 0 0 6px var(--accent-glow);
 }
 
-html:not(.dark) .post-list .post-card a:hover .post-card-index {
+html:not([data-mode="dark"]) .post-list .post-card a:hover .post-card-index {
   color: var(--accent);
 }
-html.dark .post-list .post-card a:hover .post-card-index {
+html[data-mode="dark"] .post-list .post-card a:hover .post-card-index {
   opacity: 1;
   color: var(--accent);
 }
@@ -247,10 +247,10 @@ html.dark .post-list .post-card a:hover .post-card-index {
   overflow: hidden;
 }
 
-html:not(.dark) .post-list .post-card a:hover .post-card-title {
+html:not([data-mode="dark"]) .post-list .post-card a:hover .post-card-title {
   color: var(--accent);
 }
-html.dark .post-list .post-card a:hover .post-card-title {
+html[data-mode="dark"] .post-list .post-card a:hover .post-card-title {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
@@ -275,7 +275,7 @@ html.dark .post-list .post-card a:hover .post-card-title {
   font-size: 0.8rem;
   color: var(--text-muted);
 }
-html.dark .post-list .post-card-date {
+html[data-mode="dark"] .post-list .post-card-date {
   color: var(--accent);
   opacity: 0.7;
 }

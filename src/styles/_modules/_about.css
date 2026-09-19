@@ -72,12 +72,12 @@
   min-height: 160px;
 }
 
-html:not(.dark) .project-card:hover {
+html:not([data-mode="dark"]) .project-card:hover {
   transform: translateY(-2px);
   border-color: var(--border-glow);
   box-shadow: var(--shadow-md);
 }
-html.dark .project-card:hover {
+html[data-mode="dark"] .project-card:hover {
   transform: translateY(-2px);
   border-color: var(--border-glow);
   box-shadow: var(--shadow-glow);
@@ -118,8 +118,8 @@ html.dark .project-card:hover {
   border-top: 1px solid var(--border-light);
 }
 
-html:not(.dark) .project-links .tag,
-html.dark .project-links .tag {
+html:not([data-mode="dark"]) .project-links .tag,
+html[data-mode="dark"] .project-links .tag {
   font-size: 0.78rem;
   padding: 0.2rem 0.55rem;
   border: 1px solid var(--border-color);
@@ -127,8 +127,8 @@ html.dark .project-links .tag {
   color: var(--text-secondary);
   transition: all 0.2s;
 }
-html:not(.dark) .project-links .tag:hover,
-html.dark .project-links .tag:hover {
+html:not([data-mode="dark"]) .project-links .tag:hover,
+html[data-mode="dark"] .project-links .tag:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
@@ -152,11 +152,11 @@ html.dark .project-links .tag:hover {
   min-height: 130px;
 }
 
-html:not(.dark) .topic-card:hover {
+html:not([data-mode="dark"]) .topic-card:hover {
   border-color: var(--border-glow);
   box-shadow: var(--shadow-md);
 }
-html.dark .topic-card:hover {
+html[data-mode="dark"] .topic-card:hover {
   border-color: var(--border-glow);
   box-shadow: var(--shadow-glow);
 }
@@ -201,11 +201,11 @@ html.dark .topic-card:hover {
   cursor: default;
 }
 
-html:not(.dark) .skill-tag:hover {
+html:not([data-mode="dark"]) .skill-tag:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
-html.dark .skill-tag:hover {
+html[data-mode="dark"] .skill-tag:hover {
   border-color: var(--accent);
   color: var(--accent);
   box-shadow: var(--shadow-glow);

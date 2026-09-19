@@ -2,7 +2,7 @@
 /* 页面背景纹理，不同主题使用不同图案 */
 
 /* Light theme: grid + radial gradients */
-html:not(.dark) body::before {
+html:not([data-mode="dark"]) body::before {
   content: '';
   position: fixed;
   inset: 0;
@@ -21,7 +21,7 @@ html:not(.dark) body::before {
 }
 
 /* Dark theme: simple grid */
-html.dark body::before {
+html[data-mode="dark"] body::before {
   content: '';
   position: fixed;
   inset: 0;

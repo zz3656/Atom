@@ -26,10 +26,10 @@
   border-radius: 2px;
 }
 
-html:not(.dark) .section-title::before {
+html:not([data-mode="dark"]) .section-title::before {
   box-shadow: none;
 }
-html.dark .section-title::before {
+html[data-mode="dark"] .section-title::before {
   box-shadow: 0 0 8px var(--accent-glow);
 }
 

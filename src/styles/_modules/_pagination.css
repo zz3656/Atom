@@ -23,13 +23,13 @@
   transition: all 0.25s;
 }
 
-html:not(.dark) .page-btn:hover {
+html:not([data-mode="dark"]) .page-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
-html.dark .page-btn:hover {
+html[data-mode="dark"] .page-btn:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: #000;
@@ -72,6 +72,6 @@ html.dark .page-btn:hover {
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
-html.dark .page-link.active {
+html[data-mode="dark"] .page-link.active {
   box-shadow: 0 0 15px var(--accent-glow);
 }

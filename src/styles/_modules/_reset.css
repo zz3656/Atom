@@ -21,6 +21,8 @@ button {
 }
 
 html {
+  /* 告诉浏览器页面同时支持亮色与暗色 — 滚动条、表单控件、<input type=date> 等会随之适配 */
+  color-scheme: light dark;
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -52,11 +54,11 @@ a {
   transition: all 0.25s ease;
 }
 
-html:not(.dark) a:hover {
+html:not([data-mode="dark"]) a:hover {
   text-shadow: none;
 }
 
-html.dark a:hover {
+html[data-mode="dark"] a:hover {
   color: var(--accent-hover);
   text-shadow: 0 0 8px var(--accent-glow-strong);
 }

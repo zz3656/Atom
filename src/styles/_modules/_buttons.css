@@ -13,20 +13,20 @@
   border: 1px solid transparent;
 }
 
-html:not(.dark) .btn-primary {
+html:not([data-mode="dark"]) .btn-primary {
   background: var(--accent);
   color: #fff;
   border-color: var(--accent);
   box-shadow: 0 1px 3px rgba(99, 102, 241, 0.3);
 }
-html:not(.dark) .btn-primary:hover {
+html:not([data-mode="dark"]) .btn-primary:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
   color: #fff;
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
 }
-html.dark .btn-primary {
+html[data-mode="dark"] .btn-primary {
   background: var(--accent);
   color: #000;
   border-color: var(--accent);
@@ -34,7 +34,7 @@ html.dark .btn-primary {
     0 0 15px var(--accent-glow),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
-html.dark .btn-primary:hover {
+html[data-mode="dark"] .btn-primary:hover {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
   color: #000;
@@ -44,21 +44,21 @@ html.dark .btn-primary:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-html:not(.dark) .btn-secondary {
+html:not([data-mode="dark"]) .btn-secondary {
   background: transparent;
   color: var(--text-primary);
   border-color: var(--border-color);
 }
-html:not(.dark) .btn-secondary:hover {
+html:not([data-mode="dark"]) .btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
 }
-html.dark .btn-secondary {
+html[data-mode="dark"] .btn-secondary {
   background: transparent;
   color: var(--text-primary);
   border-color: var(--border-color);
 }
-html.dark .btn-secondary:hover {
+html[data-mode="dark"] .btn-secondary:hover {
   border-color: var(--accent);
   color: var(--accent);
   box-shadow: 0 0 15px var(--accent-glow);

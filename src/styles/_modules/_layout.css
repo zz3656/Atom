@@ -57,13 +57,13 @@ html body * {
   }
 }
 
-html:not(.dark) .hero,
-html.dark .hero {
+html:not([data-mode="dark"]) .hero,
+html[data-mode="dark"] .hero {
   animation: fadeInUp 0.5s ease-out;
 }
 
-html:not(.dark) .post-card,
-html.dark .post-card {
+html:not([data-mode="dark"]) .post-card,
+html[data-mode="dark"] .post-card {
   animation: fadeInUp 0.4s ease-out;
 }
 
@@ -104,7 +104,7 @@ html.dark .post-card {
   transform: translateY(-3px);
 }
 
-html.dark .back-to-top {
+html[data-mode="dark"] .back-to-top {
   color: #000;
   box-shadow: var(--shadow-glow);
 }

@@ -34,14 +34,14 @@
   line-height: 1.2;
 }
 
-html:not(.dark) .unified-page-header h1 {
+html:not([data-mode="dark"]) .unified-page-header h1 {
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-html.dark .unified-page-header h1 {
+html[data-mode="dark"] .unified-page-header h1 {
   background: var(--accent-gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -58,7 +58,7 @@ html.dark .unified-page-header h1 {
   border-radius: 1px;
 }
 
-html.dark .unified-page-header::after {
+html[data-mode="dark"] .unified-page-header::after {
   box-shadow: 0 0 10px var(--accent-glow);
 }
 
@@ -92,14 +92,14 @@ html.dark .unified-page-header::after {
   text-decoration: none;
 }
 
-html:not(.dark) .category-card:hover,
-html:not(.dark) .tag-card:hover {
+html:not([data-mode="dark"]) .category-card:hover,
+html:not([data-mode="dark"]) .tag-card:hover {
   border-color: var(--border-glow);
   box-shadow: var(--shadow);
   transform: translateY(-1px);
 }
-html.dark .category-card:hover,
-html.dark .tag-card:hover {
+html[data-mode="dark"] .category-card:hover,
+html[data-mode="dark"] .tag-card:hover {
   border-color: var(--border-glow);
   box-shadow: var(--shadow-glow);
   transform: translateY(-1px);
@@ -113,17 +113,17 @@ html.dark .tag-card:hover {
   font-family: var(--font-mono);
 }
 
-html:not(.dark) .category-card:hover .category-card-name {
+html:not([data-mode="dark"]) .category-card:hover .category-card-name {
   color: var(--accent);
 }
-html.dark .category-card:hover .category-card-name {
+html[data-mode="dark"] .category-card:hover .category-card-name {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
-html:not(.dark) .tag-card:hover .tag-card-label {
+html:not([data-mode="dark"]) .tag-card:hover .tag-card-label {
   color: var(--accent);
 }
-html.dark .tag-card:hover .tag-card-label {
+html[data-mode="dark"] .tag-card:hover .tag-card-label {
   color: var(--accent);
   text-shadow: 0 0 8px var(--accent-glow);
 }
@@ -139,20 +139,20 @@ html.dark .tag-card:hover .tag-card-label {
   white-space: nowrap;
 }
 
-html.dark .category-card-count,
-html.dark .tag-card-count {
+html[data-mode="dark"] .category-card-count,
+html[data-mode="dark"] .tag-card-count {
   color: var(--accent);
   opacity: 0.7;
 }
 
-html:not(.dark) .category-card:hover .category-card-count,
-html:not(.dark) .tag-card:hover .tag-card-count {
+html:not([data-mode="dark"]) .category-card:hover .category-card-count,
+html:not([data-mode="dark"]) .tag-card:hover .tag-card-count {
   background: var(--tag-active-bg);
   border-color: var(--accent);
   color: var(--accent);
 }
-html.dark .category-card:hover .category-card-count,
-html.dark .tag-card:hover .tag-card-count {
+html[data-mode="dark"] .category-card:hover .category-card-count,
+html[data-mode="dark"] .tag-card:hover .tag-card-count {
   opacity: 1;
   box-shadow: 0 0 6px var(--accent-glow);
 }
@@ -173,7 +173,7 @@ html.dark .tag-card:hover .tag-card-count {
   font-family: monospace;
 }
 
-html.dark .empty-list-icon {
+html[data-mode="dark"] .empty-list-icon {
   color: var(--accent);
   opacity: 0.3;
   text-shadow: 0 0 15px var(--accent-glow);
@@ -198,7 +198,7 @@ html.dark .empty-list-icon {
   margin-top: 2rem;
 }
 
-html:not(.dark) .view-all a {
+html:not([data-mode="dark"]) .view-all a {
   font-weight: 600;
   font-size: 0.9rem;
   display: inline-flex;
@@ -211,13 +211,13 @@ html:not(.dark) .view-all a {
   transition: all 0.25s;
   font-family: var(--font-mono);
 }
-html:not(.dark) .view-all a:hover {
+html:not([data-mode="dark"]) .view-all a:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: #fff;
   box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
-html.dark .view-all a {
+html[data-mode="dark"] .view-all a {
   font-weight: 600;
   font-size: 0.9rem;
   display: inline-flex;
@@ -230,7 +230,7 @@ html.dark .view-all a {
   transition: all 0.25s;
   font-family: var(--font-mono);
 }
-html.dark .view-all a:hover {
+html[data-mode="dark"] .view-all a:hover {
   background: var(--accent);
   border-color: var(--accent);
   color: #000;
