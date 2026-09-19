@@ -56,7 +56,7 @@ async function readAllBlogPosts() {
       files.map((file) => {
         const content = readFile(join(CONTENT_DIR, file), 'utf-8');
         return parseFrontmatterPromise(file, content);
-      })
+      }),
     );
     return posts;
   } catch (err) {
@@ -84,7 +84,11 @@ function parseFrontmatter(content) {
       let v = m[2].trim();
       // 解析数组
       if (v.startsWith('[') && v.endsWith(']')) {
-        v = v.slice(1, -1).split(',').map((s) => s.trim().replace(/^["']|["']$/g, '')).filter(Boolean);
+        v = v
+          .slice(1, -1)
+          .split(',')
+          .map((s) => s.trim().replace(/^["']|["']$/g, ''))
+          .filter(Boolean);
       }
       // 解析日期
       else if (/^\d{4}-\d{2}-\d{2}$/.test(v)) {
@@ -119,7 +123,10 @@ async function cmdNew(args) {
   const category = options.c || options.category;
   const tagsStr = options.t || options.tags;
   const tags = tagsStr
-    ? tagsStr.split(',').map((s) => s.trim()).filter(Boolean)
+    ? tagsStr
+        .split(',')
+        .map((s) => s.trim())
+        .filter(Boolean)
     : [];
   const description = options.de || options.description;
   const heroImage = options.i || options.image;
@@ -145,17 +152,12 @@ async function cmdNew(args) {
   // 5. 生成 frontmatter
   const desc = description || `这是一篇关于「${title}」的文章。`;
   const tagsLine = tags.length > 0 ? `tags: [${tags.join(', ')}]` : '';
-  const fmLines = [
-    '---',
-    `title: ${title}`,
-    `description: "${desc}"`,
-    `pubDate: ${pubDate}`,
-  ];
+  const fmLines = ['---', `title: ${title}`, `description: "${desc}"`, `pubDate: ${pubDate}`];
   if (category) fmLines.push(`category: ${category}`);
   if (tagsLine) fmLines.push(tagsLine);
   if (heroImage) fmLines.push(`heroImage: ${heroImage}`);
   fmLines.push('---', '');
-  if (draft) fmLines.push('>( 本文是草稿，尚未发布 )\n');
+  if (draft) fmLines.push('draft: true');
   const fm = fmLines.join('\n');
 
   // 6. 写入文件
@@ -187,9 +189,11 @@ async function cmdList(_args) {
   posts.sort((a, b) => (b.pubDate || '').localeCompare(a.pubDate || ''));
 
   posts.forEach((p, i) => {
-    const status = p.description?.includes('尚未发布') ? ' 📌' : '';
+    const status = p.draft ? ' 📌' : '';
     console.log(`  ${String(i + 1).padStart(3, ' ')}. ${p.title}`);
-    console.log(`       📅 ${p.pubDate || '-'}  📁 ${p.category || '未分类'}  🏷️ ${p.tags?.length ? p.tags.join(', ') : '-'}`);
+    console.log(
+      `       📅 ${p.pubDate || '-'}  📁 ${p.category || '未分类'}  🏷️ ${p.tags?.length ? p.tags.join(', ') : '-'}`,
+    );
     console.log(`       📂 ${p.file}`);
   });
 
@@ -201,7 +205,7 @@ async function cmdBuild(_args) {
   console.log('\n🔨 构建 Atom Blog...\n');
 
   // 1. 检查 Atom-blog 目录是否存在
-  if (!await dirExists(BLOG_REPO_DIR)) {
+  if (!(await dirExists(BLOG_REPO_DIR))) {
     console.error('  ❌ 未找到 Atom-blog 目录');
     console.error(`     预期路径: ${BLOG_REPO_DIR}`);
     console.error('     请将 Atom-blog (上线仓库) 放在 Atom (源码仓库) 的父目录下');
@@ -210,7 +214,7 @@ async function cmdBuild(_args) {
   }
 
   // 2. 检查 Atom-blog 是否是 git 仓库
-  if (!await dirExists(join(BLOG_REPO_DIR, '.git'))) {
+  if (!(await dirExists(join(BLOG_REPO_DIR, '.git')))) {
     console.error('  ❌ Atom-blog 不是 git 仓库');
     rl.close();
     return;
@@ -221,9 +225,10 @@ async function cmdBuild(_args) {
   await syncSourceToBlogRepo();
 
   // 4. 在 Atom-blog 目录构建
+  // 注意：必须把 cwd 设为 BLOG_REPO_DIR，否则 astro build 会在源仓库目录读取配置
   console.log('  🏗️  执行构建...');
   try {
-    execSync(`cd "${BLOG_REPO_DIR}" && npx astro build`, { stdio: 'inherit', cwd: ROOT });
+    execSync('npx astro build', { stdio: 'inherit', cwd: BLOG_REPO_DIR });
   } catch (err) {
     console.error('  ❌ 构建失败');
     rl.close();
@@ -233,10 +238,13 @@ async function cmdBuild(_args) {
   // 5. 提交 + 推送
   console.log('  🚀 推送到 Atom-blog...');
   try {
-    execSync(`cd "${BLOG_REPO_DIR}" && git add -A && git commit -m "Auto build: $(date +%Y-%m-%d\\ %H:%M)" && git push origin main`, {
-      stdio: 'inherit',
-      cwd: ROOT,
-    });
+    execSync(
+      'git add -A && git commit -m "Auto build: $(date +%Y-%m-%d\\ %H:%M)" && git push origin main',
+      {
+        stdio: 'inherit',
+        cwd: BLOG_REPO_DIR,
+      },
+    );
   } catch (err) {
     console.error('  ⚠️  推送失败，请手动提交');
     console.error(`     cd "${BLOG_REPO_DIR}" && git add -A && git push origin main`);
@@ -262,16 +270,8 @@ async function syncSourceToBlogRepo() {
     'src/consts.ts',
     'src/content.config.ts',
     'src/env.d.ts',
-    'src/pages/index.astro',
     'src/pages/about.astro',
     'src/pages/404.astro',
-    'src/pages/blog/index.astro',
-    'src/pages/blog/[...slug].astro',
-    'src/pages/categories/index.astro',
-    'src/pages/category/[...category].astro',
-    'src/pages/tags/index.astro',
-    'src/pages/tag/[...tag].astro',
-    'src/pages/index.astro',
   ];
 
   for (const rel of syncFiles) {
@@ -313,18 +313,51 @@ async function syncSourceToBlogRepo() {
 // ─── Options parser ───────────────────────────────────────────
 
 function parseOptions(args) {
-  const opts = { _: [], d: null, date: null, c: null, category: null, t: null, tags: null, de: null, description: null, i: null, image: null, r: null, reward: null, D: null, draft: null };
+  const opts = {
+    _: [],
+    d: null,
+    date: null,
+    c: null,
+    category: null,
+    t: null,
+    tags: null,
+    de: null,
+    description: null,
+    i: null,
+    image: null,
+    r: null,
+    reward: null,
+    D: null,
+    draft: null,
+  };
   let i = 0;
   while (i < args.length) {
     const arg = args[i];
-    if (arg === '-d' || arg === '--date') { opts.date = args[++i]; i++; }
-    else if (arg === '-c' || arg === '--category') { opts.category = args[++i]; i++; }
-    else if (arg === '-t' || arg === '--tags') { opts.tags = args[++i]; i++; }
-    else if (arg === '-de' || arg === '--description') { opts.description = args[++i]; i++; }
-    else if (arg === '-i' || arg === '--image') { opts.image = args[++i]; i++; }
-    else if (arg === '-r' || arg === '--reward') { opts.reward = args[++i]; i++; }
-    else if (arg === '-D' || arg === '--draft') { opts.draft = true; i++; }
-    else { opts._.push(arg); i++; }
+    if (arg === '-d' || arg === '--date') {
+      opts.date = args[++i];
+      i++;
+    } else if (arg === '-c' || arg === '--category') {
+      opts.category = args[++i];
+      i++;
+    } else if (arg === '-t' || arg === '--tags') {
+      opts.tags = args[++i];
+      i++;
+    } else if (arg === '-de' || arg === '--description') {
+      opts.description = args[++i];
+      i++;
+    } else if (arg === '-i' || arg === '--image') {
+      opts.image = args[++i];
+      i++;
+    } else if (arg === '-r' || arg === '--reward') {
+      opts.reward = args[++i];
+      i++;
+    } else if (arg === '-D' || arg === '--draft') {
+      opts.draft = true;
+      i++;
+    } else {
+      opts._.push(arg);
+      i++;
+    }
   }
   return opts;
 }
@@ -332,14 +365,21 @@ function parseOptions(args) {
 // ─── File utils ───────────────────────────────────────────────
 
 async function fileExists(path) {
-  try { await readFile(path, 'utf-8'); return true; } catch { return false; }
+  try {
+    await readFile(path, 'utf-8');
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 async function dirExists(path) {
   try {
     const stat = await (await import('node:fs/promises')).stat(path);
     return stat.isDirectory();
-  } catch { return false; }
+  } catch {
+    return false;
+  }
 }
 
 async function findFilesRecursively(dir) {
@@ -350,7 +390,7 @@ async function findFilesRecursively(dir) {
     const fullPath = join(dir, entry);
     const stat = await fs.stat(fullPath);
     if (stat.isDirectory()) {
-      files.push(...await findFilesRecursively(fullPath));
+      files.push(...(await findFilesRecursively(fullPath)));
     } else if (entry.endsWith('.astro')) {
       files.push(fullPath);
     }

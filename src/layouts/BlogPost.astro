@@ -1,8 +1,10 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import FormattedDate from '../components/FormattedDate.astro';
-import { AUTHOR } from '../consts';
-import { blogPath, rootPath } from '../utils/path';
+import TableOfContents from '../components/TableOfContents.astro';
+import { AUTHOR, SITE_TITLE } from '../consts';
+import { blogPostUrl, rootPath, baseAssetsPath } from '../utils/path';
+import { readingTime, countWords } from '../utils/blog';
 
 interface Props {
   title: string;
@@ -10,65 +12,98 @@ interface Props {
   updatedDate?: Date;
   description: string;
   heroImage?: string;
+  featuredImage?: string;
   category?: string;
   tags?: string[];
   reward?: boolean;
+  body?: string;
   prevPost?: { title: string; slug: string };
   nextPost?: { title: string; slug: string };
+  relatedPosts?: { title: string; slug: string }[];
+  toc?: { depth: number; slug: string; text: string }[];
 }
 
-const { title, pubDate, updatedDate, description, heroImage, category = '', tags = [], reward = false, prevPost, nextPost } = Astro.props;
+const {
+  title,
+  pubDate,
+  updatedDate,
+  description,
+  heroImage,
+  featuredImage,
+  category = '',
+  tags = [],
+  reward = false,
+  body = '',
+  prevPost,
+  nextPost,
+  relatedPosts = [],
+  toc = [],
+} = Astro.props;
+const readingMinutes = readingTime(body || '');
 ---
 
-<BaseLayout title={title} description={description} image={heroImage || undefined} type="article">
+<BaseLayout
+  title={title}
+  description={description}
+  image={featuredImage || heroImage || undefined}
+  type="article"
+>
   <fragment slot="head">
-    <script type="application/ld+json">
-      {JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BlogPosting",
-        headline: title,
-        description: description || '',
-        datePublished: pubDate.toISOString(),
-        dateModified: updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
-        author: { "@type": "Person", name: AUTHOR },
-        mainEntityOfPage: { "@type": "WebPage", "@id": Astro.url },
-      })}
-    </script>
-    <script>
-      // Reading progress bar
-      function updateProgress() {
-        const article = document.querySelector('.post-content');
-        const bar = document.querySelector('.reading-progress-fill');
-        if (!article || !bar) return;
-        const rect = article.getBoundingClientRect();
-        const total = article.scrollHeight;
-        const scrolled = Math.max(0, Math.min(1, (window.innerHeight - rect.top) / (total + window.innerHeight - rect.height)));
-        bar.style.width = (scrolled * 100) + '%';
-      }
-      window.addEventListener('scroll', updateProgress, { passive: true });
-      window.addEventListener('resize', updateProgress, { passive: true });
-      updateProgress();
-    </script>
+    {(() => {
+      const imageUrl =
+        featuredImage || heroImage ? `${Astro.url.origin}${featuredImage || heroImage}` : undefined;
+      const publisherLogo = `${Astro.url.origin}/favicon.svg`;
+      const wordCount = countWords(body || '');
+      return (
+        <script
+          type="application/ld+json"
+          set:html={JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: title,
+            name: title,
+            description: description || '',
+            datePublished: pubDate.toISOString(),
+            dateModified: updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+            image: imageUrl,
+            wordCount: wordCount,
+            timeRequired: `PT${readingMinutes}M`,
+            keywords: tags.join(', '),
+            articleSection: category || undefined,
+            author: { '@type': 'Person', name: AUTHOR },
+            publisher: {
+              '@type': 'Organization',
+              name: SITE_TITLE,
+              logo: { '@type': 'ImageObject', url: publisherLogo },
+            },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': Astro.url },
+          })}
+        ></script>
+      );
+    })()}
   </fragment>
   <div class="reading-progress-container">
-    <div class="reading-progress"><div class="reading-progress-fill"></div></div>
+    <div class="reading-progress">
+      <div class="reading-progress-fill"></div>
+    </div>
   </div>
   <article class="post">
     <div class="post-header">
       <h1>{title}</h1>
       <p class="post-description">{description}</p>
       <div class="post-meta">
-        <span>📅 <FormattedDate date={pubDate} /></span>
+        <span>
+          📅 <FormattedDate date={pubDate} />
+        </span>
         {updatedDate && (
           <span class="updated">
             🔄 更新于 <FormattedDate date={updatedDate} />
           </span>
         )}
+        {readingMinutes > 0 && <span class="reading-time">⏱️ 约 {readingMinutes} 分钟</span>}
       </div>
       <div class="post-meta-extra">
-        {category && (
-          <span class="post-category-tag">📁 {category}</span>
-        )}
+        {category && <span class="post-category-tag">📁 {category}</span>}
         {tags.length > 0 && (
           <span class="post-tags-row">
             {tags.map((tag) => (
@@ -80,37 +115,72 @@ const { title, pubDate, updatedDate, description, heroImage, category = '', tags
     </div>
     {heroImage && (
       <div class="hero-image">
-        <img src={heroImage} alt={title} loading="lazy" />
+        <img
+          src={heroImage}
+          alt={title}
+          loading="eager"
+          fetchpriority="high"
+          width="1200"
+          height="630"
+        />
       </div>
     )}
-    <div class="post-content">
-      <slot />
+    <div class="post-content-wrapper">
+      <TableOfContents headings={toc} />
+      <div class="post-content">
+        <slot />
+      </div>
     </div>
     {reward && (
       <div class="post-reward">
         <p class="reward-title">🤖 觉得文章有帮助？给 Atom 加个油</p>
         <div class="reward-qr">
           <div class="reward-item">
-            <img src="/medias/reward/wechat.png" alt="微信赞赏码" />
+            <img
+              src={baseAssetsPath('/medias/reward/wechat.png')}
+              alt="微信赞赏码"
+              width="140"
+              height="140"
+            />
             <span>微信赞赏</span>
           </div>
           <div class="reward-item">
-            <img src="/medias/reward/alipay.png" alt="支付宝收款码" />
+            <img
+              src={baseAssetsPath('/medias/reward/alipay.png')}
+              alt="支付宝收款码"
+              width="140"
+              height="140"
+            />
             <span>支付宝赞赏</span>
           </div>
         </div>
       </div>
     )}
+    {relatedPosts.length > 0 && (
+      <section class="related-posts">
+        <h3 class="related-title">📚 相关推荐</h3>
+        <ul class="related-list">
+          {relatedPosts.map((p) => (
+            <li>
+              <a href={blogPostUrl(p.slug)} class="related-link">
+                <span class="related-link-title">{p.title}</span>
+                <span class="related-link-arrow">→</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
     {prevPost || nextPost ? (
       <nav class="post-nav">
         <div class="post-nav-links">
           {prevPost && (
-            <a href={blogPath(prevPost.slug)} class="post-nav-link prev">
+            <a href={blogPostUrl(prevPost.slug)} class="post-nav-link prev">
               ← <span class="nav-label">{prevPost.title}</span>
             </a>
           )}
           {nextPost && (
-            <a href={blogPath(nextPost.slug)} class="post-nav-link next">
+            <a href={blogPostUrl(nextPost.slug)} class="post-nav-link next">
               <span class="nav-label">{nextPost.title}</span> →
             </a>
           )}

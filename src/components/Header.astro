@@ -1,5 +1,5 @@
 ---
-import { SITE_TITLE, SITE_NAME, SITE_LOGO } from '../consts';
+import { SITE_NAME, SITE_LOGO } from '../consts';
 import { baseAssetsPath } from '../utils/path';
 
 const logoSrc = baseAssetsPath(SITE_LOGO);
@@ -8,18 +8,26 @@ const logoSrc = baseAssetsPath(SITE_LOGO);
 const currentPath = Astro.url.pathname;
 
 const navLinks = [
-  { label: '首页', href: '/', active: currentPath === '/' || currentPath === baseAssetsPath('/') },
-  { label: '文章', href: '/blog', active: currentPath === baseAssetsPath('/blog') || currentPath === baseAssetsPath('/blog/') || currentPath.startsWith('/blog/') },
-  { label: '分类', href: '/categories', active: currentPath === baseAssetsPath('/categories') || currentPath === baseAssetsPath('/categories/') },
-  { label: '标签', href: '/tags', active: currentPath === baseAssetsPath('/tags') || currentPath === baseAssetsPath('/tags/') },
-  { label: '关于', href: '/about', active: currentPath === baseAssetsPath('/about') || currentPath === baseAssetsPath('/about/') },
+  { label: '首页', href: '/', active: currentPath === '/' },
+  {
+    label: '文章',
+    href: '/blog',
+    active: currentPath === '/blog' || currentPath === '/blog/' || currentPath.startsWith('/blog/'),
+  },
+  {
+    label: '分类',
+    href: '/categories',
+    active: currentPath === '/categories' || currentPath === '/categories/',
+  },
+  { label: '标签', href: '/tags', active: currentPath === '/tags' || currentPath === '/tags/' },
+  { label: '关于', href: '/about', active: currentPath === '/about' || currentPath === '/about/' },
 ];
 ---
 
 <header class="site-header">
   <nav class="nav-container">
     <a href={baseAssetsPath('/')} class="site-title">
-      <img src={logoSrc} alt="Logo" class="site-logo" />
+      <img src={logoSrc} alt="Logo" class="site-logo" width="32" height="32" />
       <span class="site-name-text">{SITE_NAME}</span>
     </a>
 
@@ -31,8 +39,10 @@ const navLinks = [
     </button>
 
     <div class="nav-links" id="nav-links">
-      {navLinks.map((link, i) => (
-        <a href={baseAssetsPath(link.href)} class:list={['nav-link', link.active && 'active']}>{link.label}</a>
+      {navLinks.map((link) => (
+        <a href={baseAssetsPath(link.href)} class:list={['nav-link', link.active && 'active']}>
+          {link.label}
+        </a>
       ))}
     </div>
     <div class="nav-actions">
@@ -44,29 +54,18 @@ const navLinks = [
           placeholder="搜索文章…"
           aria-label="搜索文章"
           autocomplete="off"
+          data-search-trigger
         />
         <div id="search-results" class="search-results"></div>
       </div>
-      <div class="theme-toggle" id="theme-toggle" aria-label="切换暗黑模式" style="cursor:pointer;">🌙</div>
+      <button
+        class="theme-toggle"
+        id="theme-toggle"
+        aria-label="切换暗黑模式"
+        style="cursor:pointer;"
+      >
+        🌙
+      </button>
     </div>
   </nav>
 </header>
-
-<script is:inline>
-  (function() {
-    var toggle = document.getElementById('nav-toggle');
-    var navLinks = document.getElementById('nav-links');
-    if (!toggle || !navLinks) return;
-    toggle.addEventListener('click', function() {
-      var isOpen = navLinks.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', String(isOpen));
-    });
-    // 点击链接后关闭菜单
-    navLinks.querySelectorAll('.nav-link').forEach(function(link) {
-      link.addEventListener('click', function() {
-        navLinks.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-      });
-    });
-  })();
-</script>

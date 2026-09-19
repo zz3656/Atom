@@ -1,0 +1,30 @@
+---
+// 表格内容（TOC）组件
+// 显示文章的 h2/h3 标题列表，点击平滑滚动
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+interface Props {
+  headings: Heading[];
+}
+const { headings } = Astro.props;
+---
+
+{headings.length > 0 && (
+  <nav class="toc" aria-label="文章目录">
+    <details open>
+      <summary class="toc-title">📑 目录</summary>
+      <ol class="toc-list">
+        {headings.map((h) => (
+          <li class:list={['toc-item', `toc-depth-${h.depth}`]}>
+            <a href={`#${h.slug}`} class="toc-link" data-toc-link={h.slug}>
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ol>
+    </details>
+  </nav>
+)}
