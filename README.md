@@ -353,13 +353,13 @@ Actions 会自动：`安装依赖 → 构建 → 部署`
 **所有站点客制化只需编辑 `src/consts.ts` 一个文件**：
 
 ```typescript
-export const SITE_TITLE = '我的博客'; // 站点标题（SEO、OG 标签、RSS、页脚等）
+export const SITE_TITLE = '我的博客'; // 站点标题（SEO、OG、RSS、页脚等）
 export const SITE_NAME = 'MyBlog'; // 导航栏显示的名称
-export const SITE_DESCRIPTION = '我的个人博客'; // 站点描述
-export const AUTHOR = '张三'; // 作者名
+export const SITE_DESCRIPTION = '我的个人博客'; // 站点描述（meta/og/twitter）
+export const AUTHOR = '张三'; // 作者名（meta author 标签）
 
-export const SITE_LOGO = '/logos/logo.svg'; // 导航栏 Logo 文件路径
-export const SITE_FAVICON = '/favicon.svg'; // 浏览器 Favicon 文件路径
+export const SITE_LOGO = '/logos/logo.svg'; // 导航栏 Logo 路径（对应 public/logos/logo.svg）
+export const SITE_FAVICON = '/favicon.svg'; // 浏览器 Favicon 路径
 
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
@@ -374,7 +374,29 @@ export const SOCIAL_LINKS = {
 > 2. **Favicon**（浏览器标签页）：放入 `public/favicon.svg`，修改 `SITE_FAVICON`
 > 3. 不需要再修改任何组件代码！
 
-### 2. 部署平台
+### 2. 替换示例文章
+
+仓库默认附带 3 篇示例文章（`src/content/blog/`）：
+
+| 文件 | 用途 |
+|---|---|
+| `welcome.md` | 首次部署的欢迎页，可删除或替换 |
+| `markdown-guide.md` | Markdown 语法参考，建议保留作为写作帮助 |
+| `astro-blog-tutorial.md` | Astro 教程，可作为示例或删除 |
+
+替换为你的内容：
+
+```bash
+# 删除示例
+rm src/content/blog/welcome.md src/content/blog/astro-blog-tutorial.md
+
+# 或用 CLI 交互式创建
+npm run new
+```
+
+**前必读：** 每篇文章必须有完整的 frontmatter（`title` / `description` / `pubDate` / `category` / `tags`），否则构建失败。详见下方「📝 写文章」章节。
+
+### 3. 部署平台
 
 Atom 支持 **GitHub Pages** 和 **Cloudflare Pages** 两种部署方式，通过环境变量自动适配。
 

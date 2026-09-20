@@ -1,19 +1,19 @@
 ---
 title: 用 Astro 搭建你的第一个博客
-description: 从零开始，手把手教你用 Astro 搭建一个现代、快速的个人博客，并部署到 GitHub Pages。
-pubDate: 2026-05-01
-category: 默认分类
+description: 从零开始了解 Astro 的核心理念、目录约定、Markdown 内容集合、主题系统，以及如何把它部署到 GitHub Pages。
+pubDate: 2026-09-19
+category: tutorial
 tags: [Astro, 教程, 博客, GitHub Pages]
 ---
 
-## 为什么选择 Astro？
+## 为什么选择 Astro
 
-Astro 是一个现代静态站点生成器，以下几个特点让它很适合内容类网站：
+Astro 是一个现代静态站点生成器，以下特点让它很适合内容类网站：
 
-- **零 JavaScript 默认** — 页面输出纯 HTML，按需加载交互脚本
-- **内容优先** — 原生支持 Markdown/MDX 内容集合，内置类型检查
-- **组件灵活** — 可以混用 React、Vue、Svelte 等框架组件
-- **构建快速** — 基于 Vite，开发体验流畅
+- **零 JavaScript 默认** —— 页面输出纯 HTML，按需加载交互脚本
+- **内容优先** —— 原生支持 Markdown/MDX 内容集合，内置类型检查
+- **构建快速** —— 基于 Vite，开发体验流畅
+- **部署友好** —— 输出纯静态文件，GitHub Pages / Cloudflare Pages / Vercel 都能跑
 
 ## 快速开始
 
@@ -21,11 +21,12 @@ Astro 是一个现代静态站点生成器，以下几个特点让它很适合�
 
 ```bash
 npm create astro@latest my-blog
+cd my-blog
+npm install
+npm run dev   # http://localhost:4321
 ```
 
-选择 Blog 模板，Astro 会自动生成基础结构。
-
-### 项目结构
+### 目录结构
 
 ```
 my-blog/
@@ -38,39 +39,55 @@ my-blog/
 └── astro.config.mjs    # 配置文件
 ```
 
-### 写第一篇文章
+## 内容集合（Content Collections）
 
-在 `src/content/blog/` 创建 `.md` 文件：
+Astro 的内容集合提供 **类型安全的 Markdown** 管理。在 `src/content.config.ts` 定义 schema：
 
-```markdown
----
-title: 我的第一篇文章
-description: Hello World！
-pubDate: 2026-05-01
-tags: [随笔]
----
+```ts
+import { defineCollection, z } from 'astro:content';
 
-这是正文内容，支持完整的 Markdown 语法！
+const blog = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/blog' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    category: z.string().default(''),
+    tags: z.array(z.string()).default([]),
+  }),
+});
+
+export const collections = { blog };
 ```
 
-Frontmatter 中的字段会自动进行类型检查，写错了 IDE 会提示。
+然后在文章 frontmatter 里严格遵守 schema，否则构建时报错。
+
+## 静态生成
+
+所有页面在构建时预渲染（SSG），没有运行时数据库。内容变更后重新构建即可。
+
+## 主题系统（如果你的博客支持）
+
+Astro 本身不强制主题方案，但你可以：
+
+- 用 CSS 变量定义设计 token
+- 在 `astro.config.mjs` 集成 Tailwind / UnoCSS
+- 用 `<style>` 块做组件级样式
 
 ## 部署到 GitHub Pages
 
-### 1. 创建仓库
+1. 推送代码到 GitHub 仓库
+2. 进入 Settings → Pages → Source 选 **GitHub Actions**
+3. 设置 Workflow permissions 为 Read and write
+4. 推送代码，自动部署
 
-在 GitHub 创建新仓库，比如 `my-blog`。
-
-### 2. 配置 GitHub Actions
-
-在 `.github/workflows/deploy.yml` 添加：
+GitHub Actions 配置示例（`.github/workflows/deploy.yml`）：
 
 ```yaml
-name: Deploy
+name: Deploy to GitHub Pages
 on:
   push:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -79,26 +96,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
       - run: npm ci
       - run: npm run build
+        env:
+          DEPLOY_TARGET: github
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
   deploy:
     needs: build
+    environment:
+      name: github-pages
     runs-on: ubuntu-latest
     steps:
       - uses: actions/deploy-pages@v4
 ```
 
-### 3. 启用 Pages
+## 进一步学习
 
-在仓库 Settings → Pages → Source 选择 **GitHub Actions**。
-
-推送代码后，GitHub 会自动构建部署。🎉
-
-## 总结
-
-Astro 让搭建个人博客变得简单而高效。如果你的需求是博客、文档站、作品集，值得一试！
-
-> 💡 **提示**：访问 [astro.build](https://astro.build) 获取更多主题和组件。
+- 📖 [Astro 官方文档](https://docs.astro.build)
+- 📖 [Astro Content Collections](https://docs.astro.build/en/guides/content-collections/)
+- 📖 [Markdown 语法参考](https://commonmark.org/)
+- 🎨 [Atom 博客](https://zz3656.github.io/Atom) — 基于以上所有理念的实际项目
