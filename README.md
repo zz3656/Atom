@@ -36,7 +36,7 @@
 | 📁 **分类 + 标签**     | 分类（单数）组织文章大类，标签（可多）标注细分主题                             |
 | 🚀 **双平台部署**      | GitHub Actions 自动构建，支持 GitHub Pages / Cloudflare Pages                  |
 | 🔍 **SEO 友好**        | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
-| 📦 **超小体积**        | HTML 仅 ~3KB（单页）                                                           |
+| 📦 **超小体积**        | 首页 HTML ~11KB gzipped（CSS 内联，无额外请求）；单篇文章 ~14KB gzipped             |
 | 💯 **Lighthouse 满分** | 性能、无障碍、SEO 全 100                                                       |
 
 ---
@@ -110,7 +110,7 @@ Atom/
 │   │   ├── Footer.astro       # 页脚
 │   │   ├── PostCard.astro     # 文章卡片
 │   │   └── ...                # 其他组件
-│   ├── utils/                 # 工具函数（path/date/blog/themes/collection）
+│   ├── utils/                 # 工具函数（path/date/blog/themes/collection/markdown-strip）
 │   ├── styles/                # 样式模块
 │   │   ├── global.css         # 主入口
 │   │   └── _modules/          # 各组件 CSS 模块
@@ -128,9 +128,10 @@ Atom/
 
 ---
 
-## 🤖 CLI 本地工具
+## 🤖 CLI 与 npm scripts
 
-Atom 提供 npm scripts 与一个轻量 CLI，体验类似 Hexo / Hugo 的本地工作流。
+Atom 提供 npm scripts 与一个轻量 CLI (`scripts/atom-cli.mjs`)，体验类似 Hexo / Hugo 的本地工作流。
+注意：CLI 只负责**创建/列出文章**；构建与部署由 GitHub Actions 自动完成。
 
 ### npm scripts
 
@@ -437,17 +438,35 @@ export default defineConfig({
 
 ### 4. 页脚
 
-编辑 `src/components/Footer.astro`：
+Footer 展示三类信息：①用户可定制的社交链接；②自动生成的 RSS / 关于链接；③硬编码的框架品牌。
 
 ```astro
 <footer class="site-footer">
   <div class="footer-content">
+    <div class="footer-links">
+      {/* 用户可定制：consts.ts 的 SOCIAL_LINKS.github */}
+      <a href={SOCIAL_LINKS.github} title="作者 GitHub">🐙 GitHub</a>
+      {/* 自动生成 */}
+      <a href={rssUrl()}>📡 RSS</a>
+      <a href={aboutUrl()}>👤 关于</a>
+    </div>
     <p>
-      © {year} <a href={SOCIAL_LINKS.github}>Atom Blog</a>. Powered by <a href="https://astro.build">Astro</a>
+      © {year}
+      {/* 硬编码框架品牌：与用户站点名(SITE_NAME)解耦，指向 REPO_URL */}
+      <a href={REPO_URL}>{FRAMEWORK_NAME}</a>
+      . Powered by <a href="https://astro.build">Astro</a>
     </p>
   </div>
 </footer>
 ```
+
+配置详见 `src/consts.ts`：
+
+| 字段 | 用途 | 用户客制化？ |
+|---|---|---|
+| `SOCIAL_LINKS.github` | Footer 🐙 GitHub 链接 | ✅ 用户可改 |
+| `REPO_URL` | 底部 "Atom" 链接，指向项目源代码仓库 | ✅ 用户必改 |
+| `FRAMEWORK_NAME` | 底部 "Atom" 文字 | ❌ 硬编码框架品牌 |
 
 ### 5. 打赏二维码
 
@@ -500,7 +519,7 @@ src/pages/links.astro        → /links
 
 | 方案               | 构建输出  | JS 依赖  | 构建时间 | SEO / RSS / Sitemap              | 学习成本     |
 | ------------------ | --------- | -------- | -------- | -------------------------------- | ------------ |
-| **Atom（本项目）** | **~3 KB** | **0**    | **~1s**  | **RSS/Sitemap/JSON-LD 自动生成** | 极低         |
+| **Atom（本项目）** | **~11 KB gz** | **0**    | **~1.5s**  | **RSS/Sitemap/JSON-LD 自动生成** | 极低         |
 | Hexo + Matery      | ~15 MB    | 数十个库 | ~5s      | 需插件                           | 中           |
 | Hugo               | ~2 MB     | 0        | ~0.5s    | 需插件                           | 中           |
 | Jekyll             | ~3 MB     | 少量     | ~3s      | 内置                             | 中           |
@@ -510,7 +529,7 @@ src/pages/links.astro        → /links
 ### 本项目的优势
 
 - **零依赖** — 全站无 JavaScript，纯 HTML + CSS，Lighthouse 满分
-- **双主题** — 日间明亮模式 + 夜间赛博朋克风格，基于 CSS 变量一键切换
+- **一键日/夜切换** — 默认主题（日间紫罗兰 + 夜间赛博青），首次访问跟随系统设置，之后记忆用户选择；开发者可通过 `npm run theme:create` 拓展主题
 - **自动 SEO** — 每篇文章自动注入 Open Graph、Twitter Card、JSON-LD 结构化数据
 - **极简构建** — 构建完成后自动执行 RSS/Sitemap 生成，零配置
 - **1 秒构建** — 相比 Hexo 的 5s+，依然足够快
