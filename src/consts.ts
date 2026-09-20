@@ -16,8 +16,12 @@ export const AUTHOR = 'zz3656';
 export const SITE_LOGO = '/logos/logo.svg'; // Logo 文件路径（对应 public/logos/logo.svg）
 export const SITE_FAVICON = '/favicon.svg'; // Favicon 文件路径（对应 public/favicon.svg）
 
+// 项目源代码仓库（Footer 的 🐙 GitHub 与 "站点标题" 链接使用）
+export const REPO_URL = 'https://github.com/zz3656/Atom';
+
+// 个人社交链接（与项目仓库区分开）
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/zz3656',
+  github: 'https://github.com/zz3656', // 个人 GitHub
   twitter: '',
   email: '',
 };

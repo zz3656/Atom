@@ -1,14 +1,11 @@
 ---
-import { SITE_TITLE, SOCIAL_LINKS } from '../consts';
+import { SITE_TITLE, REPO_URL, SOCIAL_LINKS } from '../consts';
 import { rssUrl, aboutUrl } from '../utils/path';
 
 const year = new Date().getFullYear();
 
-// Build social links dynamically (only render if URL is non-empty)
+// 个人社交链接（不包含 GitHub，因为 GitHub 已通过 REPO_URL 单独展示）
 const socialLinks = [
-  SOCIAL_LINKS.github
-    ? { href: SOCIAL_LINKS.github, label: '🐙 GitHub', target: '_blank', rel: 'noopener' }
-    : null,
   SOCIAL_LINKS.twitter
     ? { href: SOCIAL_LINKS.twitter, label: '🐦 Twitter', target: '_blank', rel: 'noopener' }
     : null,
@@ -19,6 +16,9 @@ const socialLinks = [
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-links">
+      <a href={REPO_URL} target="_blank" rel="noopener" title="项目源代码仓库">
+        🐙 GitHub
+      </a>
       {socialLinks.map(
         (link) =>
           link && (
@@ -34,7 +34,7 @@ const socialLinks = [
     </div>
     <p>
       © {year}{' '}
-      <a href={socialLinks[0]?.href} target={socialLinks[0]?.target} rel={socialLinks[0]?.rel}>
+      <a href={REPO_URL} target="_blank" rel="noopener">
         {SITE_TITLE}
       </a>
       . Powered by{' '}

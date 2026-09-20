@@ -376,13 +376,13 @@ export const SOCIAL_LINKS = {
 
 ### 2. 替换示例文章
 
-仓库默认附带 3 篇示例文章（`src/content/blog/`）：
+仓库默认附带 3 篇示例文章（`src/content/blog/`），介绍项目功能与 Markdown / Astro 用法：
 
 | 文件 | 用途 |
 |---|---|
 | `welcome.md` | 首次部署的欢迎页，可删除或替换 |
 | `markdown-guide.md` | Markdown 语法参考，建议保留作为写作帮助 |
-| `astro-blog-tutorial.md` | Astro 教程，可作为示例或删除 |
+| `astro-blog-tutorial.md` | Atom 技术架构解析（不是 Astro 入门教程），可作为示例或删除 |
 
 替换为你的内容：
 
