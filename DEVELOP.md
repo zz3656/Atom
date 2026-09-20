@@ -126,86 +126,151 @@ npm run build   # Full build with all post-processing
 
 ```
 Atom/
+├── scripts/                   # 构建辅助脚本
+│   ├── atom-cli.mjs           # 本地 CLI（创建/列出文章）
+│   ├── create-theme.mjs       # 主题脚手架（npm run theme:create <id>）
+│   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
+│   ├── fix-sitemap.mjs        # sitemap lastmod 修正
+│   ├── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
+│   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）
+├── astro-plugins/
+│   ├── remark-img-lazy.mjs    # Markdown 图片自动加 lazy loading
+│   └── theme-loader.mjs       # 构建时扫描 src/themes/，生成 CSS 入口
 ├── public/                    # 静态资源（原样复制到 dist/）
 │   ├── favicon.svg            # 网站图标
+│   ├── manifest.json          # PWA 配置
 │   ├── robots.txt             # 搜索引擎爬虫规则
-│   └── medias/                # 多媒体资源
-│       └── reward/            # 打赏二维码（可选）
-│           ├── wechat.png
-│           └── alipay.jpg
-├── scripts/                   # 构建辅助脚本
-│   └── generate-rss.mjs       # 生成 RSS + Sitemap
+│   ├── logos/                  # 导航栏 Logo 占位
+│   └── medias/reward/         # 打赏二维码（可选）
+│       ├── wechat.png
+│       └── alipay.png
 ├── src/
+│   ├── themes/                # 主题目录（默认 atom-default）
+│   │   └── atom-default/      # 自带主题：light + dark
 │   ├── components/            # Astro 组件
-│   │   ├── Header.astro       # 导航栏 + 暗黑模式切换
+│   │   ├── Header.astro       # 导航栏 + 日/夜间切换
 │   │   ├── Footer.astro       # 页脚 + 社交链接
-│   │   ├── PostCard.astro     # 文章卡片（标题、日期、标签）
+│   │   ├── PostCard.astro     # 文章卡片（标题、日期、分类、标签）
+│   │   ├── TableOfContents.astro # 文章目录（桌面浮动 + 移动折叠）
+│   │   ├── HeroIcon.astro     # 首页 Hero 图标
 │   │   └── FormattedDate.astro # 日期格式化组件
-│   ├── content/               # Astro Content Collections
-│   │   ├── config.ts          # Schema 定义
-│   │   └── blog/              # 文章目录
-│   │       ├── hello-world.md
-│   │       └── ...
 │   ├── layouts/               # 页面布局
-│   │   ├── BaseLayout.astro   # 全局布局（head、nav、footer）
-│   │   └── BlogPost.astro     # 文章布局（含 prev/next、打赏）
+│   │   ├── BaseLayout.astro   # 全局布局（head, nav, footer, 内联主题脚本）
+│   │   └── BlogPost.astro     # 文章布局（含 TOC、prev/next、打赏、JSON-LD）
 │   ├── pages/                 # 路由页面
 │   │   ├── index.astro        # / → 首页
 │   │   ├── about.astro        # /about → 关于页
 │   │   ├── 404.astro          # /404 → 404 页
-│   │   └── blog/
-│   │       ├── index.astro    # /blog → 文章列表
-│   │       └── [...slug].astro # /blog/[slug] → 文章详情
-│   ├── styles/
-│   │   └── global.css         # 全局样式 + CSS 变量
-│   ├── consts.ts              # 站点配置
-│   └── env.d.ts               # TypeScript 类型声明
-├── astro.config.mjs           # Astro 配置
-├── package.json               # 依赖 + 脚本
-└── tsconfig.json              # TypeScript 配置
+│   │   ├── blog/              # 文章列表 & 详情
+│   │   ├── categories/        # 分类列表
+│   │   ├── category/          # 分类详情
+│   │   ├── tags/              # 标签列表
+│   │   └── tag/               # 标签详情
+│   ├── content/               # 📝 Markdown 文章
+│   │   └── blog/              # 文章目录（每篇一个 .md）
+│   ├── styles/                # 样式模块
+│   │   ├── global.css         # 主入口（@import 所有模块）
+│   │   └── _modules/          # 22 个 CSS 模块（按钮/导航/TOC/...）
+│   ├── utils/                 # 工具函数
+│   │   ├── path.ts            # URL/base 路径处理
+│   │   ├── blog.ts            # 文章数据工具
+│   │   ├── date.ts            # 日期格式化
+│   │   ├── collection.ts      # Content Collections 公共逻辑
+│   │   ├── themes.ts          # 主题 manifest 校验
+│   │   └── markdown-strip.ts  # Markdown → 纯文本（提取摘要/搜索）
+│   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL / SOCIAL_LINKS）
+│   └── env.d.ts
+├── tests/                     # 单元测试（Vitest）
+│   ├── app.behavior.test.ts   # 主题切换/搜索/复制 等交互
+│   ├── app.dom.test.ts        # DOM 操作
+│   ├── blog.test.ts           # 文章数据工具
+│   ├── collection.test.ts     # getPublishedPosts
+│   ├── date.test.ts           # 日期格式化
+│   ├── path.test.ts           # URL 路径
+│   └── themes.test.ts         # 主题 manifest 校验
+├── docs/
+│   └── THEMING.md             # 主题开发指南（第三方主题用）
+├── astro.config.mjs           # Astro 配置（含 base 自动检测）
+├── vitest.config.ts           # 测试配置
+├── eslint.config.js           # ESLint 配置
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 ### English
 
 ```
 Atom/
+├── scripts/                   # Build helper scripts
+│   ├── atom-cli.mjs           # Local CLI (create / list articles)
+│   ├── create-theme.mjs       # Theme scaffold (npm run theme:create <id>)
+│   ├── generate-rss.mjs       # RSS feed + search index
+│   ├── fix-sitemap.mjs        # Sitemap lastmod fix
+│   ├── minify-app-js.mjs      # app.js minify + sub-path compat
+│   └── convert-hexo.mjs       # Hexo migration tool (optional)
+├── astro-plugins/
+│   ├── remark-img-lazy.mjs    # Auto-add loading=lazy to Markdown images
+│   └── theme-loader.mjs       # Build-time scan src/themes/, generate CSS entry
 ├── public/                    # Static assets (copied to dist/)
 │   ├── favicon.svg            # Site favicon
+│   ├── manifest.json          # PWA config
 │   ├── robots.txt             # Search engine crawler rules
-│   └── medias/
-│       └── reward/            # Reward QR codes (optional)
-│           ├── wechat.png
-│           └── alipay.jpg
-├── scripts/                   # Build helper scripts
-│   └── generate-rss.mjs       # Generate RSS + Sitemap
+│   └── medias/reward/         # Reward QR codes (optional)
+│       ├── wechat.png
+│       └── alipay.png
 ├── src/
+│   ├── themes/                # Themes directory (default: atom-default)
+│   │   └── atom-default/      # Built-in theme: light + dark
 │   ├── components/            # Astro components
-│   │   ├── Header.astro       # Navbar + dark mode toggle
+│   │   ├── Header.astro       # Navbar + light/dark toggle
 │   │   ├── Footer.astro       # Footer + social links
-│   │   ├── PostCard.astro     # Article card (title, date, tags)
+│   │   ├── PostCard.astro     # Article card (title, date, category, tags)
+│   │   ├── TableOfContents.astro # Article TOC (desktop floating + mobile collapsible)
+│   │   ├── HeroIcon.astro     # Homepage hero icon
 │   │   └── FormattedDate.astro # Date formatter
-│   ├── content/               # Astro Content Collections
-│   │   ├── config.ts          # Schema definition
-│   │   └── blog/              # Article directory
-│   │       ├── hello-world.md
-│   │       └── ...
 │   ├── layouts/               # Page layouts
-│   │   ├── BaseLayout.astro   # Global layout (head, nav, footer)
-│   │   └── BlogPost.astro     # Article layout (prev/next, reward)
+│   │   ├── BaseLayout.astro   # Global layout (head, nav, footer, inline theme script)
+│   │   └── BlogPost.astro     # Article layout (TOC, prev/next, reward, JSON-LD)
 │   ├── pages/                 # Route pages
 │   │   ├── index.astro        # / → Homepage
 │   │   ├── about.astro        # /about → About page
 │   │   ├── 404.astro          # /404 → 404 page
-│   │   └── blog/
-│   │       ├── index.astro    # /blog → Article listing
-│   │       └── [...slug].astro # /blog/[slug] → Article detail
-│   ├── styles/
-│   │   └── global.css         # Global styles + CSS variables
-│   ├── consts.ts              # Site configuration
-│   └── env.d.ts               # TypeScript type declarations
-├── astro.config.mjs           # Astro config
-├── package.json               # Dependencies + scripts
-└── tsconfig.json              # TypeScript config
+│   │   ├── blog/              # Article list & detail
+│   │   ├── categories/        # Category list
+│   │   ├── category/          # Category detail
+│   │   ├── tags/              # Tag list
+│   │   └── tag/               # Tag detail
+│   ├── content/               # 📝 Markdown articles
+│   │   └── blog/              # One .md per article
+│   ├── styles/                # Style modules
+│   │   ├── global.css         # Main entry (@import all modules)
+│   │   └── _modules/          # 22 CSS modules (buttons/nav/TOC/...)
+│   ├── utils/                 # Utility functions
+│   │   ├── path.ts            # URL / base path
+│   │   ├── blog.ts            # Article data tools
+│   │   ├── date.ts            # Date formatting
+│   │   ├── collection.ts      # Content Collections helpers
+│   │   ├── themes.ts          # Theme manifest validation
+│   │   └── markdown-strip.ts  # Markdown → plain text (for search / summary)
+│   ├── consts.ts              # Site config (SITE_TITLE / REPO_URL / SOCIAL_LINKS)
+│   └── env.d.ts
+├── tests/                     # Unit tests (Vitest)
+│   ├── app.behavior.test.ts   # Theme toggle / search / copy interactions
+│   ├── app.dom.test.ts        # DOM operations
+│   ├── blog.test.ts           # Article data tools
+│   ├── collection.test.ts     # getPublishedPosts
+│   ├── date.test.ts           # Date formatting
+│   ├── path.test.ts           # URL paths
+│   └── themes.test.ts         # Theme manifest validation
+├── docs/
+│   └── THEMING.md             # Theme development guide (for third parties)
+├── astro.config.mjs           # Astro config (auto-detect base)
+├── vitest.config.ts           # Test config
+├── eslint.config.js           # ESLint config
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 ---
@@ -258,26 +323,47 @@ heroImage: /images/cover.jpg
 
 ### 中文
 
-#### 修改配色
+#### 修改主题配色（推荐）
 
-编辑 `src/styles/global.css`，调整 CSS 变量：
+编辑主题文件 `src/themes/atom-default/light.css` 和 `dark.css`，调整 CSS 变量：
 
 ```css
-:root {
-  /* 亮色模式 */
+/* src/themes/atom-default/light.css */
+html[data-theme='atom-default'][data-mode='light'] {
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #1a1a2e;
-  --accent: #6366f1; /* 主色 */
+  --accent: #6366f1;
   --accent-hover: #4f46e5;
-  --radius: 12px; /* 圆角 */
 }
+```
 
-html.dark {
-  /* 暗黑模式 */
+```css
+/* src/themes/atom-default/dark.css */
+html[data-theme='atom-default'][data-mode='dark'] {
   --bg-primary: #0f0f1a;
   --text-primary: #e2e8f0;
   --accent: #818cf8;
+}
+```
+
+**完整 token 列表**（background / text / border / accent / tag / category / semantic / shadow）见 [docs/THEMING.md](./docs/THEMING.md)。
+
+如果只是想覆盖**整个主题**（换一套配色），可以新建自己的主题目录：
+```bash
+npm run theme:create ocean
+# 编辑 src/themes/ocean/light.css + dark.css
+```
+
+#### 修改布局 token（圆角/字体/宽度）
+
+编辑 `src/styles/_modules/_variables.css`（**不在主题 CSS 里**）：
+
+```css
+:root {
+  --radius: 12px;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 ```
 
@@ -296,11 +382,19 @@ html.dark {
 编辑 `src/consts.ts`：
 
 ```typescript
-export const SITE_TITLE = '你的博客名';
-export const SITE_DESCRIPTION = '你的博客描述';
+export const SITE_TITLE = '你的博客名';        // SEO/OG/RSS 标题
+export const SITE_NAME = 'MyBlog';              // 导航栏短名
+export const SITE_DESCRIPTION = '你的博客描述'; // meta description
 export const AUTHOR = '你的名字';
+
+export const SITE_LOGO = '/logos/logo.svg';
+export const SITE_FAVICON = '/favicon.svg';
+
+export const REPO_URL = 'https://github.com/你的用户名/你的仓库';
+// ↑ Footer "Atom" 链接指向这里
+
 export const SOCIAL_LINKS = {
-  github: 'https://github.com/yourusername',
+  github: 'https://github.com/你的用户名', // 用户可定制（Footer 🐙）
   twitter: '',
   email: '',
 };
@@ -308,24 +402,47 @@ export const SOCIAL_LINKS = {
 
 ### English
 
-#### Change Colors
+#### Change Theme Colors (recommended)
 
-Edit `src/styles/global.css`, adjust CSS variables:
+Edit theme files `src/themes/atom-default/light.css` and `dark.css`, adjust CSS variables:
 
 ```css
-:root {
-  /* Light mode */
+/* src/themes/atom-default/light.css */
+html[data-theme='atom-default'][data-mode='light'] {
   --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
   --text-primary: #1a1a2e;
-  --accent: #6366f1; /* Primary color */
+  --accent: #6366f1;
   --accent-hover: #4f46e5;
 }
+```
 
-html.dark {
-  /* Dark mode */
+```css
+/* src/themes/atom-default/dark.css */
+html[data-theme='atom-default'][data-mode='dark'] {
   --bg-primary: #0f0f1a;
   --text-primary: #e2e8f0;
   --accent: #818cf8;
+}
+```
+
+For the **full token list** (background / text / border / accent / tag / category / semantic / shadow), see [docs/THEMING.md](./docs/THEMING.md).
+
+To replace the **entire theme** with a different palette, create your own theme directory:
+```bash
+npm run theme:create ocean
+# Edit src/themes/ocean/light.css + dark.css
+```
+
+#### Change Layout Tokens (radius / fonts / width)
+
+Edit `src/styles/_modules/_variables.css` (**not** in theme CSS):
+
+```css
+:root {
+  --radius: 12px;
+  --font-sans: 'Inter', -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
 }
 ```
 
@@ -343,8 +460,22 @@ html.dark {
 Edit `src/consts.ts`:
 
 ```typescript
-export const SITE_TITLE = 'Your Blog Name';
+export const SITE_TITLE = 'Your Blog Name';  // SEO / OG / RSS title
+export const SITE_NAME = 'MyBlog';           // Navbar short name
+export const SITE_DESCRIPTION = '...';        // meta description
 export const AUTHOR = 'Your Name';
+
+export const SITE_LOGO = '/logos/logo.svg';
+export const SITE_FAVICON = '/favicon.svg';
+
+export const REPO_URL = 'https://github.com/yourname/yourrepo';
+// ↑ Footer "Atom" link points here
+
+export const SOCIAL_LINKS = {
+  github: 'https://github.com/yourname',     // User-customizable (Footer 🐙)
+  twitter: '',
+  email: '',
+};
 ```
 
 ---
