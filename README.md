@@ -118,7 +118,7 @@ Atom/
 │   │   └── blog/              # 文章目录（每篇一个 .md）
 │   ├── layouts/               # 布局模板（BaseLayout / BlogPost）
 │   ├── pages/                 # 路由页面
-│   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL 等）
+│   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL / HERO_* 等）
 │   └── env.d.ts
 ├── docs/THEMING.md            # 主题开发指南
 ├── astro.config.mjs
@@ -312,7 +312,7 @@ Actions 会自动：`安装依赖 → 构建 → 部署`
 
 ## ⚙️ 自定义
 
-### 1. 站点基本信息 / Logo / Favicon
+### 1. 站点基本信息 / Logo / Favicon / 首页 Hero
 
 **所有站点客制化只需编辑 `src/consts.ts` 一个文件**：
 
@@ -325,6 +325,15 @@ export const AUTHOR = '张三'; // 作者名（meta author 标签）
 export const SITE_LOGO = '/logos/logo.svg'; // 导航栏 Logo 路径（对应 public/logos/logo.svg）
 export const SITE_FAVICON = '/favicon.svg'; // 浏览器 Favicon 路径
 
+// 首页 Hero 区域完全可客制化（图标 + 标题 + 描述 + 按钮）
+export const SITE_HERO_ICON = ''; // 留空则使用内置 Atom 原子 SVG
+export const HERO_TITLE = 'MyBlog'; // Hero 标题文本（可含 HTML 标签，如 <em>）
+export const HERO_DESCRIPTION = '一个简洁、快速、优雅的现代博客。';
+export const HERO_ACTIONS = [
+  { label: '开始阅读 →', href: '/blog', variant: 'primary' },
+  { label: '关于此站', href: '/about', variant: 'secondary' },
+];
+
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
   twitter: '',
@@ -332,11 +341,13 @@ export const SOCIAL_LINKS = {
 };
 ```
 
-> 💡 **替换 Logo 和 Favicon 各独立**：
+> 💡 **替换 Logo、Favicon、Hero 图标各独立**：
 >
 > 1. **Logo**（导航栏）：放入 `public/logos/logo.svg`（支持 .svg / .png / .webp），修改 `SITE_LOGO`
 > 2. **Favicon**（浏览器标签页）：放入 `public/favicon.svg`，修改 `SITE_FAVICON`
-> 3. 不需要再修改任何组件代码！
+> 3. **Hero 图标**（首页大标题前）：留空 `''` 走内置 SVG；如需替换，放入 `public/heroes/hero.svg`（支持 .svg / .png / .webp），修改 `SITE_HERO_ICON`
+> 4. **Hero 文案 / 按钮**：直接编辑 `HERO_TITLE` / `HERO_DESCRIPTION` / `HERO_ACTIONS`；按钮可任意增删，`variant: 'primary' | 'secondary'` 控制样式，`hide: true` 跳过渲染
+> 5. 不需要再修改任何组件代码！
 
 ### 2. 替换示例文章
 

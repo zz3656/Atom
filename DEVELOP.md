@@ -390,6 +390,15 @@ export const AUTHOR = '你的名字';
 export const SITE_LOGO = '/logos/logo.svg';
 export const SITE_FAVICON = '/favicon.svg';
 
+// 首页 Hero 区域（图标 + 标题 + 描述 + 按钮）可完全客制化
+export const SITE_HERO_ICON = '';               // 留空使用内置 Atom 原子 SVG
+export const HERO_TITLE = 'MyBlog';             // Hero 标题文本（允许内嵌 HTML）
+export const HERO_DESCRIPTION = '你的博客描述';
+export const HERO_ACTIONS = [
+  { label: '开始阅读 →', href: '/blog', variant: 'primary' },
+  { label: '关于此站', href: '/about', variant: 'secondary' },
+];
+
 export const REPO_URL = 'https://github.com/你的用户名/你的仓库';
 // ↑ Footer "Atom" 链接指向这里
 
@@ -467,6 +476,15 @@ export const AUTHOR = 'Your Name';
 
 export const SITE_LOGO = '/logos/logo.svg';
 export const SITE_FAVICON = '/favicon.svg';
+
+// Homepage Hero section (icon + title + description + buttons) is fully customizable
+export const SITE_HERO_ICON = '';            // Empty -> use built-in Atom SVG
+export const HERO_TITLE = 'MyBlog';          // Hero headline (HTML allowed)
+export const HERO_DESCRIPTION = 'Your blog description';
+export const HERO_ACTIONS = [
+  { label: 'Start reading →', href: '/blog', variant: 'primary' },
+  { label: 'About', href: '/about', variant: 'secondary' },
+];
 
 export const REPO_URL = 'https://github.com/yourname/yourrepo';
 // ↑ Footer "Atom" link points here

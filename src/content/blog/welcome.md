@@ -25,6 +25,15 @@ export const AUTHOR = '你的名字';               // meta author 标签
 export const SITE_LOGO = '/logos/logo.svg';     // 导航栏 Logo 路径
 export const SITE_FAVICON = '/favicon.svg';     // 浏览器标签图标
 
+// 首页 Hero 区域（图标 + 标题 + 描述 + 按钮）也可在同一个文件里客制化
+export const SITE_HERO_ICON = '';              // 留空使用内置 Atom 原子 SVG；替换则放入 public/heroes/hero.svg
+export const HERO_TITLE = 'MyBlog';            // 首页大标题文本（支持 HTML 标签，如 <em>）
+export const HERO_DESCRIPTION = '你的博客一句话介绍';
+export const HERO_ACTIONS = [
+  { label: '开始阅读 →', href: '/blog', variant: 'primary' },
+  { label: '关于此站', href: '/about', variant: 'secondary' },
+];
+
 export const REPO_URL = 'https://github.com/你的用户名/你的仓库';
 // ↑ Footer 的 "Atom" 链接指向这里（项目源代码仓库）
 
@@ -45,6 +54,7 @@ export const POSTS_PER_PAGE = 10;               // 首页 / 文章列表每页�
 | `SITE_NAME` | 导航栏 Logo 旁的短名 |
 | `SITE_DESCRIPTION` | meta description、社交分享卡片 |
 | `SITE_LOGO` / `SITE_FAVICON` | 导航栏 / 浏览器标签页 |
+| `SITE_HERO_ICON` / `HERO_TITLE` / `HERO_DESCRIPTION` / `HERO_ACTIONS` | 首页 Hero 区域（标题前的图标、大标题、CTA 按钮） |
 | `SOCIAL_LINKS.github` | Footer 的 🐙 GitHub（可改成项目仓库或个人主页）|
 | `REPO_URL` | Footer 的 "Atom" 链接，指向你的源代码仓库 |
 
@@ -82,16 +92,30 @@ draft: false                # true 表示草稿，构建时被过滤掉
 
 完整字段说明见 [Markdown 写作完全指南](/blog/markdown-guide/)。
 
-## 三、Logo 和 Favicon（推荐改）
+## 三、Logo、Favicon 和 Hero 图标（推荐改）
 
-替换两个图片文件即可，**不需要改任何组件代码**：
+替换三个图片文件即可，**不需要改任何组件代码**：
 
 | 文件 | 用途 | 推荐尺寸 |
 |---|---|---|
 | `public/logos/logo.svg` | 导航栏左侧图标 | 32×32 矢量 |
 | `public/favicon.svg` | 浏览器标签页图标 | 任意，矢量自适应 |
+| `public/heroes/hero.svg` | 首页 Hero 大标题前的图标（可选） | 36×36 矢量 |
 
-也可以是 PNG/WebP（`SITE_LOGO` 后缀改一下就行）。最简单的办法：直接覆盖源文件，保持路径不变。
+也可以是 PNG/WebP（对应 `SITE_*` 后缀改一下就行）。Hero 图标留空 `SITE_HERO_ICON = ''` 则用内置的 Atom 原子 SVG。
+
+Hero 区域的**标题文案**、**描述段落**、**CTA 按钮**也都可以直接在 `src/consts.ts` 里的 `HERO_TITLE` / `HERO_DESCRIPTION` / `HERO_ACTIONS` 配置：
+
+```typescript
+export const HERO_TITLE = 'MyBlog';                              // 标题（可含 <em>）
+export const HERO_DESCRIPTION = '一个简洁、快速、优雅的现代博客。';
+export const HERO_ACTIONS = [
+  { label: 'GitHub', href: 'https://github.com/yourname', variant: 'secondary' },
+  { label: '开始阅读 →', href: '/blog', variant: 'primary' },
+];
+```
+
+按钮可任意增删；`variant: 'primary' | 'secondary'` 控制样式，`hide: true` 跳过该按钮。
 
 ## 四、关于页面（推荐改）
 
@@ -119,7 +143,8 @@ GitHub Actions 会自动跑 `npm run build` 并部署。几分钟后访问你的
 |---|---|---|
 | ⭐ 必改 | 站点信息 | `src/consts.ts` |
 | ⭐ 必改 | 示例文章 | `src/content/blog/*.md` |
-| ⭐ 推荐 | Logo + Favicon | `public/logos/logo.svg`, `public/favicon.svg` |
+| ⭐ 推荐 | Logo + Favicon + Hero 图标 | `public/logos/logo.svg`, `public/favicon.svg`, `public/heroes/hero.svg`（可选）|
+| ⭐ 推荐 | 首页 Hero 文案与按钮 | `HERO_TITLE` / `HERO_DESCRIPTION` / `HERO_ACTIONS` 在 `src/consts.ts` |
 | 推荐 | 关于页面 | `src/pages/about.astro` |
 | 可选 | 主题 | `src/themes/` + 主题脚手架 `npm run theme:create <id>` |
 | 可选 | 社交链接 | `SOCIAL_LINKS` 在 `src/consts.ts` |

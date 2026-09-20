@@ -81,7 +81,7 @@ Atom/
 │   │       └── [...slug].astro  # Article detail (dynamic route)
 │   ├── styles/
 │   │   └── global.css           # Global styles + dark mode variables
-│   └── consts.ts                # Site config (title, author, links)
+│   └── consts.ts                # Site config (SITE_TITLE / REPO_URL / HERO_* etc.)
 ├── astro.config.mjs             # Astro configuration
 ├── package.json
 ├── tsconfig.json
@@ -187,7 +187,7 @@ Actions will automatically: `Install deps → Build → Deploy`
 
 ## ⚙️ Customize
 
-### Site Info, Logo & Favicon
+### Site Info, Logo & Favicon / Homepage Hero
 
 **All customization in a single file** — edit `src/consts.ts`:
 
@@ -200,6 +200,15 @@ export const AUTHOR = 'Your Name';
 export const SITE_LOGO = '/logos/logo.svg'; // Navbar logo file path
 export const SITE_FAVICON = '/favicon.svg'; // Browser favicon file path
 
+// Homepage Hero section (icon + title + description + buttons) is fully customizable
+export const SITE_HERO_ICON = ''; // Empty -> use built-in Atom SVG
+export const HERO_TITLE = 'MyBlog'; // Hero headline (HTML allowed, e.g. <em>)
+export const HERO_DESCRIPTION = 'A modern, lightweight blog built with Astro.';
+export const HERO_ACTIONS = [
+  { label: 'Start reading →', href: '/blog', variant: 'primary' },
+  { label: 'About', href: '/about', variant: 'secondary' },
+];
+
 export const SOCIAL_LINKS = {
   github: 'https://github.com/yourusername',
   twitter: '',
@@ -207,10 +216,12 @@ export const SOCIAL_LINKS = {
 };
 ```
 
-> 💡 **Logo and Favicon are independent**:
+> 💡 **Logo, Favicon, and Hero icon are independent**:
 >
 > 1. **Logo** (navbar): put in `public/logos/logo.svg` (supports .svg / .png / .webp), update `SITE_LOGO`
 > 2. **Favicon** (browser tab): put in `public/favicon.svg`, update `SITE_FAVICON`
+> 3. **Hero icon** (in front of the homepage headline): leave `SITE_HERO_ICON` empty to use the built-in Atom SVG, or drop your own at `public/heroes/hero.svg` (supports .svg / .png / .webp)
+> 4. **Hero text / buttons**: edit `HERO_TITLE` / `HERO_DESCRIPTION` / `HERO_ACTIONS` directly. Buttons can be added/removed freely; `variant: 'primary' | 'secondary'` controls style, `hide: true` skips rendering
 >    No need to touch any component code!
 
 ### Deploy URL
