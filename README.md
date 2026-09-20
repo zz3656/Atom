@@ -29,10 +29,10 @@
 | 特性                   | 说明                                                                           |
 | ---------------------- | ------------------------------------------------------------------------------ |
 | ⚡ **Astro 驱动**      | 零 JS 输出，纯 HTML，加载极快                                                  |
-| 🎨 **多主题切换**      | 3 套内置主题（Atom 默认 / Solarized / 羊皮纸）+ 自定义开发，一键切换，自动记忆                |
+| 🎨 **主题系统**         | 默认主题（紫罗兰 + 赛博青），一键切换深/浅色；CSS Token 体系让开发者可拓展自定义主题          |
 | 📱 **响应式设计**      | 手机汉堡菜单、平板、桌面完美适配，iOS 安全区域支持                             |
 | 📝 **Markdown 写作**   | 原生支持，Shiki 代码语法高亮                                                   |
-| 🤖 **CLI 工具**        | `atom new` / `atom list` / `atom build` — 本地创建文章、一键构建推送           |
+| 🤖 **CLI 工具**        | `npm run new` / `npm run list` / `npm run theme:create <id>` — 本地创建文章、生成主题       |
 | 📁 **分类 + 标签**     | 分类（单数）组织文章大类，标签（可多）标注细分主题                             |
 | 🚀 **双平台部署**      | GitHub Actions 自动构建，支持 GitHub Pages / Cloudflare Pages                  |
 | 🔍 **SEO 友好**        | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
@@ -47,7 +47,7 @@
 
 - Hero 区域：Atom 原子图标（紫色渐变轨道球体）+ 渐变大标题 + 背景光晕
 - 卡片网格布局：展示标题、描述、日期、分类、标签
-- 主题下拉菜单：3 套内置主题 + 浅色/深色独立切换；新主题 `npm run theme:create <id>` 即可上线
+- 右上角主题切换按钮：一键深/浅色；首次访问跟随系统设置，之后记忆用户选择
 
 ### 导航栏
 
@@ -90,78 +90,70 @@
 ```
 Atom/
 ├── scripts/
-│   ├── atom-cli.mjs           # 🤖 CLI 本地构建工具
-│   ├── generate-rss.mjs       # RSS + 搜索索引生成
-│   └── fix-links.mjs          # 路径修复（根路径部署）
+│   ├── atom-cli.mjs           # 🤖 本地 CLI（创建/列出文章）
+│   ├── create-theme.mjs       # 🎨 主题脚手架（npm run theme:create <id>）
+│   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
+│   ├── fix-sitemap.mjs        # sitemap lastmod 修正
+│   └── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
+├── astro-plugins/
+│   └── theme-loader.mjs       # 构建时扫描 src/themes/
 ├── public/
 │   ├── favicon.svg            # 浏览器标签页图标
 │   ├── manifest.json          # PWA 支持
 │   ├── robots.txt             # 搜索引擎爬虫规则
-│   ├── logos/                 # 导航栏 Logo 文件
+│   ├── logos/                 # 导航栏 Logo 目录
 │   └── medias/reward/         # 打赏二维码（可选）
 ├── src/
+│   ├── themes/                # 🎨 主题目录（默认 atom-default，开发者可扩展）
 │   ├── components/            # Astro 组件
-│   │   ├── Header.astro       # 导航栏 + 暗黑模式切换
-│   │   ├── Footer.astro       # 页脚 + 社交链接
+│   │   ├── Header.astro       # 导航栏
+│   │   ├── Footer.astro       # 页脚
 │   │   ├── PostCard.astro     # 文章卡片
-│   │   └── FormattedDate.astro # 日期格式化组件
-│   ├── utils/                 # 工具函数
-│   │   ├── path.ts            # 路径处理工具
-│   │   ├── date.ts            # 日期格式化
-│   │   └── blog.ts            # 文章数据工具
-│   ├── styles/                # 样式模块（已拆分）
-│   │   ├── global.css         # 主入口（20 个 @import）
-│   │   └── _modules/          # 20 个 CSS 模块
+│   │   └── ...                # 其他组件
+│   ├── utils/                 # 工具函数（path/date/blog/themes/collection）
+│   ├── styles/                # 样式模块
+│   │   ├── global.css         # 主入口
+│   │   └── _modules/          # 各组件 CSS 模块
 │   ├── content/               # 📝 Markdown 文章
-│   │   ├── blog/              # 文章目录
-│   │   └── config.ts          # 内容 Schema
-│   ├── layouts/               # 布局模板
-│   │   ├── BaseLayout.astro   # 全局布局
-│   │   └── BlogPost.astro     # 文章布局
+│   │   └── blog/              # 文章目录（每篇一个 .md）
+│   ├── layouts/               # 布局模板（BaseLayout / BlogPost）
 │   ├── pages/                 # 路由页面
-│   │   ├── index.astro        # 首页
-│   │   ├── about.astro        # 关于页
-│   │   ├── 404.astro          # 404 页
-│   │   ├── blog/              # 文章列表 & 详情
-│   │   ├── categories/        # 分类列表
-│   │   ├── category/          # 分类详情
-│   │   ├── tags/              # 标签列表
-│   │   └── tag/               # 标签详情
-│   ├── consts.ts              # 站点配置
-│   └── env.d.ts               # TypeScript 类型声明
-├── astro.config.mjs           # Astro 配置
+│   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL 等）
+│   └── env.d.ts
+├── docs/THEMING.md            # 主题开发指南
+├── astro.config.mjs
 ├── package.json
-├── tsconfig.json
 └── README.md
 ```
 
 ---
 
-## 🤖 CLI 本地构建工具
+## 🤖 CLI 本地工具
 
-Atom 提供命令行工具 `atom-cli.mjs`，体验类似 Hexo / Hugo 的本地工作流。
+Atom 提供 npm scripts 与一个轻量 CLI，体验类似 Hexo / Hugo 的本地工作流。
 
-### 目录结构要求
-
-将 `Atom-blog`（上线仓库）放在 `Atom`（源码仓库）的**同级目录**：
-
-```
-parent/
-├── Atom/              ← 源码仓库（在此运行 CLI）
-│   ├── scripts/
-│   │   └── atom-cli.mjs
-│   └── src/
-└── Atom-blog/         ← 上线仓库（生成 dist/）
-    ├── src/
-    └── dist/
-```
-
-### 命令速览
+### npm scripts
 
 ```bash
-# 查看帮助
-node scripts/atom-cli.mjs --help
+npm run dev             # 开发服务器（http://localhost:4321）
+npm run build           # 生产构建（产物 dist/）
+npm run preview         # 预览构建产物
+npm test                # 运行单元测试
+npm run check           # TypeScript 类型检查
+npm run lint            # ESLint 检查
+npm run format          # Prettier 格式化
+
+# 内容管理
+npm run new             # 交互式创建新文章
+npm run list            # 列出所有文章
+
+# 主题开发
+npm run theme:create <id>  # 一键生成主题脚手架
 ```
+
+### atom-cli.mjs（交互式创建）
+
+除了上面的 npm scripts，还有一个 `scripts/atom-cli.mjs` 提供交互式创建文章体验：
 
 | 命令                              | 说明                                 |
 | --------------------------------- | ------------------------------------ |
@@ -172,59 +164,30 @@ node scripts/atom-cli.mjs --help
 | `new <标题> -i /images/cover.jpg` | 指定封面图                           |
 | `new <标题> --draft`              | 创建为草稿                           |
 | `list`                            | 列出所有文章                         |
-| `build`                           | 同步源文件 → 构建 → 推送上线         |
-
-### 交互式创建
 
 ```bash
-$ node scripts/atom-cli.mjs new "我的第一篇文章"
-📝 文章标题: （从参数自动获取）
-📁 分类（回车跳过）: 技术笔记
-🏷️ 标签（逗号分隔，回车跳过）: Astro, Blog
-📄 描述（每篇文章必填，简短概括文章内容，建议不超过 80 字）:
-🖼️ 封面图路径（回车跳过）:
+# 交互式（推荐新手）
+$ npm run new
 
-✅ 文章已创建
-   📂 src/content/blog/my-first-article.md
-   📝 我的第一篇文章
-   📅 2026-09-15
-   📁 技术笔记
-   🏷️ Astro, Blog
-```
-
-### 非交互式创建（一行命令）
-
-```bash
-# 创建文章，不弹窗交互
+# 或一行命令
 node scripts/atom-cli.mjs new "Astro 完全指南" \
   -c "技术教程" \
   -t "Astro,Blog,教程" \
-  -d 2026-09-15
+  -d 2026-09-20
 
-# 创建草稿
-node scripts/atom-cli.mjs new "草稿内容" --draft
+# 列出所有文章
+npm run list
 ```
 
-### 一键构建推送
-
-```bash
-node scripts/atom-cli.mjs build
-```
-
-自动执行：
-
-1. 同步 `src/` 下所有 `.astro` 源文件到 `Atom-blog/`
-2. 在 `Atom-blog/` 执行 `npx astro build`（支持 GitHub Pages / Cloudflare Pages 两种模式）
-3. `git add -A && git commit && git push origin main`
+**注**：构建与部署由 GitHub Actions 自动完成（推送 main 分支即触发），不需要 `atom build` 之类的命令。
 
 ### 与 Hexo / Hugo 对比
 
 | Hexo              | Hugo                             | Atom                                  |
 | ----------------- | -------------------------------- | ------------------------------------- |
-| `hexo new "标题"` | `hugo new content posts/标题.md` | `node atom-cli.mjs new "标题"`        |
-| `hexo generate`   | `hugo`                           | `node atom-cli.mjs build`             |
-| `hexo deploy`     | (手动)                           | `node atom-cli.mjs build`（内置推送） |
+| `hexo new "标题"` | `hugo new content posts/标题.md` | `npm run new`（交互式）              |
 | `hexo server`     | `hugo server`                    | `npm run dev`                         |
+| `hexo generate && hexo deploy` | `hugo && rsync`        | `git push`（GitHub Actions 自动构建） |
 
 ---
 
@@ -444,7 +407,7 @@ npx wrangler pages deploy dist
 > - `DEPLOY_TARGET=github` — GitHub Pages 模式（需要 `REPO_NAME`）
 > - `DEPLOY_TARGET=cf` — Cloudflare Pages 模式（需要 `CF_DOMAIN`）
 > - 不设置 — 自动检测，优先 GitHub Pages
-> - `REPO_NAME` — GitHub Pages 子路径（默认 `Atom-blog`）
+> - `REPO_NAME` — GitHub Pages 子路径（默认 `Atom`，从 `${{ github.event.repository.name }}` 自动推导）
 > - `CF_DOMAIN` — Cloudflare 自定义域名（默认 `atom.inte8.top`）
 
 > ⚡ 如果默认值不满足需求，可以手动调整 `astro.config.mjs` 中的 `site` 和 `base` 字段。
@@ -500,10 +463,13 @@ public/medias/reward/
 
 ### 6. 主题 / 换肤
 
-3 套内置主题：**Atom 默认**（紫罗兰 + 赛博青）/ **Solarized**（Ethan Schoonover 经典）/ **羊皮纸**（复古护眼）。
+Atom 自带一套精心调校的默认主题：**紫罗兰 + 赛博青**（日间紫罗兰，夜间赛博朋克青）。
+
+右上角一键切换深色 / 浅色模式，**首次访问跟随系统设置**，之后记忆用户选择。
+
 站点颜色全部通过 CSS 变量控制；布局/字体等变量位于 `src/styles/_modules/_variables.css`。
 
-**添加自定义主题**（零配置）：
+**拓展自定义主题**（主题系统基础设施已就绪）：
 
 ```bash
 # 一键生成主题脚手架（含 manifest + 全部必需 token）
@@ -513,7 +479,9 @@ npm run theme:create ocean
 npm run theme:create ocean --no-dark
 ```
 
-然后编辑 `src/themes/ocean/light.css`（及 dark.css）。`npm run dev` 后主题会自动出现在右上角菜单中，无需修改任何其他文件。
+然后编辑 `src/themes/ocean/light.css`（及 dark.css）。**默认只安装 atom-default 一个主题**；生成的第三方主题存放在 `src/themes/<id>/`，构建时自动被扫描加入。
+
+如需在 UI 暴露主题选择菜单，开发者可自行扩展 `src/components/Header.astro`——基础设施（themes 数组 + data-theme 属性切换）已就绪。
 
 完整开发指南（必需 token 列表、选择器约定、最佳实践）见 **[docs/THEMING.md](./docs/THEMING.md)**。
 
