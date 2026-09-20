@@ -46,7 +46,7 @@
   }
 }
 
-/* 桌面端：固定浮动在文章左侧空白区
+/* 桌面端：固定浮动在文章左侧空白区，垂直居中
  *
  * 几何计算:
  *   - 文章 .post 宽度 = --content-width = 760px，居中
@@ -54,12 +54,17 @@
  *   - 文章左边缘 = 50% - 380px
  *   - TOC 右侧 = 文章左边缘 - 1.5rem(gap) = 50% - 380px - 1.5rem
  *   - TOC 左侧 = TOC 右侧 - 220px(width) = 50% - 600px - 1.5rem
+ *
+ * 垂直位置：top: 50% + translateY(-50%) 实现垂直居中。
+ *   - 当 TOC 高度 < 视口高时，TOC 视觉居中
+ *   - 当 TOC 内容过长时，受 max-height + overflow-y:auto 约束，按需滚动
  */
 @media (min-width: 1280px) {
   .toc {
     position: fixed;
-    top: calc(var(--header-height) + 1.5rem);
+    top: 50%;
     left: calc(50% - 600px - 1.5rem); /* 文章左外侧 - gap */
+    transform: translateY(-50%);
     width: 220px;
     max-height: calc(100vh - var(--header-height) - 3rem);
     overflow-y: auto;
