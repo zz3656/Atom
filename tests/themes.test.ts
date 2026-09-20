@@ -59,17 +59,15 @@ describe('isValidMode', () => {
 });
 
 describe('scanThemes', () => {
-  it('returns at least 3 built-in themes', () => {
+  it('returns at least the atom-default built-in theme', () => {
     const themes = scanThemes();
-    expect(themes.length).toBeGreaterThanOrEqual(3);
+    expect(themes.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('contains the three documented built-in themes', () => {
+  it('contains atom-default', () => {
     const themes = scanThemes();
     const ids = themes.map((t) => t.id);
     expect(ids).toContain('atom-default');
-    expect(ids).toContain('solarized');
-    expect(ids).toContain('sepia');
   });
 
   it('puts atom-default first', () => {
@@ -97,17 +95,5 @@ describe('scanThemes', () => {
     const themes = scanThemes();
     const def = themes.find((t) => t.id === 'atom-default');
     expect(def?.modes).toEqual(expect.arrayContaining(['light', 'dark']));
-  });
-
-  it('sepia is single-mode (light only)', () => {
-    const themes = scanThemes();
-    const sepia = themes.find((t) => t.id === 'sepia');
-    expect(sepia?.modes).toEqual(['light']);
-  });
-
-  it('solarized supports both light and dark', () => {
-    const themes = scanThemes();
-    const sol = themes.find((t) => t.id === 'solarized');
-    expect(sol?.modes).toEqual(expect.arrayContaining(['light', 'dark']));
   });
 });

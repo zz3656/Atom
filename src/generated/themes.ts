@@ -15,28 +15,5 @@ export const themes: ThemeManifest[] = [
       "dark"
     ],
     "preview": "/logos/logo.svg"
-  },
-  {
-    "id": "sepia",
-    "name": "Sepia Paper",
-    "author": "Atom Contributors",
-    "version": "1.0.0",
-    "description": "复古羊皮纸主题 — 适合长时间阅读，单模式",
-    "modes": [
-      "light"
-    ],
-    "preview": ""
-  },
-  {
-    "id": "solarized",
-    "name": "Solarized",
-    "author": "Atom Contributors",
-    "version": "1.0.0",
-    "description": "Solarized 配色方案（Ethan Schoonover）— 经典开发者配色",
-    "modes": [
-      "light",
-      "dark"
-    ],
-    "preview": ""
   }
 ];

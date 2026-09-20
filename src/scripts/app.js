@@ -66,131 +66,41 @@
   }
 
   // ============================================================
-  // 1. Theme picker (多主题: data-theme + data-mode)
+  // 1. Theme toggle (data-theme + data-mode)
   // ============================================================
+  // 默认主题从 data-theme 取（允许开发者未来扩展多个主题）。
+  // 简单点击：light ↔ dark。
+  // 系统主题跟随：用户未手动设置时自动跟随 prefers-color-scheme。
   var themeToggle = document.getElementById('theme-toggle');
   var themeToggleIcon = document.getElementById('theme-toggle-icon');
-  var themePicker = document.getElementById('theme-picker');
-  var themeMenu = document.getElementById('theme-menu');
   var root = document.documentElement;
 
-  function currentThemeId() {
-    return root.getAttribute('data-theme') || 'atom-default';
-  }
   function currentMode() {
     return root.getAttribute('data-mode') || 'light';
   }
-  function setThemeId(id) {
-    root.setAttribute('data-theme', id);
-    try { localStorage.setItem('themeId', id); } catch (e) {}
-    syncThemeUI();
+  function syncThemeIcon() {
+    if (!themeToggleIcon) return;
+    themeToggleIcon.textContent = currentMode() === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19';
   }
   function setMode(mode) {
     root.setAttribute('data-mode', mode);
     try { localStorage.setItem('themeMode', mode); } catch (e) {}
-    syncThemeUI();
-  }
-  // 当前主题是否支持 dark 模式（由 data-has-dark 标记决定）
-  // data-has-dark 属性：
-  //   "1"   → 支持 dark（双模式）
-  //   "0"   → 仅 light（单模式）
-  //   缺失   → 默认支持 dark（向后兼容旧 DOM/第三方主题）
-  function currentThemeSupportsDark() {
-    var opts = themeMenu.querySelectorAll('[data-theme-id]');
-    for (var i = 0; i < opts.length; i++) {
-      if (opts[i].getAttribute('data-theme-id') === currentThemeId()) {
-        var hasDark = opts[i].getAttribute('data-has-dark');
-        if (hasDark === null) return true; // 属性缺失则默认双模式
-        return hasDark === '1';
-      }
-    }
-    return true; // 找不到当前主题也默认双模式
+    syncThemeIcon();
   }
 
-  // 同步按钮图标 + 菜单选中态
-  function syncThemeUI() {
-    var mode = currentMode();
-    var supportsDark = currentThemeSupportsDark();
-    // 单模式主题：图标强制为月，免跰用户跰跰不协调
-    if (themeToggleIcon) {
-      themeToggleIcon.textContent = !supportsDark
-        ? '\uD83C\uDF19'
-        : (mode === 'dark' ? '\u2600\uFE0F' : '\uD83C\uDF19');
-    }
-    if (!themeMenu) return;
-    var opts = themeMenu.querySelectorAll('[data-theme-id]');
-    for (var i = 0; i < opts.length; i++) {
-      var isCurrent = opts[i].getAttribute('data-theme-id') === currentThemeId();
-      opts[i].classList.toggle('active', isCurrent);
-    }
-    var modeOpts = themeMenu.querySelectorAll('[data-mode]');
-    for (var j = 0; j < modeOpts.length; j++) {
-      var modeOpt = modeOpts[j];
-      var isDarkOpt = modeOpt.getAttribute('data-mode') === 'dark';
-      var isCurrentMode = modeOpt.getAttribute('data-mode') === mode;
-      modeOpt.classList.toggle('active', isCurrentMode);
-      // 单模式主题：dark 选项变灰、不可点
-      // 重要：不能用 button.disabled = true 屏蔽点击！
-      // 那样会导致 click 事件根本不触发，后面的关闭菜单逻辑跑不到。
-      // 改为：仅设 aria-disabled + 依赖 CSS 的 pointer-events: none
-      var disableDark = isDarkOpt && !supportsDark;
-      modeOpt.classList.toggle('disabled', disableDark);
-      modeOpt.setAttribute('aria-disabled', disableDark ? 'true' : 'false');
-      // 不设 modeOpt.disabled，避免屏蔽 click 事件
-    }
-  }
+  if (themeToggle) {
+    syncThemeIcon();
 
-  if (themeToggle && themeMenu) {
-    syncThemeUI();
-
-    themeToggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var isOpen = !themeMenu.hidden;
-      themeMenu.hidden = isOpen;
-      themeToggle.setAttribute('aria-expanded', String(!isOpen));
+    // 点击切换
+    themeToggle.addEventListener('click', function () {
+      var next = currentMode() === 'dark' ? 'light' : 'dark';
+      setMode(next);
+      // 记录"已手动设置"，不再跟随系统主题
+      try { localStorage.setItem('themeModeAuto', '0'); } catch (e) {}
     });
 
-    // 主题选项
-    themeMenu.addEventListener('click', function (e) {
-      var target = e.target && e.target.closest ? e.target.closest('[data-theme-id]') : null;
-      if (target) {
-        setThemeId(target.getAttribute('data-theme-id'));
-        themeMenu.hidden = true;
-        themeToggle.setAttribute('aria-expanded', 'false');
-        return;
-      }
-      // 模式选项
-      var modeBtn = e.target && e.target.closest ? e.target.closest('[data-mode]') : null;
-      if (modeBtn) {
-        // 单模式主题：点击 dark 选项被冸默 + 自动跳回 light
-        var requestedMode = modeBtn.getAttribute('data-mode');
-        if (requestedMode === 'dark' && !currentThemeSupportsDark()) {
-          requestedMode = 'light';
-        }
-        setMode(requestedMode);
-        themeMenu.hidden = true;
-        themeToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // 点外面关闭
-    document.addEventListener('click', function (e) {
-      if (themePicker && !themePicker.contains(e.target)) {
-        themeMenu.hidden = true;
-        themeToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // ESC 关闭
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && !themeMenu.hidden) {
-        themeMenu.hidden = true;
-        themeToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    // 跟随系统主题：仅在用户从未手动设置过时生效。
-    // localStorage 键 'themeModeAuto' === '0' 表示用户明确选择过模式，不再跟随系统。
+    // 跟随系统主题：仅在用户从未手动设置过时生效
+    // localStorage.themeModeAuto === '0' 表示用户明确选择过
     var mql = window.matchMedia('(prefers-color-scheme: dark)');
     var handleSystemThemeChange = function (e) {
       try {
@@ -198,20 +108,11 @@
         setMode(e.matches ? 'dark' : 'light');
       } catch (err) { /* localStorage 不可用，静默 */ }
     };
-    // 现代浏览器用 addEventListener，旧版 Safari 兼容 addListener
     if (mql.addEventListener) {
       mql.addEventListener('change', handleSystemThemeChange);
     } else if (mql.addListener) {
       mql.addListener(handleSystemThemeChange);
     }
-
-    // 用户点击模式选项后，记录“已手动设置”，不再跟随系统主题。
-    // 复用原有菜单点击事件：检测到点击了 [data-mode] 按钮后写入标记。
-    themeMenu.addEventListener('click', function markManualMode(e) {
-      if (e.target && e.target.closest && e.target.closest('[data-mode]')) {
-        try { localStorage.setItem('themeModeAuto', '0'); } catch (err) {}
-      }
-    });
   }
 
   // ============================================================

@@ -1,9 +1,0 @@
-{
-  "id": "sepia",
-  "name": "Sepia Paper",
-  "author": "Atom Contributors",
-  "version": "1.0.0",
-  "description": "复古羊皮纸主题 — 适合长时间阅读，单模式",
-  "modes": ["light"],
-  "preview": ""
-}
