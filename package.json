@@ -16,7 +16,7 @@
     "new": "node scripts/atom-cli.mjs new",
     "list": "node scripts/atom-cli.mjs list",
     "theme:create": "node scripts/create-theme.mjs",
-    "postbuild": "node scripts/generate-rss.mjs && node scripts/fix-sitemap.mjs"
+    "postbuild": "node --experimental-strip-types scripts/generate-rss.mjs && node scripts/fix-sitemap.mjs"
   },
   "engines": {
     "node": ">=22.12",
@@ -27,7 +27,6 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
-    "@astrojs/markdown-remark": "^7.3.1",
     "@astrojs/sitemap": "^3.7.4",
     "@types/jsdom": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^8.70.0",

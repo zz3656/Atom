@@ -108,6 +108,16 @@ const defaultThemeId = themeIds[0] || 'atom-default';
       })();
     </script>
     <slot name="head" />
+    <noscript>
+      <style>
+        /* JS disabled 时：默认浅色 + 调整布局避免主题按钮占位 */
+        html { color-scheme: light; }
+        .theme-toggle { display: none; }
+      </style>
+      <div style="background:#fef3c7;color:#92400e;padding:0.75rem 1rem;text-align:center;font-size:0.9rem;border-bottom:1px solid #f59e0b;">
+        本站某些功能（主题切换 / 搜索 / 代码复制）需要 JavaScript。基础阅读不受影响。
+      </div>
+    </noscript>
   </head>
   <body data-search-base={searchBase}>
     <a class="skip-link" href="#main-content">

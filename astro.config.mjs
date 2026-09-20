@@ -33,8 +33,8 @@ export default defineConfig({
   // HTML 压缩优化
   build: {
     compressHTML: true,
-    // 小 CSS 文件直接内联到 HTML，减少 HTTP 请求
-    inlineStylesheets: 'auto',
+    // 项目所有 CSS 都内联到 HTML，省一次 HTTP 请求（适合博客这种小项目）
+    inlineStylesheets: 'always',
   },
   // 启用 Vite 预构建以加快冷启动
   vite: {

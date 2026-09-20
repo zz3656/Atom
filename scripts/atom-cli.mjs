@@ -5,25 +5,24 @@
  * 类似 Hexo / Hugo 的 CLI 工作流：
  *   atom new <title>   → 在 src/content/blog/ 创建新文章
  *   atom list          → 列出所有文章
- *   atom build         → 构建 + 推送 dist 到 Atom-blog 仓库
+ *
+ * 注: 构建与部署由 GitHub Actions 自动完成（推送 main 分支即触发），
+ *     不再提供 atom build 命令。
  *
  * 用法:
  *   node atom-cli.mjs new "我的文章"
  *   node atom-cli.mjs new "我的文章" -c "技术笔记" -t "Astro,Web"
  *   node atom-cli.mjs list
- *   node atom-cli.mjs build
  */
 
-import { readdir, readFile, writeFile, mkdir, copyFile, rm } from 'node:fs/promises';
-import { execSync } from 'node:child_process';
-import { basename, join, dirname, relative, resolve, extname } from 'node:path';
+import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { basename, join, dirname, resolve, extname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createInterface } from 'node:readline';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
 const CONTENT_DIR = join(ROOT, 'src', 'content', 'blog');
-const BLOG_REPO_DIR = join(ROOT, '..', 'Atom-blog');
 
 const rl = createInterface({ input: process.stdin, output: process.stdout });
 
@@ -171,7 +170,7 @@ async function cmdNew(args) {
   if (category) console.log(`     📁 ${category}`);
   if (tags.length) console.log(`     🏷️ ${tags.join(', ')}`);
   console.log(`\n  💡 编辑文章:  nano ${relativePath}`);
-  console.log(`  💡 完成后:    atom build`);
+  console.log(`  💡 完成后:    git push（GitHub Actions 自动构建 + 部署）`);
   rl.close();
 }
 
@@ -199,115 +198,6 @@ async function cmdList(_args) {
 
   console.log(`\n  共 ${posts.length} 篇文章\n`);
   rl.close();
-}
-
-async function cmdBuild(_args) {
-  console.log('\n🔨 构建 Atom Blog...\n');
-
-  // 1. 检查 Atom-blog 目录是否存在
-  if (!(await dirExists(BLOG_REPO_DIR))) {
-    console.error('  ❌ 未找到 Atom-blog 目录');
-    console.error(`     预期路径: ${BLOG_REPO_DIR}`);
-    console.error('     请将 Atom-blog (上线仓库) 放在 Atom (源码仓库) 的父目录下');
-    rl.close();
-    return;
-  }
-
-  // 2. 检查 Atom-blog 是否是 git 仓库
-  if (!(await dirExists(join(BLOG_REPO_DIR, '.git')))) {
-    console.error('  ❌ Atom-blog 不是 git 仓库');
-    rl.close();
-    return;
-  }
-
-  // 3. 同步 src/ 文件
-  console.log('  📦 同步源文件...');
-  await syncSourceToBlogRepo();
-
-  // 4. 在 Atom-blog 目录构建
-  // 注意：必须把 cwd 设为 BLOG_REPO_DIR，否则 astro build 会在源仓库目录读取配置
-  console.log('  🏗️  执行构建...');
-  try {
-    execSync('npx astro build', { stdio: 'inherit', cwd: BLOG_REPO_DIR });
-  } catch (err) {
-    console.error('  ❌ 构建失败');
-    rl.close();
-    return;
-  }
-
-  // 5. 提交 + 推送
-  console.log('  🚀 推送到 Atom-blog...');
-  try {
-    execSync(
-      'git add -A && git commit -m "Auto build: $(date +%Y-%m-%d\\ %H:%M)" && git push origin main',
-      {
-        stdio: 'inherit',
-        cwd: BLOG_REPO_DIR,
-      },
-    );
-  } catch (err) {
-    console.error('  ⚠️  推送失败，请手动提交');
-    console.error(`     cd "${BLOG_REPO_DIR}" && git add -A && git push origin main`);
-    rl.close();
-    return;
-  }
-
-  console.log('\n  ✅ 完成！博客已更新');
-  rl.close();
-}
-
-// ─── File sync ────────────────────────────────────────────────
-
-async function syncSourceToBlogRepo() {
-  const syncFiles = [
-    'src/layouts/BaseLayout.astro',
-    'src/layouts/BlogPost.astro',
-    'src/components/Header.astro',
-    'src/components/Footer.astro',
-    'src/components/PostCard.astro',
-    'src/components/FormattedDate.astro',
-    'src/styles/global.css',
-    'src/consts.ts',
-    'src/content.config.ts',
-    'src/env.d.ts',
-    'src/pages/about.astro',
-    'src/pages/404.astro',
-  ];
-
-  for (const rel of syncFiles) {
-    const src = join(ROOT, rel);
-    const dst = join(BLOG_REPO_DIR, rel);
-    if (await fileExists(src)) {
-      const dstDir = dirname(dst);
-      await mkdir(dstDir, { recursive: true });
-      await copyFile(src, dst);
-    }
-  }
-
-  // 同步 .astro 文件（自动发现新页面）
-  const pagesDir = join(ROOT, 'src', 'pages');
-  if (await dirExists(pagesDir)) {
-    const pageFiles = await findFilesRecursively(pagesDir);
-    for (const pageFile of pageFiles) {
-      const rel = relative(ROOT, pageFile);
-      const dst = join(BLOG_REPO_DIR, rel);
-      await mkdir(dirname(dst), { recursive: true });
-      await copyFile(pageFile, dst);
-    }
-  }
-
-  // 同步文章 .md 文件
-  const blogDir = join(ROOT, 'src', 'content', 'blog');
-  if (await dirExists(blogDir)) {
-    const entries = await readdir(blogDir);
-    for (const entry of entries) {
-      if (entry.endsWith('.md')) {
-        const src = join(blogDir, entry);
-        const dst = join(BLOG_REPO_DIR, 'src', 'content', 'blog', entry);
-        await copyFile(src, dst);
-      }
-    }
-  }
 }
 
 // ─── Options parser ───────────────────────────────────────────
@@ -382,22 +272,6 @@ async function dirExists(path) {
   }
 }
 
-async function findFilesRecursively(dir) {
-  const fs = await import('node:fs/promises');
-  const files = [];
-  const entries = await fs.readdir(dir);
-  for (const entry of entries) {
-    const fullPath = join(dir, entry);
-    const stat = await fs.stat(fullPath);
-    if (stat.isDirectory()) {
-      files.push(...(await findFilesRecursively(fullPath)));
-    } else if (entry.endsWith('.astro')) {
-      files.push(fullPath);
-    }
-  }
-  return files;
-}
-
 // ─── Entry point ──────────────────────────────────────────────
 
 async function main() {
@@ -415,9 +289,6 @@ async function main() {
       break;
     case 'list':
       await cmdList(args.slice(1));
-      break;
-    case 'build':
-      await cmdBuild(args.slice(1));
       break;
     default:
       console.log(`  ❌ 未知命令: ${cmd}`);
@@ -444,15 +315,12 @@ function printUsage() {
 
     list                    列出所有文章
 
-    build                   同步源文件 → 构建 → 推送
-
     help                    显示帮助信息
 
   示例:
     node atom-cli.mjs new "Astro 指南"
     node atom-cli.mjs new "Astro 指南" -c "技术教程" -t "Astro,Web"
     node atom-cli.mjs list
-    node atom-cli.mjs build
 `);
 }
 

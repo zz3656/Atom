@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 import { readdirSync } from 'fs';
 import { join, dirname } from 'path';
-import { markdownToPlainText, stripFrontmatter } from '../src/utils/markdown-strip.js';
+import { markdownToPlainText, stripFrontmatter } from '../src/utils/markdown-strip.ts';
 
 function escapeXml(str) {
   var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' };
@@ -84,7 +84,7 @@ var posts = files
   .map(function (f) {
     var fullContent = readFileSync(join(blogDir, f), 'utf-8');
     var fm = parseFrontmatter(fullContent);
-    // 提取正文（复用 src/utils/markdown-strip.js 的实现）
+    // 提取正文（复用 src/utils/markdown-strip.ts 的实现）
     var body = stripFrontmatter(fullContent);
     return {
       title: fm.title || '',
@@ -156,7 +156,7 @@ writeFileSync('dist/rss.xml', rss, 'utf-8');
 console.log('RSS generated: dist/rss.xml');
 
 // --- Generate Search Index ---
-// 从正文提取纯文本用于搜索（去除 Markdown 标记，函数从 src/utils/markdown-strip.js 共享）
+// 从正文提取纯文本用于搜索（去除 Markdown 标记，函数从 src/utils/markdown-strip.ts 共享）
 var searchIndex = posts.map(function (p) {
   var bodyText = markdownToPlainText(p.content || '');
   return {

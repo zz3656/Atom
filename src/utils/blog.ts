@@ -1,7 +1,7 @@
 // Atom Blog — 文章数据处理
 // 统一的文章摘要提取逻辑
 
-import { stripFrontmatter, markdownToPlainText } from './markdown-strip.js';
+import { stripFrontmatter, markdownToPlainText } from './markdown-strip';
 
 /**
  * 从 Markdown body 中提取摘要

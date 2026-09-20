@@ -6,6 +6,50 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+### Added
+
+- `REPO_URL` in `src/consts.ts` for Footer project source link (separate from `SOCIAL_LINKS.github`)
+- `data-has-dark` attribute on theme options (single-mode theme support)
+- Theme scaffold CLI: `npm run theme:create <id>` + `--no-dark` flag
+- `data-theme` / `data-mode` dual-attribute theme system with build-time injection (FOUC-free)
+- Build plugin `astro-plugins/theme-loader.mjs` (scans `src/themes/` at build)
+- `docs/THEMING.md` — complete theme development guide
+- `<noscript>` graceful degradation fallback (planned)
+- `inlineStylesheets: 'always'` — eliminates one HTTP request per page (planned)
+
+### Changed
+
+- Simplified multi-theme system: project ships with only `atom-default`; other themes moved to separate repo (`atom-themes/`)
+- Theme picker UI replaced with simple light/dark toggle button
+- Header dropdown menu (`.theme-picker`/`.theme-menu`) removed; click directly toggles mode
+- Header code: -50 lines; app.js theme code: -135 → ~30 lines; `_header.css`: -106 lines
+- Net: -498 lines of code (`+58 / -556`)
+- Footer rewritten: `🐙 GitHub` (user-customizable via `SOCIAL_LINKS.github`) + `© 2026 Atom` (hardcoded framework brand → `REPO_URL`)
+- RSS Feed URL double-prefix bug fixed (online verified): `siteUrl + prefix` → `siteUrl.replace(/\/$/, '') + path`
+- search-result URL double-trailing-slash bug fixed
+- Hero button href `/Atom//blog` (404) fixed → `/Atom/blog` (works)
+- Image zoom overlay: aria-supplied alt via original `<img alt>` (not blank placeholder)
+- TOC desktop: `top: calc(header + 1.5rem)` → `top: 50% + translateY(-50%)` (vertically centered)
+- Coverage config: removed exclude of `date.ts`/`path.ts`/`collection.ts` (P0-18)
+- `collection.ts` now has dedicated `tests/collection.test.ts` (was 0% coverage)
+- minify-app-js.mjs: removed redundant `public/<base>/` copy branch (was creating unused `dist/Atom/` files)
+- Removed `scripts/fix-links.mjs` (was dead code: Astro 7 auto-fixes protocol-relative URLs)
+- Added `canonical` URL link to all pages
+- 404 page `og:url` no longer points to non-existent `/404/` (uses `pageUrl={Astro.site}`)
+
+### Removed
+
+- Dead code: `formatFullDate` (only used in tests), `isRoot()` (never called)
+- `dist/Atom/js/app.js` (10KB unused file in production builds)
+- Sepia & Solarized themes from `src/themes/` (moved to `atom-themes/` standalone repo)
+
+### Security
+
+- RSS injection defense: `escapeXml()` on title/description in RSS items
+- Image-zoom overlay: uses original `<img>` alt via `openZoom(src, alt)` (not blank)
+
+## [Unreleased - Optimization & Refactor]
+
 ### Changed
 
 - Renamed project from `Atom-blog` to `Atom` (directory, package name, docs, URLs, code references)
