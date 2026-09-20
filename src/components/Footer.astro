@@ -1,10 +1,14 @@
 ---
-import { SITE_TITLE, REPO_URL, SOCIAL_LINKS } from '../consts';
+import { REPO_URL, SOCIAL_LINKS } from '../consts';
 import { rssUrl, aboutUrl } from '../utils/path';
 
 const year = new Date().getFullYear();
 
-// 个人社交链接（不包含 GitHub，因为 GitHub 已通过 REPO_URL 单独展示）
+// "Powered by Atom" 中的 Atom——与用户站点名(SITE_NAME)解耦，
+// 不应被用户客制化时修改。
+const FRAMEWORK_NAME = 'Atom';
+
+// 个人社交链接（不包含 GitHub —— GitHub 单独处理）
 const socialLinks = [
   SOCIAL_LINKS.twitter
     ? { href: SOCIAL_LINKS.twitter, label: '🐦 Twitter', target: '_blank', rel: 'noopener' }
@@ -16,9 +20,11 @@ const socialLinks = [
 <footer class="site-footer">
   <div class="footer-content">
     <div class="footer-links">
-      <a href={REPO_URL} target="_blank" rel="noopener" title="项目源代码仓库">
-        🐙 GitHub
-      </a>
+      {SOCIAL_LINKS.github && (
+        <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener" title="作者 GitHub">
+          🐙 GitHub
+        </a>
+      )}
       {socialLinks.map(
         (link) =>
           link && (
@@ -35,7 +41,7 @@ const socialLinks = [
     <p>
       © {year}{' '}
       <a href={REPO_URL} target="_blank" rel="noopener">
-        {SITE_TITLE}
+        {FRAMEWORK_NAME}
       </a>
       . Powered by{' '}
       <a href="https://astro.build" target="_blank" rel="noopener">
