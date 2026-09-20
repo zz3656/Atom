@@ -28,7 +28,7 @@
 
 | 特性                   | 说明                                                                           |
 | ---------------------- | ------------------------------------------------------------------------------ |
-| ⚡ **Astro 驱动**      | 零 JS 输出，纯 HTML，加载极快                                                  |
+| ⚡ **Astro 驱动**      | 静态 HTML + ~10KB minified 交互脚本（defer 加载，首屏渲染零阻塞），加载极快             |
 | 🎨 **主题系统**         | 默认主题（紫罗兰 + 赛博青），一键切换深/浅色；CSS Token 体系让开发者可拓展自定义主题          |
 | 📱 **响应式设计**      | 手机汉堡菜单、平板、桌面完美适配，iOS 安全区域支持                             |
 | 📝 **Markdown 写作**   | 原生支持，Shiki 代码语法高亮                                                   |
@@ -37,7 +37,7 @@
 | 🚀 **双平台部署**      | GitHub Actions 自动构建，支持 GitHub Pages / Cloudflare Pages                  |
 | 🔍 **SEO 友好**        | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
 | 📦 **超小体积**        | 首页 HTML ~11KB gzipped（CSS 内联，无额外请求）；单篇文章 ~14KB gzipped             |
-| 💯 **Lighthouse 满分** | 性能、无障碍、SEO 全 100                                                       |
+| 💯 **Lighthouse 满分** | 在简洁页面上可达到 100/100（性能/无障碍/SEO）；内置配置：语义化 HTML、canonical、OG、Twitter Card、JSON-LD、sitemap、RSS、a11y skip-link |
 
 ---
 

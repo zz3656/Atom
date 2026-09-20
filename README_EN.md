@@ -20,16 +20,16 @@
 
 | Feature                 | Description                                                                                                      |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| ⚡ **Astro-Powered**    | Zero JavaScript output, pure HTML, blazing fast                                                                  |
-| 🌑 **Cyberpunk Theme**  | Dark futuristic UI, neon glow, grid background                                                                   |
-| 📱 **Responsive**       | Perfect on mobile, tablet, and desktop                                                                           |
-| 🎯 **Base Path Fix**    | Supports GitHub Pages subpath deployment                                                                         |
-| 📝 **Markdown Writing** | Native support with code syntax highlighting                                                                     |
-| 🏷️ **Tag System**       | Automatic tag display on article cards                                                                           |
-| 🚀 **GitHub Actions**   | Automatic build and deploy on push                                                                               |
-| 🔍 **SEO Friendly**     | Semantic HTML, Open Graph / Twitter Card / JSON-LD Structured Data, Sitemap, RSS Feed (📡 in nav bar and footer) |
-| 📦 **Tiny Size**        | ~3KB HTML per page                                                                                               |
-| 💯 **Lighthouse 100**   | Performance, Accessibility, SEO all perfect                                                                      |
+| ⚡ **Astro-Powered**    | Static HTML + ~10KB minified interaction script (defer-loaded, no first-paint blocking), blazing fast             |
+| 🎨 **Theme System**     | Default theme (violet + cyber cyan) with one-click light/dark toggle; CSS Token system for custom themes            |
+| 📱 **Responsive**       | Perfect on mobile / tablet / desktop, iOS safe-area support                                                      |
+| 📝 **Markdown Writing** | Native support with Shiki code syntax highlighting                                                                |
+| 🤖 **CLI Tools**        | `npm run new` / `npm run list` / `npm run theme:create <id>` — create articles, generate themes                  |
+| 📁 **Category + Tags**  | Categories (one per article) + tags (multiple per article)                                                        |
+| 🚀 **Dual Deploy**      | GitHub Actions auto-build, supports GitHub Pages / Cloudflare Pages                                              |
+| 🔍 **SEO Friendly**     | Semantic HTML, Open Graph / Twitter Card / JSON-LD, canonical URL, Sitemap, RSS                                |
+| 📦 **Tiny Size**        | Homepage HTML ~11KB gzipped (CSS inline, no extra request); single post ~14KB gzipped                            |
+| 💯 **Lighthouse-Ready** | Built-in semantics for 100/100 scores: canonical, OG/Twitter, JSON-LD, sitemap, RSS, a11y skip-link              |
 
 ## 📸 Preview
 

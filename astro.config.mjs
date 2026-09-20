@@ -51,7 +51,7 @@ export default defineConfig({
 
   markdown: {
     shikiConfig: {
-      // Shiki 会自动检测 html.dark 类并切换为 github-light 主题
+      // Shiki 输出两套颜色，CSS 变量 --shiki-dark 控制切换（见 src/styles/_modules/_post.css）
       themes: {
         light: 'github-light',
         dark: 'github-dark',
