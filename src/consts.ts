@@ -4,15 +4,25 @@
 // ★ 客制化指南 ★
 // 只需修改此处，即可全局更新站点信息、Logo、Favicon、首页 Hero 区域 等
 
+// 版本号从 package.json 读取 —— 单一数据源，不要在这里手写。
+// package.json version ↔ CHANGELOG 最新版本号 ↔ 页脚显示，三者由
+// tests/version.test.ts 保证一致。
+import pkg from '../package.json';
+
 export const SITE_TITLE = 'Atom Blog'; // 站点标题（SEO 标题、OG 标签、RSS 名称等）
 export const SITE_NAME = 'Atom'; // 导航栏显示的名称（短名称，可用于 Logo 替换后仅显示文字）
 export const SITE_DESCRIPTION =
-  'A modern, lightweight blog built with Astro — clean, fast, elegant';
+  'Atom 博客 —— 用 Astro 构建的现代轻量级博客。零 JavaScript 运行时，内容优先，为技术写作而生的精密日志。';
 export const AUTHOR = 'zz3656';
+
+/** 站点版本号（显示在页脚）。数据源：package.json 的 version 字段。 */
+export const SITE_VERSION = pkg.version;
 
 // 首页 Hero 区域文案（可完全客制化，不依赖任何外部数据）
 // - HERO_TITLE       → 首页 Hero 大标题中的文本部分（图标 + 文本）。可包含 HTML 标签
 // - HERO_DESCRIPTION → 首页 Hero 描述段落
+// - HERO_EYEBROW     → Hero 标题上方的小写标签（等宽字体）
+// - HERO_EYEBROW_SUB → 标签右侧的补充说明
 // - HERO_ACTIONS     → 首页 Hero 下方的 CTA 按钮列表，按顺序渲染；留空数组则不渲染按钮区
 //   · label  : 按钮文案
 //   · href   : 按钮跳转地址（以 / 开头的站内路径会自动加 base 前缀）
@@ -20,7 +30,9 @@ export const AUTHOR = 'zz3656';
 //   · hide   : true 则跳过该按钮（可选）
 export const HERO_TITLE = 'Atom 博客';
 export const HERO_DESCRIPTION =
-  '一个简洁、快速、优雅的现代博客。基于 Astro 构建，零 JavaScript， Lighthouse 满分，为你的内容而生。';
+  '一个用 Astro 构建的现代轻量级博客：零 JavaScript 运行时、Lighthouse 满分，把精力留给内容本身。';
+export const HERO_EYEBROW = 'PRECISION LOG';
+export const HERO_EYEBROW_SUB = '个人技术日志';
 export const HERO_ACTIONS: Array<{
   label: string;
   href: string;
@@ -37,6 +49,9 @@ export const HERO_ACTIONS: Array<{
 // - Hero Icon → 首页 Hero 区域"Atom 博客"前面的图标。
 //               留空 '' 则使用内置的 Atom 原子 SVG（默认）；
 //               如需替换，放入 public/heroes/hero.svg（或 .png / .webp），修改 SITE_HERO_ICON 即可
+//
+// 图形来源：内置标识由本机 Draw Things 生成原图，再描摹成矢量，颜色对齐设计系统 token。
+// 完整流水线见 DEVELOP.md「品牌图标（Draw Things 流水线）」。
 export const SITE_LOGO = '/logos/logo.svg'; // Logo 文件路径（对应 public/logos/logo.svg）
 export const SITE_FAVICON = '/favicon.svg'; // Favicon 文件路径（对应 public/favicon.svg）
 export const SITE_HERO_ICON = ''; // 首页 Hero 图标路径；留空则使用内置 Atom 原子 SVG
