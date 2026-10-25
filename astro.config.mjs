@@ -12,7 +12,7 @@ import themeLoader from './astro-plugins/theme-loader.mjs';
 const isGitHubPages = process.env.DEPLOY_TARGET === 'github' || process.env.PAGES_ENV === 'true';
 
 // GitHub Pages 自动从仓库名推导 base 路径
-// 例如: zz3656/Atom-blog → base='/Atom-blog'
+// 例如: zz3656/Atom → base='/Atom'
 const REPO_NAME = process.env.REPO_NAME || 'Atom';
 
 // Cloudflare Pages 使用根路径

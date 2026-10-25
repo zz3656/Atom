@@ -27,21 +27,21 @@
 
 ### 中文
 
-Atom 是一个**轻量级、零依赖**的静态博客，使用 [Astro](https://astro.build) 构建，专为 GitHub Pages 部署优化。项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom — 小巧、精准、充满力量。
+Atom 是一个**轻量级、无前端框架依赖**的静态博客，使用 [Astro](https://astro.build) 构建，专为 GitHub Pages 部署优化。项目灵感来自电影《铁甲钢拳》(Real Steel) 中的机器人 Atom — 小巧、精准、充满力量。
 
 **核心设计理念：**
 
-- **快** — 零 JavaScript 输出，Lighthouse 满分
+- **快** — 无框架运行时、无水合，仅 ~8.7KB 原生 JS，Lighthouse 满分
 - **简** — 无后端、无数据库、无构建依赖
 - **全** — SEO 开箱即用：RSS、Sitemap、JSON-LD、Open Graph
 
 ### English
 
-Atom is a **lightweight, zero-dependency** static blog built with [Astro](https://astro.build), optimized for GitHub Pages deployment. Inspired by Atom, the boxing robot from _Real Steel_ — compact, precise, full of power.
+Atom is a **lightweight, framework-free** static blog built with [Astro](https://astro.build), optimized for GitHub Pages deployment. Inspired by Atom, the boxing robot from _Real Steel_ — compact, precise, full of power.
 
 **Core design philosophy:**
 
-- **Fast** — Zero JavaScript output, Lighthouse 100
+- **Fast** — No framework runtime, no hydration, only ~8.7KB of vanilla JS, Lighthouse 100
 - **Simple** — No backend, no database, no build dependencies
 - **Complete** — SEO out of the box: RSS, Sitemap, JSON-LD, Open Graph
 
@@ -53,7 +53,7 @@ Atom is a **lightweight, zero-dependency** static blog built with [Astro](https:
 
 | 层            | 技术                     | 原因                                       |
 | ------------- | ------------------------ | ------------------------------------------ |
-| 框架          | Astro 7.4                | 零 JS 默认输出，Content Collections Schema |
+| 框架          | Astro 7.4                | 框架默认零 JS 输出（不注入运行时），Content Collections Schema |
 | 语言          | TypeScript 6.x           | 类型安全，编辑器提示                       |
 | 样式          | 原生 CSS + CSS Variables | 无框架依赖，21 个 CSS 模块按职责拆分        |
 | 字体          | Archivo + JetBrains Mono | Archivo 承担标题/正文（含 wdth 宽度轴），Mono 只用于数据 |
@@ -65,7 +65,7 @@ Atom is a **lightweight, zero-dependency** static blog built with [Astro](https:
 
 | Layer            | Technology                 | Reason                                     |
 | ---------------- | -------------------------- | ------------------------------------------ |
-| Framework        | Astro 7.4                  | Zero JS output, Content Collections Schema |
+| Framework        | Astro 7.4                  | Zero-JS by default (no runtime injected), Content Collections Schema |
 | Language         | TypeScript 6.x             | Type safety, IDE hints                     |
 | Styling          | Native CSS + CSS Variables | No framework dependency, 21 focused modules |
 | Fonts            | Archivo + JetBrains Mono   | Archivo for display/body (wdth axis), Mono for data only |
@@ -130,6 +130,11 @@ npm run build   # Full build with all post-processing
 
 ```
 Atom/
+├── .github/                   # GitHub 配置（CI 与部署均已启用）
+│   ├── dependabot.yml         # 依赖更新机器人
+│   └── workflows/
+│       ├── test.yml           # CI：lint → test → build
+│       └── deploy.yml         # GitHub Pages / Cloudflare Pages 部署
 ├── scripts/                   # 构建辅助脚本
 │   ├── atom-cli.mjs           # 本地 CLI（创建/列出文章）
 │   ├── create-theme.mjs       # 主题脚手架（npm run theme:create <id>）
@@ -146,7 +151,10 @@ Atom/
 │   ├── favicon.svg            # 网站图标
 │   ├── manifest.json          # PWA 配置
 │   ├── robots.txt             # 搜索引擎爬虫规则
-│   ├── logos/                  # 导航栏 Logo 占位
+│   ├── opensearch.xml         # 浏览器搜索插件
+│   ├── logos/logo.svg         # 导航栏 Logo
+│   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
+│   ├── _assets/               # 搜索索引（构建时生成）
 │   └── medias/reward/         # 打赏二维码（可选）
 │       ├── wechat.png
 │       └── alipay.png
@@ -177,6 +185,8 @@ Atom/
 │   ├── styles/                # 样式模块
 │   │   ├── global.css         # 主入口（@import 所有模块）
 │   │   └── _modules/          # 21 个 CSS 模块（按钮/导航/TOC/...）
+│   ├── scripts/app.js         # 交互脚本源码（构建时压缩）
+│   ├── generated/             # 构建期生成的主题入口（勿手改）
 │   ├── utils/                 # 工具函数
 │   │   ├── path.ts            # URL/base 路径处理
 │   │   ├── blog.ts            # 文章数据工具
@@ -185,6 +195,7 @@ Atom/
 │   │   ├── themes.ts          # 主题 manifest 校验
 │   │   └── markdown-strip.ts  # Markdown → 纯文本（提取摘要/搜索）
 │   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL / SOCIAL_LINKS）
+│   ├── content.config.ts      # 内容集合 Schema（类型安全）
 │   └── env.d.ts
 ├── tests/                     # 单元测试（Vitest）
 │   ├── app.behavior.test.ts   # 主题切换/搜索/复制 等交互
@@ -194,7 +205,8 @@ Atom/
 │   ├── date.test.ts           # 日期格式化
 │   ├── path.test.ts           # URL 路径
 │   ├── themes.test.ts         # 主题 manifest 校验
-│   └── rehype-table-scroll.test.ts # 表格滚动容器插件
+│   ├── rehype-table-scroll.test.ts # 表格滚动容器插件
+│   └── version.test.ts        # 版本号与 CHANGELOG 一致性
 ├── docs/
 │   └── THEMING.md             # 主题开发指南（第三方主题用）
 ├── astro.config.mjs           # Astro 配置（含 base 自动检测）
@@ -202,13 +214,22 @@ Atom/
 ├── eslint.config.js           # ESLint 配置
 ├── package.json
 ├── tsconfig.json
-└── README.md
+├── AGENTS.md                  # AI Agent 项目定义
+├── CHANGELOG.md               # 更新日志
+├── DEVELOP.md                 # 开发者指南
+├── README.md                  # 本文件（中文）
+└── README_EN.md               # 本文件（英文）
 ```
 
 ### English
 
 ```
 Atom/
+├── .github/                   # GitHub config (CI + deploy both enabled)
+│   ├── dependabot.yml         # Dependency update bot
+│   └── workflows/
+│       ├── test.yml           # CI: lint → test → build
+│       └── deploy.yml         # GitHub Pages / Cloudflare Pages deploy
 ├── scripts/                   # Build helper scripts
 │   ├── atom-cli.mjs           # Local CLI (create / list articles)
 │   ├── create-theme.mjs       # Theme scaffold (npm run theme:create <id>)
@@ -219,11 +240,16 @@ Atom/
 │   └── convert-hexo.mjs       # Hexo migration tool (optional)
 ├── astro-plugins/
 │   ├── remark-img-lazy.mjs    # Auto-add loading=lazy to Markdown images
+│   ├── rehype-table-scroll.mjs # Wrap wide tables in a scroll container
 │   └── theme-loader.mjs       # Build-time scan src/themes/, generate CSS entry
 ├── public/                    # Static assets (copied to dist/)
 │   ├── favicon.svg            # Site favicon
 │   ├── manifest.json          # PWA config
 │   ├── robots.txt             # Search engine crawler rules
+│   ├── opensearch.xml         # Browser search plugin
+│   ├── logos/logo.svg         # Navbar logo
+│   ├── js/app.js              # Minified interaction script (generated at build)
+│   ├── _assets/               # Search index (generated at build)
 │   └── medias/reward/         # Reward QR codes (optional)
 │       ├── wechat.png
 │       └── alipay.png
@@ -254,6 +280,8 @@ Atom/
 │   ├── styles/                # Style modules
 │   │   ├── global.css         # Main entry (@import all modules)
 │   │   └── _modules/          # 21 CSS modules (buttons/nav/TOC/...)
+│   ├── scripts/app.js         # Interaction script source (minified at build)
+│   ├── generated/             # Build-generated theme entry (do not edit by hand)
 │   ├── utils/                 # Utility functions
 │   │   ├── path.ts            # URL / base path
 │   │   ├── blog.ts            # Article data tools
@@ -262,6 +290,7 @@ Atom/
 │   │   ├── themes.ts          # Theme manifest validation
 │   │   └── markdown-strip.ts  # Markdown → plain text (for search / summary)
 │   ├── consts.ts              # Site config (SITE_TITLE / REPO_URL / SOCIAL_LINKS)
+│   ├── content.config.ts      # Content collection schema (type-safe)
 │   └── env.d.ts
 ├── tests/                     # Unit tests (Vitest)
 │   ├── app.behavior.test.ts   # Theme toggle / search / copy interactions
@@ -271,7 +300,8 @@ Atom/
 │   ├── date.test.ts           # Date formatting
 │   ├── path.test.ts           # URL paths
 │   ├── themes.test.ts         # Theme manifest validation
-│   └── rehype-table-scroll.test.ts # Table scroll wrapper plugin
+│   ├── rehype-table-scroll.test.ts # Table scroll wrapper plugin
+│   └── version.test.ts        # Version / CHANGELOG consistency
 ├── docs/
 │   └── THEMING.md             # Theme development guide (for third parties)
 ├── astro.config.mjs           # Astro config (auto-detect base)
@@ -279,7 +309,11 @@ Atom/
 ├── eslint.config.js           # ESLint config
 ├── package.json
 ├── tsconfig.json
-└── README.md
+├── AGENTS.md                  # Agent-facing project definition
+├── CHANGELOG.md               # Changelog
+├── DEVELOP.md                 # Developer guide
+├── README.md                  # This file (Chinese)
+└── README_EN.md               # This file (English)
 ```
 
 ---
@@ -921,9 +955,15 @@ export const SITE_VERSION = pkg.version; // 页脚显示的就是它
 
 ### GitHub Pages（推荐）
 
-1. 重命名 `.github_disabled/` → `.github/`
-2. **Settings → Pages → Source → GitHub Actions**
+1. **Settings → Pages → Source → GitHub Actions**
+2. **Settings → Actions → General → Workflow permissions → Read and write**
 3. 推送代码到 `main` 分支
+
+> 💡 子路径仓库：仓库名为 `my-blog` 时自动部署到 `https://username.github.io/my-blog/`。
+
+> 💡 Cloudflare Pages：在 Secrets 中设置 `DEPLOY_TARGET=cf`，并配置 `CF_PAGES_TOKEN`、`CF_ACCOUNT_ID`、`CF_PROJECT_NAME`。
+
+CI（`.github/workflows/test.yml`）与部署相互独立，每次 push / PR 都会跑 `lint → test → build`。
 
 ### 自定义域名
 

@@ -6,18 +6,18 @@ category: tutorial
 tags: [Astro, 架构, GitHub Pages, 部署, 设计系统]
 ---
 
-如果你对 Atom 博客**背后的技术栈**感兴趣——它为什么能做到零 JavaScript、构建产物体积小、部署到 GitHub Pages 完全免费——这篇文章会拆开五个层面：**Astro 内容集合**、**主题 Token 体系**、**Markdown 渲染管线**、**构建流水线**、**GitHub Pages 自动部署**。
+如果你对 Atom 博客**背后的技术栈**感兴趣——它为什么能做到无框架运行时、构建产物体积小、部署到 GitHub Pages 完全免费——这篇文章会拆开五个层面：**Astro 内容集合**、**主题 Token 体系**、**Markdown 渲染管线**、**构建流水线**、**GitHub Pages 自动部署**。
 
 ## 一、为什么选 Astro
 
 Astro 是一个现代静态站点生成器，与 Atom 的轻量化定位非常契合：
 
-- **零 JavaScript 默认** —— 页面输出纯 HTML，交互脚本按需 `defer` 加载
+- **框架默认零 JS** —— Astro 本身不注入运行时，页面输出纯 HTML；本站只额外挂一份 `defer` 加载的交互脚本
 - **内容优先** —— 原生支持 Markdown / MDX 内容集合，内置类型检查
 - **构建快速** —— 基于 Vite，开发体验流畅
 - **部署友好** —— 输出纯静态文件，GitHub Pages / Cloudflare Pages / Vercel 都能跑
 
-整个 Atom 博客的**生产依赖只有 1 个**（`astro`），构建产物约 700KB，单页 HTML gzip 后 13–17KB。
+整个 Atom 博客的**生产依赖只有 1 个**（`astro`），构建产物约 1.8MB（其中 384KB 是打赏二维码），单页 HTML gzip 后 12–18KB。
 
 当前版本是 **Astro 7.4.2**。
 
@@ -132,7 +132,7 @@ export default defineConfig({
 
 `theme-loader.mjs` 这个 Astro 插件是关键——它**构建时**扫描 `src/themes/` 目录，自动生成主题清单和 CSS 入口。
 
-交互脚本只有一份：压缩后约 **8.6KB**（原始 17.8KB），负责主题切换、搜索、阅读进度、代码复制、图片灯箱和目录高亮。
+交互脚本只有一份：压缩后约 **8.7KB**（原始 18.3KB，gzip 后 3.4KB），负责主题切换、汉堡菜单、搜索、回到顶部、代码复制、图片放大、阅读进度和目录高亮。
 
 ## 六、GitHub Actions 自动部署
 

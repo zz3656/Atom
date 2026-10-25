@@ -25,7 +25,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-6.x-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-[🌐 在线预览](https://zz3656.github.io/Atom) · [📝 写文章](#-写文章) · [🤖 CLI 工具](#-cli-本地构建工具) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#%EF%B8%8F-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md) · [🔄 Hexo 转换工具](scripts/README.md)
+[🌐 在线预览](https://zz3656.github.io/Atom) · [📝 写文章](#-写文章) · [🤖 CLI 工具](#-cli-与-npm-scripts) · [🚀 部署](#-部署到-github-pages) · [⚙️ 自定义](#-自定义) · [🇬🇧 English](README_EN.md) · [📘 开发者指南](DEVELOP.md) · [🔄 Hexo 转换工具](scripts/README.md)
 
 </div>
 
@@ -35,7 +35,7 @@
 
 | 特性                   | 说明                                                                           |
 | ---------------------- | ------------------------------------------------------------------------------ |
-| ⚡ **Astro 驱动**      | 静态 HTML + ~10KB minified 交互脚本（defer 加载，首屏渲染零阻塞），加载极快             |
+| ⚡ **Astro 驱动**      | 静态 HTML + ~8.7KB minified 交互脚本（defer 加载，首屏渲染零阻塞），加载极快             |
 | 🎨 **主题系统**         | 默认主题（冷轧钢 + 黄铜指示灯），一键切换深/浅色；CSS Token 体系让开发者可拓展自定义主题          |
 | 📱 **响应式设计**      | 手机汉堡菜单、平板、桌面完美适配，iOS 安全区域支持                             |
 | 📝 **Markdown 写作**   | 原生支持，Shiki 代码语法高亮                                                   |
@@ -43,7 +43,7 @@
 | 📁 **分类 + 标签**     | 分类（单数）组织文章大类，标签（可多）标注细分主题                             |
 | 🚀 **双平台部署**      | GitHub Actions 自动构建，支持 GitHub Pages / Cloudflare Pages                  |
 | 🔍 **SEO 友好**        | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
-| 📦 **超小体积**        | 首页 HTML ~13KB gzipped（CSS 内联，无额外请求）；单篇文章 ~16KB gzipped             |
+| 📦 **超小体积**        | 首页 HTML ~14KB gzipped（CSS 内联，无额外请求）；单篇文章 ~18KB gzipped             |
 | 💯 **Lighthouse 满分** | 在简洁页面上可达到 100/100（性能/无障碍/SEO）；内置配置：语义化 HTML、canonical、OG、Twitter Card、JSON-LD、sitemap、RSS、a11y skip-link |
 | 🎚️ **Token 化设计系统** | 组件层零硬编码颜色，12 组语义表面 token 驱动全部配色，第三方主题零配置接入 |
 | 📐 **刻度尺视觉语言** | 横竖刻度线贯穿全站，日志列表配标尺脊线，让"按时间排列的日志"成为可读的视觉结构 |
@@ -54,8 +54,8 @@
 
 ### 首页
 
-- Hero 区域：Atom 原子图标（紫色渐变轨道球体）+ 渐变大标题 + 背景光晕
-- 卡片网格布局：展示标题、描述、日期、分类、标签
+- Hero 区域：Atom 原子图标（冷轧钢圆盘 + 黄铜三轨道）+ 渐变大标题 + 背景光晕
+- 日志行列表：竖向刻度脊线上依次排列序号、标题、日期、分类、标签
 - 右上角主题切换按钮：一键深/浅色；首次访问跟随系统设置，之后记忆用户选择
 
 ### 导航栏
@@ -99,13 +99,19 @@
 
 ```
 Atom/
+├── .github/                    # GitHub 配置（CI 与部署均已启用）
+│   ├── dependabot.yml          # 依赖更新机器人
+│   └── workflows/
+│       ├── test.yml            # CI：lint → test → build
+│       └── deploy.yml          # GitHub Pages / Cloudflare Pages 部署
 ├── scripts/
 │   ├── atom-cli.mjs           # 🤖 本地 CLI（创建/列出文章）
 │   ├── create-theme.mjs       # 🎨 主题脚手架（npm run theme:create <id>）
 │   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
 │   ├── fix-sitemap.mjs        # sitemap lastmod 修正
 │   ├── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
-│   └── vectorize-icon.mjs     # 位图 → 矢量（图标流水线）
+│   ├── vectorize-icon.mjs     # 位图 → 矢量（图标流水线）
+│   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）
 ├── astro-plugins/
 │   ├── theme-loader.mjs       # 构建时扫描 src/themes/
 │   ├── remark-img-lazy.mjs    # Markdown 图片懒加载
@@ -114,7 +120,10 @@ Atom/
 │   ├── favicon.svg            # 浏览器标签页图标
 │   ├── manifest.json          # PWA 支持
 │   ├── robots.txt             # 搜索引擎爬虫规则
-│   ├── logos/                 # 导航栏 Logo 目录
+│   ├── opensearch.xml         # 浏览器搜索插件
+│   ├── logos/logo.svg         # 导航栏 Logo
+│   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
+│   ├── _assets/               # 搜索索引（构建时生成）
 │   └── medias/reward/         # 打赏二维码（可选）
 ├── src/
 │   ├── themes/                # 🎨 主题目录（默认 atom-default，开发者可扩展）
@@ -122,21 +131,34 @@ Atom/
 │   │   ├── Header.astro       # 导航栏
 │   │   ├── Footer.astro       # 页脚
 │   │   ├── PostCard.astro     # 日志行（文章列表项）
-│   │   └── ...                # 其他组件
+│   │   ├── TableOfContents.astro # 文章目录（≥1280px 左侧刻度栏 / <1280px 顶部折叠条）
+│   │   ├── HeroIcon.astro     # 首页 Hero 图标
+│   │   └── FormattedDate.astro # 日期格式化组件
 │   ├── utils/                 # 工具函数（path/date/blog/themes/collection/markdown-strip）
 │   ├── styles/                # 样式模块
 │   │   ├── global.css         # 主入口
-│   │   └── _modules/          # 各组件 CSS 模块
+│   │   └── _modules/          # 21 个 CSS 模块
+│   ├── scripts/app.js         # 交互脚本源码（构建时压缩）
+│   ├── generated/             # 构建期生成的主题入口（勿手改）
 │   ├── content/               # 📝 Markdown 文章
 │   │   └── blog/              # 文章目录（每篇一个 .md）
 │   ├── layouts/               # 布局模板（BaseLayout / BlogPost）
 │   ├── pages/                 # 路由页面
 │   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL / HERO_* 等）
+│   ├── content.config.ts      # 内容集合 Schema（类型安全）
 │   └── env.d.ts
+├── tests/                     # 单元测试（Vitest）
 ├── docs/THEMING.md            # 主题开发指南
-├── astro.config.mjs
+├── astro.config.mjs           # Astro 配置（base 自动检测 + 统一 Markdown 管线）
+├── vitest.config.ts           # 测试配置
+├── eslint.config.js           # ESLint 配置
 ├── package.json
-└── README.md
+├── tsconfig.json
+├── AGENTS.md                  # AI Agent 项目定义
+├── CHANGELOG.md               # 更新日志
+├── DEVELOP.md                 # 开发者指南
+├── README.md                  # 本文件（中文）
+└── README_EN.md               # 本文件（英文）
 ```
 
 ---
@@ -544,7 +566,7 @@ src/pages/links.astro        → /links
 
 | 方案               | 构建输出  | JS 依赖  | 构建时间 | SEO / RSS / Sitemap              | 学习成本     |
 | ------------------ | --------- | -------- | -------- | -------------------------------- | ------------ |
-| **Atom（本项目）** | **~13 KB gz** | **0**    | **~1.5s**  | **RSS/Sitemap/JSON-LD 自动生成** | 极低         |
+| **Atom（本项目）** | **~14 KB gz** | **8.7KB 原生** | **~1.5s**  | **RSS/Sitemap/JSON-LD 自动生成** | 极低         |
 | Hexo + Matery      | ~15 MB    | 数十个库 | ~5s      | 需插件                           | 中           |
 | Hugo               | ~2 MB     | 0        | ~0.5s    | 需插件                           | 中           |
 | Jekyll             | ~3 MB     | 少量     | ~3s      | 内置                             | 中           |
@@ -553,12 +575,17 @@ src/pages/links.astro        → /links
 
 ### 本项目的优势
 
-- **零依赖** — 全站无 JavaScript，纯 HTML + CSS，Lighthouse 满分
+- **零第三方依赖** — 无前端框架；唯一的 JavaScript 是 ~8.7KB 原生脚本（搜索 / 主题切换 / 目录），Lighthouse 满分
 - **一键日/夜切换** — 默认主题（日间镀锌钢 + 夜间枪铁），首次访问跟随系统设置，之后记忆用户选择；开发者可通过 `npm run theme:create` 拓展主题
 - **自动 SEO** — 每篇文章自动注入 Open Graph、Twitter Card、JSON-LD 结构化数据
 - **极简构建** — 构建完成后自动执行 RSS/Sitemap 生成，零配置
 - **1 秒构建** — 相比 Hexo 的 5s+，依然足够快
 - **TypeScript 类型安全** — 文章内容通过 Astro Content Collections Schema 校验
+- **Token 化设计系统** — 12 组语义表面 token 驱动全部配色，组件层零硬编码颜色
+- **刻度尺视觉语言** — 横竖刻度线贯穿全站，日志列表落在竖向刻度脊线上
+- **内置客户端搜索** — 静态索引于构建期生成，交互 JS 总量约 8.7KB
+- **零横向溢出** — 320px 起全站无横向滚动条；宽表格在自身容器内滚动
+- **居中导航栏** — Logo 左、导航链接居中、操作区右
 
 ### 局限性
 

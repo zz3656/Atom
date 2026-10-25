@@ -12,7 +12,7 @@ import pkg from '../package.json';
 export const SITE_TITLE = 'Atom Blog'; // 站点标题（SEO 标题、OG 标签、RSS 名称等）
 export const SITE_NAME = 'Atom'; // 导航栏显示的名称（短名称，可用于 Logo 替换后仅显示文字）
 export const SITE_DESCRIPTION =
-  'Atom 博客 —— 用 Astro 构建的现代轻量级博客。零 JavaScript 运行时，内容优先，为技术写作而生的精密日志。';
+  'Atom 博客 —— 用 Astro 构建的现代轻量级博客。无框架运行时，内容优先，为技术写作而生的精密日志。';
 export const AUTHOR = 'zz3656';
 
 /** 站点版本号（显示在页脚）。数据源：package.json 的 version 字段。 */
@@ -30,7 +30,7 @@ export const SITE_VERSION = pkg.version;
 //   · hide   : true 则跳过该按钮（可选）
 export const HERO_TITLE = 'Atom 博客';
 export const HERO_DESCRIPTION =
-  '一个用 Astro 构建的现代轻量级博客：零 JavaScript 运行时、Lighthouse 满分，把精力留给内容本身。';
+  '一个用 Astro 构建的现代轻量级博客：无框架运行时、Lighthouse 满分，把精力留给内容本身。';
 export const HERO_EYEBROW = 'PRECISION LOG';
 export const HERO_EYEBROW_SUB = '个人技术日志';
 export const HERO_ACTIONS: Array<{

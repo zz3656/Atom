@@ -35,7 +35,7 @@
 
 | Feature                 | Description                                                                                                      |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------- |
-| ⚡ **Astro-Powered**    | Static HTML + ~10KB minified interaction script (defer-loaded, no first-paint blocking), blazing fast             |
+| ⚡ **Astro-Powered**    | Static HTML + ~8.7KB minified interaction script (defer-loaded, no first-paint blocking), blazing fast             |
 | 🎨 **Theme System**     | Default theme (cold steel + brass indicator) with one-click light/dark toggle; CSS Token system for custom themes    |
 | 📱 **Responsive**       | Perfect on mobile / tablet / desktop, iOS safe-area support                                                      |
 | 📝 **Markdown Writing** | Native support with Shiki code syntax highlighting                                                                |
@@ -43,7 +43,7 @@
 | 📁 **Category + Tags**  | Categories (one per article) + tags (multiple per article)                                                        |
 | 🚀 **Dual Deploy**      | GitHub Actions auto-build, supports GitHub Pages / Cloudflare Pages                                              |
 | 🔍 **SEO Friendly**     | Semantic HTML, Open Graph / Twitter Card / JSON-LD, canonical URL, Sitemap, RSS                                |
-| 📦 **Tiny Size**        | Homepage HTML ~13KB gzipped (CSS inline, no extra request); single post ~16KB gzipped                            |
+| 📦 **Tiny Size**        | Homepage HTML ~14KB gzipped (CSS inline, no extra request); single post ~18KB gzipped                            |
 | 💯 **Lighthouse-Ready** | Built-in semantics for 100/100 scores: canonical, OG/Twitter, JSON-LD, sitemap, RSS, a11y skip-link              |
 | 🎚️ **Token Design System** | 12 semantic surface tokens drive every color; components hardcode zero colors, third-party themes plug in with zero config |
 | 📐 **Ruler Visual Language** | Tick-marked rules run through the site; every log entry is a tick on a vertical ruler spine                        |
@@ -67,59 +67,91 @@
 
 ```
 Atom/
-├── .github_disabled/            # GitHub Actions config (rename to .github/)
-│   └── deploy.yml               # Auto-deploy workflow
-├── public/
-│   ├── favicon.svg              # Browser favicon
-│   ├── logos/                   # Navbar logo files (.svg / .png / .webp)
-│   └── robots.txt               # Search engine crawling rules
-├── scripts/
-│   └── generate-rss.mjs         # Post-build RSS + Sitemap generator
+├── .github/                     # GitHub config (CI + deploy already enabled)
+│   ├── dependabot.yml           # Dependency update bot
+│   └── workflows/
+│       ├── test.yml             # CI: lint → test → build
+│       └── deploy.yml           # GitHub Pages / Cloudflare Pages deploy
+├── astro-plugins/               # Build-time remark / rehype plugins
+│   ├── theme-loader.mjs         # Scans src/themes/, generates the CSS entry
+│   ├── remark-img-lazy.mjs      # Auto-add loading="lazy" to Markdown images
+│   └── rehype-table-scroll.mjs  # Wraps wide tables in a scroll container
+├── public/                      # Static assets (copied verbatim to dist/)
+│   ├── favicon.svg              # Browser tab icon
+│   ├── manifest.json            # PWA config
+│   ├── robots.txt               # Search engine crawling rules
+│   ├── opensearch.xml           # Browser search plugin
+│   ├── logos/logo.svg           # Navbar logo
+│   ├── js/app.js                # Minified interaction script (generated at build)
+│   ├── _assets/search-index.json # Search index (generated at build)
+│   └── medias/reward/           # Reward QR codes (optional)
+├── scripts/                     # Build helpers & CLIs
+│   ├── atom-cli.mjs             # Local CLI (npm run new / npm run list)
+│   ├── create-theme.mjs         # Theme scaffold (npm run theme:create <id>)
+│   ├── generate-rss.mjs         # RSS feed + search index
+│   ├── fix-sitemap.mjs          # Sitemap lastmod fix
+│   ├── minify-app-js.mjs        # app.js minify + sub-path compatibility
+│   ├── vectorize-icon.mjs       # Raster → vector (brand icon pipeline)
+│   └── convert-hexo.mjs         # Hexo migration tool (optional)
 ├── src/
-│   ├── components/
-│   │   ├── Header.astro         # Navbar + dark mode toggle
-│   │   ├── Footer.astro         # Footer with social links
-│   │   ├── PostCard.astro       # Article card component
+│   ├── themes/                  # Theme directory (default: atom-default)
+│   │   └── atom-default/        # Built-in theme: light.css + dark.css + manifest.json
+│   ├── components/              # Astro components
+│   │   ├── Header.astro         # Navbar + light/dark toggle
+│   │   ├── Footer.astro         # Footer + social links + version badge
+│   │   ├── PostCard.astro       # Log row (index / title / date / category / tags)
+│   │   ├── TableOfContents.astro # TOC (left ruler rail ≥1280px / collapsible bar below)
+│   │   ├── HeroIcon.astro       # Homepage hero icon
 │   │   └── FormattedDate.astro  # Date formatter
-│   ├── content/
-│   │   ├── config.ts            # Content schema (type-safe)
-│   │   └── blog/                # 📝 Markdown blog posts live here
-│   │       ├── hello-world.md
-│   │       ├── astro-blog-tutorial.md
-│   │       └── markdown-guide.md
-│   ├── layouts/
-│   │   ├── BaseLayout.astro     # Base layout (head + nav + footer)
-│   │   └── BlogPost.astro       # Article detail layout
-│   ├── pages/
-│   │   ├── index.astro          # Homepage
-│   │   ├── about.astro          # About page
-│   │   ├── 404.astro            # 404 page
-│   │   └── blog/
-│   │       ├── index.astro      # Article listing
-│   │       └── [...slug].astro  # Article detail (dynamic route)
-│   ├── styles/
-│   │   └── global.css           # Global styles + dark mode variables
-│   └── consts.ts                # Site config (SITE_TITLE / REPO_URL / HERO_* etc.)
-├── astro.config.mjs             # Astro configuration
+│   ├── layouts/                 # Layout templates
+│   │   ├── BaseLayout.astro     # Base layout (head, nav, footer, inline theme script)
+│   │   └── BlogPost.astro       # Article layout (TOC, prev/next, reward, JSON-LD)
+│   ├── pages/                   # Route pages
+│   │   ├── index.astro          # / → Homepage
+│   │   ├── about.astro          # /about
+│   │   ├── 404.astro            # /404
+│   │   ├── blog/                # Article list & detail
+│   │   ├── categories/          # Category index
+│   │   ├── category/            # Category detail
+│   │   ├── tags/                # Tag index
+│   │   └── tag/                 # Tag detail
+│   ├── content/                 # 📝 Markdown articles
+│   │   └── blog/                # One .md per article
+│   ├── styles/                  # Style modules
+│   │   ├── global.css           # Main entry (@imports every module)
+│   │   └── _modules/            # 21 CSS modules (layout / type / ruler)
+│   ├── scripts/app.js           # Interaction script source (minified at build)
+│   ├── utils/                   # Utilities (path / date / blog / themes / collection / markdown-strip)
+│   ├── generated/               # Build-generated theme entry (do not edit by hand)
+│   ├── consts.ts                # Site config (SITE_TITLE / REPO_URL / HERO_* etc.)
+│   ├── content.config.ts        # Content collection schema (type-safe)
+│   └── env.d.ts
+├── tests/                       # Unit tests (Vitest)
+├── docs/THEMING.md              # Theme authoring guide
+├── astro.config.mjs             # Astro config (base auto-detect + unified markdown pipeline)
+├── vitest.config.ts             # Test config
+├── eslint.config.js             # ESLint config
 ├── package.json
 ├── tsconfig.json
+├── AGENTS.md                    # Agent-facing project definition
+├── CHANGELOG.md                 # Changelog
+├── DEVELOP.md                   # Developer guide
 ├── README.md                    # This file (Chinese)
-├── README_EN.md                 # This file (English)
-└── DEVELOP.md                   # Developer guide
+└── README_EN.md                 # This file (English)
 ```
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- Node.js >= 20.3
-- npm >= 9.6
+- Node.js >= 22.12
+- npm >= 10.8
 
 ### 1. Clone the Project
 
 ```bash
 git clone https://github.com/zz3656/Atom.git
-cd Atom-blog
+cd Atom
 ```
 
 ### 2. Install Dependencies
@@ -169,34 +201,37 @@ Body content using Markdown syntax. Supports:
 
 ### Frontmatter Fields
 
-| Field         | Type     | Required | Description                                     |
-| ------------- | -------- | -------- | ----------------------------------------------- |
-| `title`       | string   | ✅       | Post title                                      |
-| `description` | string   | ✅       | Short description for article cards             |
-| `pubDate`     | date     | ✅       | Publication date                                |
-| `tags`        | string[] | ❌       | Tag list                                        |
-| `heroImage`   | string   | ❌       | Cover image path                                |
-| `updatedDate` | date     | ❌       | Last updated date                               |
-| `reward`      | boolean  | ❌       | Show reward QR codes at post end (default: off) |
+| Field          | Type     | Required | Description                                                   |
+| -------------- | -------- | -------- | ------------------------------------------------------------- |
+| `title`        | string   | ✅       | Post title                                                    |
+| `description`  | string   | ✅       | Short description for article cards                           |
+| `pubDate`      | date     | ✅       | Publication date                                              |
+| `category`     | string   | ❌       | Category (one per article)                                    |
+| `tags`         | string[] | ❌       | Tag list                                                      |
+| `heroImage`    | string   | ❌       | Cover image path (placed under `public/`)                     |
+| `featuredImage`| string   | ❌       | SEO-only cover (OG / Twitter Card), takes precedence over `heroImage`. 1200×630 recommended |
+| `updatedDate`  | date     | ❌       | Last updated date (also used as the sitemap `lastmod`)        |
+| `reward`       | boolean  | ❌       | Show reward QR codes at post end (default: off)               |
+| `draft`        | boolean  | ❌       | Draft marker — excluded from list, RSS and the search index   |
 
 ## 🐙 Deploy to GitHub Pages
 
 ### Auto Deploy (Recommended)
 
-GitHub Actions configuration is included. Just:
+GitHub Actions is already configured. Just:
 
 1. **Push** to your own GitHub repository
-2. Rename `.github_disabled/` to `.github/`:
-   ```bash
-   mv .github_disabled .github
-   git add . && git commit -m "enable github actions" && git push
-   ```
-3. Go to **Settings → Pages → Source → select GitHub Actions**
+2. Go to **Settings → Pages → Source → select GitHub Actions**
+3. Go to **Settings → Actions → General → Workflow permissions → Read and write**
 4. Push code to `main` branch ✅
 
-> 💡 `.github_disabled/` exists because token permissions prevent pushing workflow files. Rename manually to enable.
+> 💡 **Sub-path repositories**: if the repo is named `my-blog`, it deploys to `https://username.github.io/my-blog/`.
+
+> 💡 **Cloudflare Pages**: set `DEPLOY_TARGET=cf` in Secrets, plus `CF_PAGES_TOKEN`, `CF_ACCOUNT_ID` and `CF_PROJECT_NAME`.
 
 Actions will automatically: `Install deps → Build → Deploy`
+
+CI is separate from deployment — `.github/workflows/test.yml` runs `lint → test → build` on every push and pull request.
 
 ### Custom Domain (Optional)
 
@@ -302,7 +337,7 @@ src/pages/blog/index.astro → /blog
 
 | Solution        | Output Size | JS Deps        | Build Time | SEO / RSS / Sitemap                                   | Learning Curve       |
 | --------------- | ----------- | -------------- | ---------- | ----------------------------------------------------- | -------------------- |
-| **Atom (This)** | **~13 KB gz** | **0**        | **~1s**    | **RSS/Sitemap/JSON-LD auto-generated, RSS in footer** | Minimal              |
+| **Atom (This)** | **~14 KB gz** | **8.7KB vanilla** | **~1s** | **RSS/Sitemap/JSON-LD auto-generated, RSS in footer** | Minimal              |
 | Hexo + Matery   | ~15 MB      | Dozens of libs | ~5s        | Needs plugin                                          | Medium               |
 | Hugo            | ~2 MB       | 0              | ~0.5s      | Needs plugin                                          | Medium (Hugo syntax) |
 | Jekyll          | ~3 MB       | Minimal        | ~3s        | Built-in                                              | Medium (Ruby)        |
@@ -311,14 +346,14 @@ src/pages/blog/index.astro → /blog
 
 ### Advantages
 
-- **Zero dependencies** — No JavaScript, pure HTML + CSS, Lighthouse 100
-- **Auto SEO metadata — each post auto-injects Open Graph, Twitter Cards, JSON-LD structured data (BlogPosting Schema)
+- **Zero third-party dependencies** — No frontend framework; the only JavaScript is ~8.7KB of vanilla code for search, the theme toggle and the TOC. Lighthouse 100
+- **Auto SEO metadata** — each post auto-injects Open Graph, Twitter Cards, JSON-LD structured data (BlogPosting Schema)
 - **Minimal builds** — RSS / Sitemap generated post-build with zero config
 - **1-second build** — Fast compared to Hexo's 5s+
 - **TypeScript safety** — Content validated via Astro Content Collections Schema
 - **Token-driven design system** — 12 semantic surface tokens; components contain zero hardcoded colors
 - **Ruler visual language** — Tick-marked rules run through the site; the log list sits on a vertical ruler spine
-- **Built-in client search** — Static index generated post-build, ~8.6KB of interaction JS in total
+- **Built-in client search** — Static index generated post-build, ~8.7KB of interaction JS in total
 - **Zero horizontal overflow** — Verified from 320px up; wide tables scroll inside their own container
 - **Centered navbar** — Logo left, nav links centered, actions right
 - **Dark mode** — CSS variable based, auto-remembers user preference

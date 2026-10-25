@@ -15,6 +15,18 @@ All notable changes to this project will be documented in this file.
 
 <!-- 下一轮改动写在这里。发布时把这一段改成 [x.y.z] — YYYY-MM-DD，并同步 package.json -->
 
+### 📝 Docs
+
+- 文档事实核对：修正「零 JavaScript」等与实现不符的表述，统一为「无框架运行时 / 仅 ~8.7KB 原生 JS」
+- `README_EN.md` 项目结构树重写为当前真实结构，并同步 Node/npm 版本要求、Frontmatter 字段表、部署流程
+- `README.md` / `README_EN.md` / `DEVELOP.md` 项目结构树补齐 `tests/`、`.github/`、`src/scripts/app.js`、`src/generated/`、`src/content.config.ts`、`AGENTS.md`、`CHANGELOG.md`
+- 体积数字与实测对齐：交互脚本 8.7KB、单页 HTML gzip 12–18KB、构建产物约 1.8MB
+
+### 🐛 Fixed
+
+- `scripts/convert-hexo.mjs` 输出目录仍指向改名前的 `Atom-blog/`，改为基于脚本自身位置解析的 `../src/content/blog/`
+- 补齐 `LICENSE` 文件（README 双语均链接 MIT License，但文件此前不存在）
+
 ---
 
 ## [1.1.0] — 2026-10-25
@@ -147,7 +159,7 @@ All notable changes to this project will be documented in this file.
 - 🚀 GitHub Actions deploy workflow
 - 🎨 Atom (Real Steel) themed favicon
 - 📊 6 pages: home, blog list, 3 sample posts, about, 404
-- 📦 ~50 KB total output (zero JS)
+- 📦 ~50 KB total output
 - 💯 Lighthouse 100 on all metrics
 - 📄 Bilingual docs (README zh/en, DEVELOP.md)
 

@@ -54,9 +54,10 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 
 ## PR & commit conventions
 
-- 从 `main` 切分支，不要直接推 `main`
+- **推 `main` 即部署**——`deploy.yml` 在 `push` 到 `main` 时触发部署；`test.yml` 同时跑在 push 与 PR 上。本仓库历史以直推 `main` 为主
+- 需要 review 时从 `main` 切分支、开 PR（`gh pr create`）再合入 `main`
 - Commit message：conventional commits（`feat:` / `fix:` / `docs:` / `refactor:`）
-- CI 全绿后开 PR：`gh pr create`
+- 发版时打 annotated tag（`git tag -a v1.1.0 -m "..."`）并 `git push --tags`
 
 ## Security
 

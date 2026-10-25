@@ -14,7 +14,9 @@
  * 每个模块都是独立 IIFE，DOM 探测后才运行——同一份 JS 适配所有页面，
  * 用不到的模块零开销。
  *
- * 体积（gzip 前 ~6KB → gzip 后 ~2KB），由 Astro <script> 内联到需要的页面。
+ * 体积：源文件 ~18.3KB → esbuild 压缩后 ~8.7KB（gzip ~3.4KB）。
+ * 构建时由 scripts/minify-app-js.mjs 生成 public/js/app.js，
+ * 以外部文件 <script defer> 引入，全站共用一份（不是内联）。
  */
 (function () {
   'use strict';
