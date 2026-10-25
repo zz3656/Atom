@@ -144,7 +144,7 @@ Atom/
 
 ### Prerequisites
 
-- Node.js >= 22.12
+- Node.js >= 22.23.4 (hard requirement of Astro 7.4; 24 LTS recommended)
 - npm >= 10.8
 
 ### 1. Clone the Project

@@ -26,6 +26,8 @@ All notable changes to this project will be documented in this file.
 
 - `scripts/convert-hexo.mjs` 输出目录仍指向改名前的 `Atom-blog/`，改为基于脚本自身位置解析的 `../src/content/blog/`
 - 补齐 `LICENSE` 文件（README 双语均链接 MIT License，但文件此前不存在）
+- **CI 修复**：Astro 7.4.2 要求 Node `>= 22.23.4`，而 workflow 写 `node-version: 22` 会命中 runner 镜像缓存的 22.23.3，`astro check` 直接失败。改为 `node-version: 24`，并把 `package.json` 的 `engines.node` 同步到 `>=22.23.4`
+- Actions 版本升级到 Node 24 运行时：`checkout@v7`、`setup-node@v7`、`upload-artifact@v7`，消除 "Node.js 20 is deprecated" 警告
 
 ---
 

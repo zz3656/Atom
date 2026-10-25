@@ -4,6 +4,7 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 
 ## Setup commands
 
+- Node 版本：**>= 22.23.4**（Astro 7.4 的硬性要求，CI 用 `node-version: 24`）。`setup-node` 里写 `node-version: 22` 会命中 runner 镜像缓存的 22.23.3，导致 `astro check` 直接报错退出——别改成 `22`
 - Install deps: `npm install`
 - Start dev:    `npm run dev`            # http://localhost:4321
 - Build:        `npm run build`          # 含 minify + RSS + sitemap 后处理，产出 `dist/`
