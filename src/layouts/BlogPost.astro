@@ -1,8 +1,8 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import TableOfContents from '../components/TableOfContents.astro';
-import { AUTHOR, SITE_TITLE } from '../consts';
-import { blogPostUrl, rootPath, baseAssetsPath } from '../utils/path';
+import { AUTHOR, SITE_TITLE, SITE_FAVICON } from '../consts';
+import { blogPostUrl, rootPath, baseAssetsPath, absoluteUrl } from '../utils/path';
 import { readingTime, countWords } from '../utils/blog';
 import { formatDateISO } from '../utils/date';
 
@@ -50,9 +50,10 @@ const readingMinutes = readingTime(body || '');
 >
   <fragment slot="head">
     {(() => {
-      const imageUrl =
-        featuredImage || heroImage ? `${Astro.url.origin}${featuredImage || heroImage}` : undefined;
-      const publisherLogo = `${Astro.url.origin}/favicon.svg`;
+      // 结构化数据必须是完整 URL，且要跟随 base（Astro.url.origin 不含 base）
+      const socialImage = featuredImage || heroImage;
+      const imageUrl = socialImage ? absoluteUrl(socialImage) : undefined;
+      const publisherLogo = absoluteUrl(SITE_FAVICON);
       const wordCount = countWords(body || '');
       return (
         <script
@@ -120,7 +121,7 @@ const readingMinutes = readingTime(body || '');
     {heroImage && (
       <div class="hero-image">
         <img
-          src={heroImage}
+          src={baseAssetsPath(heroImage)}
           alt={title}
           loading="eager"
           fetchpriority="high"

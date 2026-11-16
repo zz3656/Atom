@@ -66,5 +66,14 @@ export const SOCIAL_LINKS = {
   email: '',
 };
 
+/**
+ * 主题色兜底值（浏览器地址栏 / PWA manifest 使用）。
+ * 组件层禁止写死颜色；主题 manifest 里的 `themeColor` 优先，缺失时才回落到这里。
+ */
+export const DEFAULT_THEME_COLORS = {
+  light: '#ecedef',
+  dark: '#12161a',
+} as const;
+
 // 分页配置（首页与文章列表共用）
 export const POSTS_PER_PAGE = 12;

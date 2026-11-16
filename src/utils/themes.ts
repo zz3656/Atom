@@ -24,6 +24,11 @@ export interface ThemeManifest {
   modes: ('light' | 'dark')[];
   /** 预览图（public 下的相对路径，可空） */
   preview: string;
+  /**
+   * 浏览器地址栏 / PWA 的主题色（可选，缺省用 consts.ts 的 DEFAULT_THEME_COLORS）。
+   * 组件层不能写死颜色，所以 theme-color 这类 meta 也从主题里取。
+   */
+  themeColor?: { light: string; dark: string };
 }
 
 /**
@@ -62,6 +67,7 @@ export function scanThemes(): ThemeManifest[] {
         description: parsed.description ?? '',
         modes: parsed.modes.filter((m) => m === 'light' || m === 'dark'),
         preview: parsed.preview ?? '',
+        themeColor: parsed.themeColor ?? undefined,
       });
     } catch (err) {
       console.warn(`[themes] Failed to parse ${manifestPath}:`, (err as Error).message);

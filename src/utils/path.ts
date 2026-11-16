@@ -87,3 +87,19 @@ export function rssUrl(): string {
 export function baseAssetsPath(path: string): string {
   return withBase(path);
 }
+
+/**
+ * 站点绝对 URL（origin + base + path），用于 JSON-LD / manifest / OG 这些
+ * 必须是完整地址、且要跟随子路径部署的场景。
+ *
+ * 注意：不能用 `Astro.url.origin + path`——origin 不含 base，
+ * 在 GitHub Pages（base=/Atom）下会指向域名根而 404。
+ */
+export function absoluteUrl(path: string): string {
+  if (!path) return '';
+  // 已经是完整地址（外链封面图等）就原样返回
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(path)) return path;
+  const site = String(import.meta.env.SITE || '');
+  const origin = site ? new URL(site).origin : '';
+  return `${origin}${withBase(path.startsWith('/') ? path : `/${path}`)}`;
+}
