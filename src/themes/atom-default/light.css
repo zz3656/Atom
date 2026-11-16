@@ -71,6 +71,14 @@ html[data-theme='atom-default'][data-mode='light'] {
   --grid-line: rgba(23, 26, 29, 0.035); /* 页面底纹 */
   --ambient-glow: rgba(138, 84, 7, 0.05); /* 页面左上角的暖光 */
   --highlight: rgba(138, 84, 7, 0.16); /* 搜索命中高亮 */
+  /* 遮罩 / 灯箱：亮色主题用深色遮罩，不跟主题底色走 */
+  --overlay-bg: rgba(12, 15, 18, 0.92);
+  --on-overlay: #ffffff;
+  --overlay-control-bg: rgba(255, 255, 255, 0.12);
+  --overlay-control-bg-hover: rgba(255, 255, 255, 0.22);
+  --overlay-control-border: rgba(255, 255, 255, 0.24);
+  --on-success: #ffffff; /* 成功色实心块上的文字 */
+  --code-inset: inset 0 1px 3px rgba(23, 26, 29, 0.06); /* 代码块内阴影 */
 
   /* ===== 刻度尺（本站签名元素）===== */
   --rule-tick: rgba(23, 26, 29, 0.22);

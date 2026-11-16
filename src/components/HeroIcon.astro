@@ -2,7 +2,8 @@
 // Hero 图标 — 首页 Hero 区域标题前的标识
 // 站点标识「黄铜原子」：冷钢底 + 黄铜轨道。
 // 图形由本机 Draw Things（SDXL Turbo / Z-Image Turbo）生成原图，
-// 再经矢量描摹得到，颜色强制对齐设计系统 token（--accent / --bg-primary）。
+// 再经矢量描摹得到。这是内置**品牌图形**：颜色固定，不随主题变化
+// （换主题时请通过 consts.ts 的 SITE_HERO_ICON 换成自己的图，详见 docs/THEMING.md）。
 // 若通过 prop 传入 src，则改用自定义图片，让用户可以在 src/consts.ts 的
 // SITE_HERO_ICON 中替换为任意图片。
 import { baseAssetsPath } from '../utils/path';

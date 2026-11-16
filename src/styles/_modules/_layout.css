@@ -122,3 +122,13 @@ html body * {
 main:focus {
   outline: none;
 }
+
+/* JS 关闭时的提示条（原文在 BaseLayout.astro 的 <noscript> 里写死了黄底） */
+.noscript-note {
+  padding: 0.75rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  background: var(--panel-bg);
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--warning);
+}

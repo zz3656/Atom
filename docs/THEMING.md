@@ -44,7 +44,7 @@ src/themes/atom-default/
 **规则**：
 
 1. 目录名必须与 `manifest.json` 中的 `id` 字段一致
-2. 文件名固定：`manifest.json`、`light.css`、`dark.css`（仅 `light` 可选）
+2. 文件名固定：`manifest.json`、`light.css`、`dark.css`（`dark.css` 可选，单模式主题可不提供）
 3. 主题目录**只能**包含 CSS token；不要放组件、HTML 或 JS
 
 ---
@@ -117,6 +117,10 @@ src/themes/atom-default/
 ### 语义表面 token（v3 新增，必需）
 
 v3 起，组件层**不再写死任何颜色**——所有"结构性"的表面与刻度都通过下面这组 token 表达。
+
+> **唯一例外：站点品牌图形。** `src/components/HeroIcon.astro` 内置的「黄铜原子」是品牌资产，
+> 颜色固定、不随主题变化（和 `public/logos/logo.svg` 同理）。第三方主题若要换外观，
+> 请通过 `src/consts.ts` 的 `SITE_HERO_ICON` 指定自己的图片，而不是期待它跟着 token 走。
 没有它们，导航栏底色、代码块底色、刻度尺颜色会退化成写死的值，第三方主题将无法正确着色。
 
 | Token | 用途 | 典型值 |
@@ -132,6 +136,13 @@ v3 起，组件层**不再写死任何颜色**——所有"结构性"的表面�
 | `--rule-tick-strong` | 刻度尺的长刻度线（主色）| `rgba(accent,.55)` |
 | `--focus-ring` | 键盘焦点环颜色 | 与 `--accent` 同色 |
 | `--glow-secondary` | 副色辉光（分类通道）| `rgba(accent-secondary,.09)` |
+| `--overlay-bg` | 图片灯箱遮罩底色 | `rgba(12,15,18,.92)` |
+| `--on-overlay` | 遮罩上的文字 / 图标 | `#ffffff` |
+| `--overlay-control-bg` | 遮罩内控件底色（关闭按钮）| `rgba(255,255,255,.12)` |
+| `--overlay-control-bg-hover` | 遮罩内控件悬浮底色 | `rgba(255,255,255,.22)` |
+| `--overlay-control-border` | 遮罩内控件描边 | `rgba(255,255,255,.24)` |
+| `--on-success` | 成功色实心块上的文字 | `#ffffff`（暗色主题常为深色）|
+| `--code-inset` | 代码块内阴影（完整 `box-shadow` 值）| `inset 0 1px 3px rgba(0,0,0,.06)` |
 
 ### 可选补充 token
 
@@ -218,7 +229,8 @@ html[data-theme='<your-theme-id>'] {
   "version": "1.0.0",
   "description": "简短说明（主题选择器 tooltip）",
   "modes": ["light", "dark"],
-  "preview": "/themes/your-theme-id/preview.png"
+  "preview": "/themes/your-theme-id/preview.png",
+  "themeColor": { "light": "#ffffff", "dark": "#0a0a0f" }
 }
 ```
 
@@ -231,6 +243,7 @@ html[data-theme='<your-theme-id>'] {
 | `description` | string | ❌ | tooltip 文本 |
 | `modes` | array | ✅ | `['light']` 或 `['light', 'dark']` |
 | `preview` | path | ❌ | 预览图（相对 `public/`） |
+| `themeColor` | object | ❌ | 浏览器地址栏 / PWA 主题色 `{light, dark}`；缺省用 `src/consts.ts` 的 `DEFAULT_THEME_COLORS`。组件层不能写死颜色，所以这类 meta 也从主题里取 |
 
 **id 校验**：`^[a-z0-9][a-z0-9_-]{0,31}$`（防 XSS / 文件系统遍历，最多 32 字符）
 

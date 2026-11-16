@@ -224,7 +224,7 @@
   overflow-x: auto;
   background: var(--code-bg);
   border: 1px solid var(--border-color);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--code-inset);
 }
 
 /* 代码块顶部的黄铜刻度 */
@@ -377,7 +377,7 @@
 
 .code-copy-btn.copied {
   background: var(--success);
-  color: #fff;
+  color: var(--on-success);
   border-color: var(--success);
   opacity: 1;
 }
@@ -393,7 +393,7 @@
 .image-zoom-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.92);
+  background: var(--overlay-bg);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -408,7 +408,7 @@
   max-height: 95vh;
   object-fit: contain;
   border-radius: var(--radius);
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  box-shadow: var(--shadow-lg);
   cursor: default;
 }
 
@@ -416,9 +416,9 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
+  background: var(--overlay-control-bg);
+  border: 1px solid var(--overlay-control-border);
+  color: var(--on-overlay);
   font-size: 1.75rem;
   line-height: 1;
   width: 42px;
@@ -432,7 +432,7 @@
 }
 
 .image-zoom-close:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--overlay-control-bg-hover);
 }
 
 @keyframes fadeIn {
@@ -454,7 +454,7 @@
  * dark  模式：用 --shiki-dark 覆盖 color，并使用 --shiki-dark-bg 作为背景
  */
 html[data-mode='dark'] .post-content pre.astro-code {
-  background-color: var(--shiki-dark-bg, #0d1117) !important;
+  background-color: var(--shiki-dark-bg, var(--code-bg)) !important;
 }
 
 html[data-mode='dark'] .post-content pre.astro-code span {

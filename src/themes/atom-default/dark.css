@@ -70,6 +70,14 @@ html[data-theme='atom-default'][data-mode='dark'] {
   --grid-line: rgba(216, 222, 227, 0.028);
   --ambient-glow: rgba(242, 179, 61, 0.045); /* 页面左上角的暖光 */
   --highlight: rgba(242, 179, 61, 0.22);
+  /* 遮罩 / 灯箱 */
+  --overlay-bg: rgba(4, 6, 8, 0.94);
+  --on-overlay: #ffffff;
+  --overlay-control-bg: rgba(255, 255, 255, 0.12);
+  --overlay-control-bg-hover: rgba(255, 255, 255, 0.22);
+  --overlay-control-border: rgba(255, 255, 255, 0.22);
+  --on-success: #06140d;
+  --code-inset: inset 0 1px 3px rgba(0, 0, 0, 0.35);
 
   /* ===== 刻度尺 ===== */
   --rule-tick: rgba(216, 222, 227, 0.2);
