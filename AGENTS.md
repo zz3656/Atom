@@ -4,7 +4,7 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 
 ## Setup commands
 
-- Node 版本：**>= 22.23.4**（Astro 7.4 的硬性要求，CI 用 `node-version: 24`）。`setup-node` 里写 `node-version: 22` 会命中 runner 镜像缓存的 22.23.3，导致 `astro check` 直接报错退出——别改成 `22`
+- Node 版本：**>= 24**（`package.json` 的 engines 与 `.nvmrc` 都是 24；Astro 7.4 只要求 >=22.23.4，但 CI 用 `node-version: 22` 会命中 runner 镜像缓存的 22.23.3，导致 `astro check` 直接失败——别改成 `22`）
 - Install deps: `npm install`
 - Start dev:    `npm run dev`            # http://localhost:4321
 - Build:        `npm run build`          # prebuild 生成搜索索引 → minify app.js → astro build → postbuild 生成 RSS，产出 `dist/`
@@ -72,4 +72,4 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 ## Security
 
 - 不要提交密钥。`.env` / `.env.*` 已在 `.gitignore`（例外是 `.env.example`），CI 侧密钥一律走 GitHub Actions secrets
-- `scripts/vectorize-icon.mjs` 依赖 `sharp`，而 `sharp` **未列入 `package.json`**（只是 Astro 的传递依赖）——需要时临时 `npm i -D sharp`，用完卸掉
+- `scripts/vectorize-icon.mjs` 依赖 `sharp`，它已正式列入 `devDependencies`（`^0.35`），不再依赖 Astro 的 optional 传递依赖

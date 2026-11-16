@@ -153,8 +153,8 @@ Atom/
 │   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
 │   ├── _assets/               # 搜索索引（构建时生成）
 │   └── medias/reward/         # 打赏二维码（可选）
-│       ├── wechat.png
-│       └── alipay.png
+│       ├── wechat.webp
+│       └── alipay.webp
 ├── src/
 │   ├── themes/                # 主题目录（默认 atom-default）
 │   │   └── atom-default/      # 自带主题：light + dark
@@ -245,8 +245,8 @@ Atom/
 │   ├── js/app.js              # Minified interaction script (generated at build)
 │   ├── _assets/               # Search index (generated at build)
 │   └── medias/reward/         # Reward QR codes (optional)
-│       ├── wechat.png
-│       └── alipay.png
+│       ├── wechat.webp
+│       └── alipay.webp
 ├── src/
 │   ├── themes/                # Themes directory (default: atom-default)
 │   │   └── atom-default/      # Built-in theme: light + dark
@@ -863,7 +863,7 @@ var repoName = 'my-blog'; // 仓库名（根站点用空字符串）
 
 ```
 public/medias/reward/
-├── wechat.png     # 微信赞赏码
+├── wechat.webp    # 微信赞赏码
 └── alipay.jpg     # 支付宝收款码
 ```
 

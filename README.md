@@ -518,8 +518,8 @@ Footer 展示三类信息：①用户可定制的社交链接；②自动生成�
 
 ```
 public/medias/reward/
-├── wechat.png     # 微信赞赏码（140x140 像素）
-└── alipay.png     # 支付宝收款码（140x140 像素）
+├── wechat.webp    # 微信赞赏码（280×280，显示 140px）
+└── alipay.webp    # 支付宝收款码（280×280，显示 140px）
 ```
 
 在文章 frontmatter 中设置 `reward: true` 即可在文章末尾显示打赏码。
@@ -598,7 +598,7 @@ src/pages/links.astro        → /links
 
 | 微信                                                                                                                          | 支付宝                                                                                                                          |
 | ----------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/wechat.png" width="140" alt="微信赞赏码" /> | <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/alipay.png" width="140" alt="支付宝收款码" /> |
+| <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/wechat.webp" width="140" alt="微信赞赏码" /> | <img src="https://raw.githubusercontent.com/zz3656/Atom/main/public/medias/reward/alipay.webp" width="140" alt="支付宝收款码" /> |
 
 每一分支持都是对开源项目的最大鼓励 ❤️
 
