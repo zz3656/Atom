@@ -144,7 +144,7 @@
   gap: 2px;
   padding: 2px;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--control-border);
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition:
@@ -193,4 +193,11 @@ html[data-mode='dark'] .theme-toggle .theme-icon-moon {
 html[data-mode='light'] .theme-toggle:hover .theme-icon-sun,
 html[data-mode='dark'] .theme-toggle:hover .theme-icon-moon {
   color: var(--accent);
+}
+
+/* 汉堡按钮只在窄屏出现：桌面端它仍会渲染在 DOM 里，
+   若不隐藏就是一个"能 Tab 聚焦、按了没反应"的幽灵控件（WCAG 2.4.7/4.1.2）。
+   <=768px 的显示规则在 _responsive.css 里。 */
+.nav-toggle {
+  display: none;
 }

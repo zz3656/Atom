@@ -177,6 +177,7 @@
         var empty = document.createElement('div');
         empty.className = 'search-no-result';
         empty.textContent = '没有找到相关结果';
+        empty.setAttribute('role', 'option');
         searchResults.appendChild(empty);
         return;
       }
@@ -186,6 +187,7 @@
         var link = document.createElement('a');
         link.href = searchBase.replace(/\/+$/, '') + '/blog/' + r.item.slug + '/';
         link.className = 'search-result-item';
+        link.setAttribute('role', 'option');
         var titleEl = document.createElement('div');
         titleEl.className = 'search-result-title';
         titleEl.innerHTML = highlightSafe(r.item.title, query);
@@ -210,12 +212,14 @@
       });
       renderResults(results.slice(0, 10), query);
       searchResults.classList.add('active');
+      searchInput.setAttribute('aria-expanded', 'true');
     }
 
     function search(query) {
       query = query.trim().toLowerCase();
       if (!query) {
         searchResults.classList.remove('active');
+        searchInput.setAttribute('aria-expanded', 'false');
         return;
       }
       if (!indexLoaded) {
@@ -243,12 +247,16 @@
     });
 
     document.addEventListener('click', function (e) {
-      if (!e.target.closest('.search-wrapper')) searchResults.classList.remove('active');
+      if (!e.target.closest('.search-wrapper')) {
+        searchResults.classList.remove('active');
+        searchInput.setAttribute('aria-expanded', 'false');
+      }
     });
 
     searchInput.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') {
         searchResults.classList.remove('active');
+        searchInput.setAttribute('aria-expanded', 'false');
         searchInput.blur();
         return;
       }
@@ -375,8 +383,11 @@
 
       var zoomImg = overlay.querySelector('.image-zoom-img');
       var closeBtn = overlay.querySelector('.image-zoom-close');
+      // 记住打开前的焦点，关闭时归还（否则键盘用户会被丢回文档开头）
+      var prevFocus = null;
 
       function openZoom(src, alt) {
+        prevFocus = document.activeElement;
         zoomImg.src = src;
         zoomImg.alt = alt || '';
         overlay.style.display = 'flex';
@@ -387,13 +398,25 @@
         overlay.style.display = 'none';
         zoomImg.src = '';
         document.body.style.overflow = '';
+        if (prevFocus && typeof prevFocus.focus === 'function') prevFocus.focus();
+        prevFocus = null;
       }
 
       for (var ii = 0; ii < images.length; ii++) {
         (function (img) {
           img.style.cursor = 'zoom-in';
+          // 键盘用户也要能打开：图片本身充当按钮
+          img.setAttribute('tabindex', '0');
+          img.setAttribute('role', 'button');
+          img.setAttribute('aria-label', img.alt ? '放大图片：' + img.alt : '放大图片');
           img.addEventListener('click', function () {
             openZoom(img.src, img.alt);
+          });
+          img.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter' || e.key === ' ' || e.key === 'Spacebar') {
+              e.preventDefault();
+              openZoom(img.src, img.alt);
+            }
           });
         })(images[ii]);
       }
@@ -401,7 +424,16 @@
         if (e.target === overlay || e.target === closeBtn) closeZoom();
       });
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && overlay.style.display !== 'none') closeZoom();
+        if (overlay.style.display === 'none') return;
+        if (e.key === 'Escape') {
+          closeZoom();
+          return;
+        }
+        // 遮罩里只有关闭按钮可聚焦：Tab 时把焦点留在遮罩内
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          closeBtn.focus();
+        }
       });
     }
 

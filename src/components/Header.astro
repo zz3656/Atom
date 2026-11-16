@@ -63,15 +63,26 @@ const navLinks = [
           </svg>
         </span>
         <input
-          type="text"
+          type="search"
           id="search-input"
           class="search-input"
           placeholder="搜索文章…"
           aria-label="搜索文章"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-expanded="false"
+          aria-controls="search-results"
           autocomplete="off"
           data-search-trigger
         />
-        <div id="search-results" class="search-results"></div>
+        <div
+          id="search-results"
+          class="search-results"
+          role="listbox"
+          aria-label="搜索结果"
+          aria-live="polite"
+        >
+        </div>
       </div>
 
       <!-- 主题开关：日 / 夜 双档。图标高亮由 CSS 依据 html[data-mode] 决定 -->

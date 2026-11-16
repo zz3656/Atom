@@ -162,6 +162,7 @@ html[data-theme='${themeId}'][data-mode='light'] {
   --overlay-control-border: rgba(255, 255, 255, 0.24);
   --on-success: #ffffff;
   --code-inset: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+  --control-border: #767f86; /* 对页面底色 >=3:1，未聚焦时控件也看得见 */
   --rule-tick: rgba(26, 29, 35, 0.22);
   --rule-tick-strong: ${hexToRgba(accent, 0.55)};
   --focus-ring: ${accent};
@@ -244,6 +245,7 @@ html[data-theme='${themeId}'][data-mode='dark'] {
   --overlay-control-border: rgba(255, 255, 255, 0.22);
   --on-success: #06140d;
   --code-inset: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+  --control-border: #5f6a75;
   --rule-tick: rgba(226, 232, 240, 0.2);
   --rule-tick-strong: ${hexToRgba(accent, 0.6)};
   --focus-ring: ${accent};

@@ -78,6 +78,8 @@ html[data-theme='atom-default'][data-mode='light'] {
   --overlay-control-bg-hover: rgba(255, 255, 255, 0.22);
   --overlay-control-border: rgba(255, 255, 255, 0.24);
   --on-success: #ffffff; /* 成功色实心块上的文字 */
+  /* 表单控件描边：--border-color 对页面底色只有 1.2:1，未聚焦时控件几乎看不见（WCAG 1.4.11 需 3:1） */
+  --control-border: #767f86;
   --code-inset: inset 0 1px 3px rgba(23, 26, 29, 0.06); /* 代码块内阴影 */
 
   /* ===== 刻度尺（本站签名元素）===== */

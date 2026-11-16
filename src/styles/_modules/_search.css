@@ -23,7 +23,7 @@
 
 .search-input {
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--control-border);
   border-radius: var(--radius-sm);
   padding: 0.35rem 0.6rem 0.35rem 1.75rem;
   font-size: 0.82rem;
@@ -90,8 +90,13 @@
 .search-result-item:hover,
 .search-result-item:focus,
 .search-result-item:focus-visible {
-  background: var(--accent-glow);
-  outline: none;
+  background: var(--panel-bg);
+}
+
+/* 键盘焦点必须看得见：只有背景色变化时，--accent-glow 对页面底色约 1.1:1，等于没有提示 */
+.search-result-item:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: -2px;
 }
 
 .search-result-title {
