@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../../consts';
 import PostCard from '../../components/PostCard.astro';
 import { POSTS_PER_PAGE } from '../../consts';
 import { getPublishedPosts } from '../../utils/collection';
@@ -39,7 +40,10 @@ const pageNumbers: number[] = [];
 for (let i = 1; i <= totalPages; i++) pageNumbers.push(i);
 ---
 
-<BaseLayout title={`所有文章 | 第${currentPage}页`} description="查看所有文章">
+<BaseLayout
+  title={`所有文章 | 第 ${currentPage} 页 | ${SITE_TITLE}`}
+  description={`${SITE_TITLE} 文章列表第 ${currentPage} 页（共 ${totalPages} 页）。`}
+>
   <section class="blog-list">
     <div class="unified-page-header">
       <p class="unified-page-eyebrow">Archive</p>

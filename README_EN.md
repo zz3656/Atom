@@ -78,7 +78,7 @@ Atom/
 │   └── rehype-table-scroll.mjs  # Wraps wide tables in a scroll container
 ├── public/                      # Static assets (copied verbatim to dist/)
 │   ├── favicon.svg              # Browser tab icon
-│   ├── robots.txt               # Search engine crawling rules
+│   ├── og-default.png           # Default social share image (1200×630)
 │   ├── logos/logo.svg           # Navbar logo
 │   ├── js/app.js                # Minified interaction script (generated at build)
 │   ├── _assets/search-index.json # Search index (generated at build)
@@ -87,7 +87,7 @@ Atom/
 │   ├── atom-cli.mjs             # Local CLI (npm run new / npm run list)
 │   ├── create-theme.mjs         # Theme scaffold (npm run theme:create <id>)
 │   ├── generate-rss.mjs         # RSS feed + search index
-│   ├── fix-sitemap.mjs          # Sitemap lastmod fix
+│   ├── verify-search-index.mjs  # Assert search index matches built pages
 │   ├── minify-app-js.mjs        # app.js minify + sub-path compatibility
 │   ├── vectorize-icon.mjs       # Raster → vector (brand icon pipeline)
 │   └── convert-hexo.mjs         # Hexo migration tool (optional)

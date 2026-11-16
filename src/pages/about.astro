@@ -1,8 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../consts';
 ---
 
-<BaseLayout title="关于 | Atom Blog">
+<BaseLayout
+  title={`关于 | ${SITE_TITLE}`}
+  description={`关于 ${SITE_TITLE}：技术栈、设计系统与联系方式。`}
+>
   <section class="about">
     <div class="unified-page-header">
       <p class="unified-page-eyebrow">About</p>

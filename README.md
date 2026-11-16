@@ -108,7 +108,7 @@ Atom/
 │   ├── atom-cli.mjs           # 🤖 本地 CLI（创建/列出文章）
 │   ├── create-theme.mjs       # 🎨 主题脚手架（npm run theme:create <id>）
 │   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
-│   ├── fix-sitemap.mjs        # sitemap lastmod 修正
+│   ├── verify-search-index.mjs # 断言搜索索引与构建产物一致
 │   ├── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
 │   ├── vectorize-icon.mjs     # 位图 → 矢量（图标流水线）
 │   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）
@@ -118,7 +118,7 @@ Atom/
 │   └── rehype-table-scroll.mjs # 宽表格包可横向滚动容器
 ├── public/
 │   ├── favicon.svg            # 浏览器标签页图标
-│   ├── robots.txt             # 搜索引擎爬虫规则
+│   ├── og-default.png         # 默认社交分享图（1200×630）
 │   ├── logos/logo.svg         # 导航栏 Logo
 │   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
 │   ├── _assets/               # 搜索索引（构建时生成）

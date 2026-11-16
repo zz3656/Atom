@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../../consts';
 import PostCard from '../../components/PostCard.astro';
 import { getPublishedPosts } from '../../utils/collection';
 import { blogPostUrl, tagsUrl } from '../../utils/path';
@@ -21,7 +22,10 @@ const { tag } = Astro.params;
 const tagPosts = (await getPublishedPosts()).filter((post) => post.data.tags?.includes(tag));
 ---
 
-<BaseLayout title={`${tag} | Atom Blog`}>
+<BaseLayout
+  title={`${tag} | 标签 | ${SITE_TITLE}`}
+  description={`${SITE_TITLE} 中带有「${tag}」标签的 ${tagPosts.length} 篇文章。`}
+>
   <section class="listing-page">
     <div class="unified-page-header">
       <p class="unified-page-eyebrow">Tag</p>

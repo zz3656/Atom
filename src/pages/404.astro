@@ -3,12 +3,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import { rootPath, blogListUrl } from '../utils/path';
 ---
 
-<BaseLayout
-  title="404 - 页面不存在"
-  description="你访问的页面走丢了"
-  type="website"
-  pageUrl={String(Astro.site)}
->
+<BaseLayout title="404 - 页面不存在" description="你访问的页面走丢了" type="website">
+  <!-- 404 不该被收录：不设 canonical（指向首页会让搜索引擎把 404 当成首页副本） -->
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, follow" />
+  </Fragment>
   <section class="hero">
     <div class="hero-inner hero-inner--single">
       <div class="hero-main">

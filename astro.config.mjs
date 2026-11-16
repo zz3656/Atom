@@ -4,6 +4,7 @@ import sitemap from '@astrojs/sitemap';
 import remarkImgLazy from './astro-plugins/remark-img-lazy.mjs';
 import rehypeTableScroll from './astro-plugins/rehype-table-scroll.mjs';
 import themeLoader from './astro-plugins/theme-loader.mjs';
+import { loadPosts } from './scripts/lib/blog-posts.mjs';
 
 // 部署目标自动检测:
 //   DEPLOY_TARGET=github → GitHub Pages（需要仓库名前缀）
@@ -23,11 +24,31 @@ const site = isGitHubPages
   ? `https://${process.env.GITHUB_USER || 'zz3656'}.github.io/${REPO_NAME}`
   : `https://${process.env.CF_DOMAIN || 'atom.inte8.top'}`;
 
+// sitemap 的 lastmod：文章页用 updatedDate ?? pubDate，其余页面用最新文章日期。
+// 之前是靠 postbuild 正则往 XML 里插 <lastmod>（还插在 <changefreq> 之后，顺序不合 XSD），
+// 现在直接交给集成序列化，顺带把那支脆弱的脚本删掉。
+const posts = loadPosts();
+const postLastmod = new Map(
+  posts.map((p) => [`/blog/${p.slug}/`, (p.updatedDate ?? p.pubDate).toISOString()]),
+);
+const newestPostDate = posts.length
+  ? new Date(Math.max(...posts.map((p) => p.pubDate.getTime()))).toISOString()
+  : new Date().toISOString();
+
+function lastmodFor(url) {
+  const pathname = new URL(url).pathname;
+  const relativePath =
+    base && pathname.startsWith(base) ? pathname.slice(base.length) || '/' : pathname;
+  return postLastmod.get(relativePath) ?? postLastmod.get(`${relativePath}/`) ?? newestPostDate;
+}
+
 export default defineConfig({
   integrations: [
     sitemap({
-      // sitemap 顺序不重要，关闭 lastmod 默认生成以避免冗余
       changefreq: 'weekly',
+      // 404 页面不该进 sitemap
+      filter: (page) => !page.includes('/404'),
+      serialize: (item) => ({ ...item, lastmod: lastmodFor(item.url) }),
     }),
   ],
   site,

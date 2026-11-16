@@ -8,8 +8,9 @@ import {
   AUTHOR,
   SITE_FAVICON,
   DEFAULT_THEME_COLORS,
+  OG_IMAGE,
 } from '../consts';
-import { rssUrl, baseAssetsPath } from '../utils/path';
+import { rssUrl, baseAssetsPath, absoluteUrl } from '../utils/path';
 import { themes } from '../generated/themes';
 
 interface Props {
@@ -29,9 +30,8 @@ const rssLink = rssUrl();
 const faviconLink = baseAssetsPath(SITE_FAVICON);
 const searchBase = baseAssetsPath('/');
 
-// Site URL for OG/Twitter images and RSS
-const siteUrl = String(Astro.site || '').replace(/\/$/, '');
-const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/favicon.svg`;
+// OG/Twitter 图：文章自带封面优先，否则用默认分享图（SVG favicon 社交平台不认）
+const ogImage = absoluteUrl(image || OG_IMAGE);
 
 // 主题清单（构建时由 theme-loader 自动生成，仅包含有效主题 ID）
 // 用于内联脚本的运行时校验，防止老用户 localStorage 中的过期主题 ID 被吞
@@ -64,6 +64,9 @@ const themeColorDark = defaultTheme?.themeColor?.dark ?? DEFAULT_THEME_COLORS.da
     <meta property="og:type" content={type} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={fullTitle} />
     <meta property="og:site_name" content={SITE_TITLE} />
 
     <!-- canonical URL: 避免 /blog/foo 与 /blog/foo/ 被重复索引 -->
@@ -74,6 +77,7 @@ const themeColorDark = defaultTheme?.themeColor?.dark ?? DEFAULT_THEME_COLORS.da
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={fullTitle} />
 
     <!-- RSS Feed -->
     <link rel="alternate" type="application/rss+xml" title={SITE_TITLE} href={rssLink} />

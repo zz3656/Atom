@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../../consts';
 import { normalizeCategory } from '../../utils/blog';
 import { getPublishedPosts } from '../../utils/collection';
 import { getCategoryUrl } from '../../utils/path';
@@ -17,7 +18,10 @@ posts.forEach((post) => {
 const sortedCategories = [...categoryMap.entries()].sort((a, b) => b[1].length - a[1].length);
 ---
 
-<BaseLayout title="所有分类 | Atom Blog">
+<BaseLayout
+  title={`所有分类 | ${SITE_TITLE}`}
+  description={`${SITE_TITLE} 的全部分类与文章数。`}
+>
   <section class="listing-page">
     <div class="unified-page-header">
       <p class="unified-page-eyebrow">Taxonomy</p>

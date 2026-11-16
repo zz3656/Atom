@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../../consts';
 import { getPublishedPosts } from '../../utils/collection';
 import { getTagUrl } from '../../utils/path';
 
@@ -17,7 +18,10 @@ posts.forEach((post) => {
 const sortedTags = [...tagMap.entries()].sort((a, b) => b[1].length - a[1].length);
 ---
 
-<BaseLayout title="所有标签 | Atom Blog">
+<BaseLayout
+  title={`所有标签 | ${SITE_TITLE}`}
+  description={`${SITE_TITLE} 的全部标签与文章数。`}
+>
   <section class="listing-page">
     <div class="unified-page-header">
       <p class="unified-page-eyebrow">Taxonomy</p>

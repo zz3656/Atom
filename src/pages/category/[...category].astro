@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../../consts';
 import PostCard from '../../components/PostCard.astro';
 import { normalizeCategory } from '../../utils/blog';
 import { getPublishedPosts } from '../../utils/collection';
@@ -24,7 +25,10 @@ const categoryPosts = (await getPublishedPosts()).filter(
 );
 ---
 
-<BaseLayout title={`${category} | Atom Blog`}>
+<BaseLayout
+  title={`${category} | 分类 | ${SITE_TITLE}`}
+  description={`${SITE_TITLE} 中归入「${category}」分类的 ${categoryPosts.length} 篇文章。`}
+>
   <section class="listing-page">
     <div class="unified-page-header">
       <p class="unified-page-eyebrow">Category</p>

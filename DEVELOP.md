@@ -139,7 +139,7 @@ Atom/
 │   ├── atom-cli.mjs           # 本地 CLI（创建/列出文章）
 │   ├── create-theme.mjs       # 主题脚手架（npm run theme:create <id>）
 │   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
-│   ├── fix-sitemap.mjs        # sitemap lastmod 修正
+│   ├── verify-search-index.mjs # 断言搜索索引与构建产物一致
 │   ├── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
 │   ├── vectorize-icon.mjs     # 位图 → 矢量（Draw Things 图标流水线第二步）
 │   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）
@@ -149,7 +149,7 @@ Atom/
 │   └── theme-loader.mjs       # 构建时扫描 src/themes/，生成 CSS 入口
 ├── public/                    # 静态资源（原样复制到 dist/）
 │   ├── favicon.svg            # 网站图标
-│   ├── robots.txt             # 搜索引擎爬虫规则
+│   ├── og-default.png # 默认社交分享图（1200×630）
 │   ├── logos/logo.svg         # 导航栏 Logo
 │   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
 │   ├── _assets/               # 搜索索引（构建时生成）
@@ -232,7 +232,7 @@ Atom/
 │   ├── atom-cli.mjs           # Local CLI (create / list articles)
 │   ├── create-theme.mjs       # Theme scaffold (npm run theme:create <id>)
 │   ├── generate-rss.mjs       # RSS feed + search index
-│   ├── fix-sitemap.mjs        # Sitemap lastmod fix
+│   ├── verify-search-index.mjs # Assert search index matches built pages
 │   ├── minify-app-js.mjs      # app.js minify + sub-path compat
 │   ├── vectorize-icon.mjs     # Raster → vector (step 2 of the Draw Things icon pipeline)
 │   └── convert-hexo.mjs       # Hexo migration tool (optional)
@@ -242,7 +242,7 @@ Atom/
 │   └── theme-loader.mjs       # Build-time scan src/themes/, generate CSS entry
 ├── public/                    # Static assets (copied to dist/)
 │   ├── favicon.svg            # Site favicon
-│   ├── robots.txt             # Search engine crawler rules
+│   ├── og-default.png # Default social share image (1200×630)
 │   ├── logos/logo.svg         # Navbar logo
 │   ├── js/app.js              # Minified interaction script (generated at build)
 │   ├── _assets/               # Search index (generated at build)

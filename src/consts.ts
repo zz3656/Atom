@@ -54,7 +54,14 @@ export const HERO_ACTIONS: Array<{
 // 完整流水线见 DEVELOP.md「品牌图标（Draw Things 流水线）」。
 export const SITE_LOGO = '/logos/logo.svg'; // Logo 文件路径（对应 public/logos/logo.svg）
 export const SITE_FAVICON = '/favicon.svg'; // Favicon 文件路径（对应 public/favicon.svg）
-export const SITE_HERO_ICON = ''; // 首页 Hero 图标路径；留空则使用内置 Atom 原子 SVG
+export const SITE_HERO_ICON = '';
+
+/**
+ * 默认社交分享图（1200×630 PNG）。
+ * 微信 / X / LinkedIn 等平台不解析 SVG，所以不能拿 favicon 当 og:image。
+ * 未在文章中指定 featuredImage / heroImage 时用它兜底。
+ */
+export const OG_IMAGE = '/og-default.png'; // 首页 Hero 图标路径；留空则使用内置 Atom 原子 SVG
 
 // 项目源代码仓库（Footer 的 🐙 GitHub 与 "站点标题" 链接使用）
 export const REPO_URL = 'https://github.com/zz3656/Atom';
