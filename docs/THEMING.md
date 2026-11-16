@@ -86,8 +86,6 @@ src/themes/atom-default/
 |-------|------|
 | `--accent` | 主色（链接、按钮、icon）|
 | `--accent-hover` | 主色 hover |
-| `--accent-secondary` | 副主色（次级高亮）|
-| `--accent-gradient` | 渐变（CTA、Logo）|
 | `--accent-glow` | 主色阴影/光晕 |
 
 ### Tag & Category (8 个)
@@ -104,11 +102,10 @@ src/themes/atom-default/
 | `--success` | 成功状态 |
 | `--warning` | 警告状态 |
 
-### 阴影 (5 个)
+### 阴影 (4 个)
 
 | Token | 用途 |
 |-------|------|
-| `--shadow-sm` | 微阴影 |
 | `--shadow` | 标准阴影 |
 | `--shadow-md` | 中等阴影 |
 | `--shadow-lg` | 大阴影 |
@@ -135,7 +132,6 @@ v3 起，组件层**不再写死任何颜色**——所有"结构性"的表面�
 | `--rule-tick` | 刻度尺的短刻度线 | `rgba(0,0,0,.22)` |
 | `--rule-tick-strong` | 刻度尺的长刻度线（主色）| `rgba(accent,.55)` |
 | `--focus-ring` | 键盘焦点环颜色 | 与 `--accent` 同色 |
-| `--glow-secondary` | 副色辉光（分类通道）| `rgba(accent-secondary,.09)` |
 | `--overlay-bg` | 图片灯箱遮罩底色 | `rgba(12,15,18,.92)` |
 | `--on-overlay` | 遮罩上的文字 / 图标 | `#ffffff` |
 | `--overlay-control-bg` | 遮罩内控件底色（关闭按钮）| `rgba(255,255,255,.12)` |
@@ -145,10 +141,12 @@ v3 起，组件层**不再写死任何颜色**——所有"结构性"的表面�
 | `--code-inset` | 代码块内阴影（完整 `box-shadow` 值）| `inset 0 1px 3px rgba(0,0,0,.06)` |
 | `--control-border` | 表单控件（搜索框/开关）描边，**对页面底色需 ≥3:1** | `#767f86` / `#5f6a75` |
 
-### 可选补充 token
+### 关于已移除的 token
 
-- `--accent-glow-strong`（accent 光晕加强版）
-- `--purple-glow`（副色辉光的旧别名，等价于 `--glow-secondary`）
+v1.1.3 起去掉了 6 个「定义了但全站零引用」的 token：`--accent-secondary`、`--accent-gradient`、
+`--accent-glow-strong`、`--glow-secondary`、`--purple-glow`、`--shadow-sm`。
+它们让第三方主题多背了 13% 的必填契约却毫无视觉效果。旧主题若仍定义这些 token 不会报错，
+只是不再被引用。
 
 ---
 
@@ -158,7 +156,6 @@ v3 起，组件层**不再写死任何颜色**——所有"结构性"的表面�
 
 | Token | 默认值 | 说明 |
 |-------|--------|------|
-| `--accent-glow-strong` | `rgba(accent, 0.15)` | 强光晕（用于 active 态）|
 
 布局相关 token（**必须**留在 `_variables.css`，**不要**在主题里覆盖）：
 - `--font-display` / `--font-sans` / `--font-mono`

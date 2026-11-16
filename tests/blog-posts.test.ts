@@ -52,3 +52,15 @@ describe('buildSearchIndex', () => {
     expect(entry.tags).toEqual(['astro', 'blog']);
   });
 });
+
+describe('parseFrontmatter 块状 YAML', () => {
+  it('支持 tags 写成多行列表', () => {
+    const fm = parseFrontmatter(
+      ['---', 'title: 块状', 'tags:', '  - astro', '  - "中文标签"', 'category: 技术', '---', ''].join(
+        '\n',
+      ),
+    );
+    expect(fm.tags).toEqual(['astro', '中文标签']);
+    expect(fm.category).toBe('技术');
+  });
+});

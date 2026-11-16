@@ -117,12 +117,7 @@ html[data-theme='${themeId}'][data-mode='light'] {
   /* Accent colors */
   --accent: ${accent};
   --accent-hover: ${accent};
-  --accent-secondary: ${accent};
-  --accent-gradient: linear-gradient(135deg, ${accent}, ${accent});
   --accent-glow: ${hexToRgba(accent, 0.08)};
-  --accent-glow-strong: ${hexToRgba(accent, 0.15)};
-  --glow-secondary: ${hexToRgba(accent, 0.06)};
-  --purple-glow: ${hexToRgba(accent, 0.06)}; /* 旧别名，保留兼容 */
 
   /* Tags */
   --tag-bg: ${hexToRgba(accent, 0.06)};
@@ -141,7 +136,6 @@ html[data-theme='${themeId}'][data-mode='light'] {
   --warning: #f59e0b;
 
   /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08);
@@ -200,12 +194,7 @@ html[data-theme='${themeId}'][data-mode='dark'] {
   /* Accent colors */
   --accent: ${accent};
   --accent-hover: ${accent};
-  --accent-secondary: ${accent};
-  --accent-gradient: linear-gradient(135deg, ${accent}, ${accent});
   --accent-glow: ${hexToRgba(accent, 0.15)};
-  --accent-glow-strong: ${hexToRgba(accent, 0.3)};
-  --glow-secondary: ${hexToRgba(accent, 0.15)};
-  --purple-glow: ${hexToRgba(accent, 0.15)}; /* 旧别名，保留兼容 */
 
   /* Tags */
   --tag-bg: ${hexToRgba(accent, 0.08)};
@@ -224,7 +213,6 @@ html[data-theme='${themeId}'][data-mode='dark'] {
   --warning: #f59e0b;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.55);

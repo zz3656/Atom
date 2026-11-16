@@ -31,13 +31,8 @@ html[data-theme='atom-default'][data-mode='dark'] {
   /* ===== Accent — 点亮的黄铜指示灯 ===== */
   --accent: #f2b33d;
   --accent-hover: #ffc95c;
-  --accent-secondary: #5fb6d4;
-  --accent-gradient: linear-gradient(135deg, #f2b33d, #d9893a);
   --accent-glow: rgba(242, 179, 61, 0.12);
-  --accent-glow-strong: rgba(242, 179, 61, 0.24);
-  --glow-secondary: rgba(95, 182, 212, 0.12);
   /* 向后兼容：旧主题把副色辉光叫 --purple-glow */
-  --purple-glow: rgba(95, 182, 212, 0.12);
 
   /* ===== Tags — 中性 ===== */
   --tag-bg: transparent;
@@ -56,7 +51,6 @@ html[data-theme='atom-default'][data-mode='dark'] {
   --warning: #f2b33d;
 
   /* ===== Shadows ===== */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
   --shadow-md: 0 6px 18px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 14px 38px rgba(0, 0, 0, 0.6);

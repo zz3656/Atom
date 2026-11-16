@@ -142,19 +142,23 @@ const readingMinutes = readingTime(body || '');
         <div class="reward-qr">
           <div class="reward-item">
             <img
-              src={baseAssetsPath('/medias/reward/wechat.png')}
+              src={baseAssetsPath('/medias/reward/wechat.webp')}
               alt="微信赞赏码"
               width="140"
               height="140"
+              loading="lazy"
+              decoding="async"
             />
             <span>微信赞赏</span>
           </div>
           <div class="reward-item">
             <img
-              src={baseAssetsPath('/medias/reward/alipay.png')}
+              src={baseAssetsPath('/medias/reward/alipay.webp')}
               alt="支付宝收款码"
               width="140"
               height="140"
+              loading="lazy"
+              decoding="async"
             />
             <span>支付宝赞赏</span>
           </div>

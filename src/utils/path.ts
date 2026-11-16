@@ -48,14 +48,15 @@ export function blogListUrl(): string {
  * 分类详情页 URL
  */
 export function getCategoryUrl(category: string): string {
-  return withBase(`/category/${category}/`);
+  return withBase(`/category/${encodeURIComponent(category)}/`);
 }
 
 /**
  * 标签详情页 URL
  */
 export function getTagUrl(tag: string): string {
-  return withBase(`/tag/${tag}/`);
+  // 标签可能含中文/空格/#，必须转义，否则链接会碎或被当成 fragment
+  return withBase(`/tag/${encodeURIComponent(tag)}/`);
 }
 
 /**

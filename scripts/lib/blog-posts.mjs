@@ -24,10 +24,26 @@ export function parseFrontmatter(content) {
   if (parts.length < 3) return {};
   const fm = {};
   const lines = parts[1].split('\n');
-  for (const line of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
     const match = line.match(/^(\w[\w-]*):\s*(.*)$/);
     if (!match) continue;
     let val = match[2].trim();
+    // 块状列表：
+    //   tags:
+    //     - a
+    //     - b
+    if (val === '') {
+      const list = [];
+      while (i + 1 < lines.length && /^\s*-\s+/.test(lines[i + 1])) {
+        list.push(lines[i + 1].replace(/^\s*-\s+/, '').replace(/^["']|["']$/g, '').trim());
+        i += 1;
+      }
+      if (list.length > 0) {
+        fm[match[1]] = list;
+        continue;
+      }
+    }
     if (val.startsWith('[') && val.endsWith(']')) {
       val = val
         .slice(1, -1)

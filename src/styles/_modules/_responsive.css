@@ -380,12 +380,8 @@
   .about-content h2 {
     font-size: 1.15rem;
   }
-  .about-projects,
-  .about-topics {
+  .about-projects {
     grid-template-columns: 1fr;
-  }
-  .topic-card {
-    padding: 1rem;
   }
 
   /* 搜索 */
