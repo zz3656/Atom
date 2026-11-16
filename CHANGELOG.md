@@ -17,6 +17,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.1.5] — 2026-11-16
+
+### 🐛 Fixed
+
+- **线上整站 404（严重）**：`Header.astro` 的导航链接被 `baseAssetsPath()` 拼了两次 base
+  ——`navLinks` 的值已经由 `path.ts` 的工具函数带上 `/Atom`，模板里又包了一层，
+  于是所有导航变成 `/Atom/Atom/blog/`。构建与 CI 都不会报错，只有点开站点才发现。
+  这次同时补了会拦住它的门：新增 `scripts/verify-build-links.mjs`，
+  把 `dist` 里每份 HTML 的站内链接映射回真实产物，缺一个就失败，CI 已接入
+  （实测：23 份 HTML、base=`/Atom`，全部命中）。
+
 ## [1.1.4] — 2026-11-16
 
 ### 🐛 Fixed

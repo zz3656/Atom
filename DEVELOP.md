@@ -139,6 +139,7 @@ Atom/
 │   ├── create-theme.mjs       # 主题脚手架（npm run theme:create <id>）
 │   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
 │   ├── verify-search-index.mjs # 断言搜索索引与构建产物一致
+│   ├── verify-build-links.mjs # 断言站内链接都能映射到产物（防 base 双前缀）
 │   ├── minify-app-js.mjs      # esbuild 直接从 src/scripts 产出压缩版 app.js
 │   ├── vectorize-icon.mjs     # 位图 → 矢量（Draw Things 图标流水线第二步）
 │   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）

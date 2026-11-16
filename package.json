@@ -1,6 +1,6 @@
 {
   "name": "atom",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist public/js public/_assets src/generated .astro coverage",
@@ -21,7 +21,8 @@
     "new": "node scripts/atom-cli.mjs new",
     "list": "node scripts/atom-cli.mjs list",
     "theme:create": "node scripts/create-theme.mjs",
-    "postbuild": "node scripts/generate-rss.mjs"
+    "postbuild": "node scripts/generate-rss.mjs",
+    "verify:links": "node scripts/verify-build-links.mjs"
   },
   "engines": {
     "node": ">=24",

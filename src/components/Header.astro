@@ -48,9 +48,11 @@ const navLinks = [
       <span class="hamburger-line"></span>
     </button>
 
+    <!-- link.href 已由 path.ts 的工具函数带上 base，这里不能再包一层 baseAssetsPath，
+         否则 base 会被拼接两次（v1.1.4 线上整站导航 404 就是这么来的） -->
     <div class="nav-links" id="nav-links">
       {navLinks.map((link) => (
-        <a href={baseAssetsPath(link.href)} class:list={['nav-link', link.active && 'active']}>
+        <a href={link.href} class:list={['nav-link', link.active && 'active']}>
           {link.label}
         </a>
       ))}
