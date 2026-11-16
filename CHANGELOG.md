@@ -21,6 +21,7 @@ All notable changes to this project will be documented in this file.
 - `README_EN.md` 项目结构树重写为当前真实结构，并同步 Node/npm 版本要求、Frontmatter 字段表、部署流程
 - `README.md` / `README_EN.md` / `DEVELOP.md` 项目结构树补齐 `tests/`、`.github/`、`src/scripts/app.js`、`src/generated/`、`src/content.config.ts`、`AGENTS.md`、`CHANGELOG.md`
 - 体积数字与实测对齐：交互脚本 8.7KB、单页 HTML gzip 12–18KB、构建产物约 1.8MB
+- `AGENTS.md` 补「本机（Linux / fnOS 卷）环境坑」：构建要在 `/tmp` 临时镜像里跑（该卷会让 Node 的 `copy_file_range` 产出不可读文件）、`astro check` 需 `ASTRO_TELEMETRY_DISABLED=1`、`node_modules` 必须本机 `npm ci`
 
 ### 🐛 Fixed
 

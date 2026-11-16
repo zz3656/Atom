@@ -53,6 +53,15 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 - 改了 markdown 处理器后，`.astro/data-store.json` 缓存**不会**自动失效：必须 `rm .astro/data-store.json` 再重启 dev server
 - 窄屏验证用 iframe 量 `scrollWidth`（macOS headless Chrome 的 `--window-size` 在 <500px 时不可靠）
 
+### 本机（Linux / fnOS 卷）环境坑
+
+在 `/vol1/1000`（fnOS）上的工作副本里，以下几条会反复出现，不是代码问题：
+
+- **不能原地 `npm run build`**。该卷的文件系统会让 Node 的 `copy_file_range` 产出「权限 000 + ACL 丢失」的文件：`scripts/minify-app-js.mjs` 拷出 `public/js/app.js` 后 esbuild 立刻读不了，vite 再往 `dist/` 拷就是 `EACCES`。要验证构建，把源码 `cp -r` 到 `/tmp` 的临时镜像、把 `node_modules` 软链回仓库，在镜像里跑 `npm run build`（**别用 `rsync -a`**，它会把源根目录的 `000` 位搬到目标，整个镜像直接不可访问）。`npm test` / `npm run lint` / dev server 不受此影响。
+- **`astro check` 要先 `ASTRO_TELEMETRY_DISABLED=1`**，否则 Astro 遥测去写 `~/.config/astro`，在写不了家目录的沙箱里直接 `EACCES` 退出。
+- **`node_modules` 必须用 `npm ci` 在本机装**。从 macOS 整份搬来的 `node_modules` 缺 Linux 原生绑定，`vitest` 会报 `Cannot find native binding`；npm 缓存里有 root 属主文件时加 `--cache /tmp/npm-cache-atom`。同理，git 报 `dubious ownership` 时用 `git -c safe.directory="$PWD" …`，不必改全局配置。
+- **改完文件要立刻 `chmod 644`**。在这个卷上，写入工具生成的替换文件同样是「000 + 无 ACL」，不 chmod 就 `cat` 不到、`git add` 报 `unable to index file`。批量收尾用 `chmod -R u+rwX src scripts tests docs`。
+
 ## PR & commit conventions
 
 - **推 `main` 即部署**——`deploy.yml` 在 `push` 到 `main` 时触发部署；`test.yml` 同时跑在 push 与 PR 上。本仓库历史以直推 `main` 为主
