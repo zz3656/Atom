@@ -39,8 +39,8 @@ export const HERO_ACTIONS: Array<{
   variant?: 'primary' | 'secondary';
   hide?: boolean;
 }> = [
-  { label: '浏览文章 →', href: '/blog', variant: 'primary' },
-  { label: '关于此博客', href: '/about', variant: 'secondary' },
+  { label: '浏览文章 →', href: '/blog/', variant: 'primary' },
+  { label: '关于此博客', href: '/about/', variant: 'secondary' },
 ];
 
 // Logo 与 Favicon（三个独立文件）

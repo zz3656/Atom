@@ -70,8 +70,7 @@ Atom/
 ├── .github/                     # GitHub config (CI + deploy already enabled)
 │   ├── dependabot.yml           # Dependency update bot
 │   └── workflows/
-│       ├── test.yml             # CI: lint → test → build
-│       └── deploy.yml           # GitHub Pages / Cloudflare Pages deploy
+│       └── verify.yml           # CI: check → lint → test → build → deploy (main)
 ├── astro-plugins/               # Build-time remark / rehype plugins
 │   ├── theme-loader.mjs         # Scans src/themes/, generates the CSS entry
 │   ├── remark-img-lazy.mjs      # Auto-add loading="lazy" to Markdown images
@@ -229,7 +228,7 @@ GitHub Actions is already configured. Just:
 
 Actions will automatically: `Install deps → Build → Deploy`
 
-CI is separate from deployment — `.github/workflows/test.yml` runs `lint → test → build` on every push and pull request.
+One workflow handles both: `.github/workflows/verify.yml` runs `check → lint → test → build` on every push and pull request, and only deploys to GitHub Pages on `main` after all of it passes.
 
 ### Custom Domain (Optional)
 

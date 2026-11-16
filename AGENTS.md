@@ -7,7 +7,7 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 - Node 版本：**>= 22.23.4**（Astro 7.4 的硬性要求，CI 用 `node-version: 24`）。`setup-node` 里写 `node-version: 22` 会命中 runner 镜像缓存的 22.23.3，导致 `astro check` 直接报错退出——别改成 `22`
 - Install deps: `npm install`
 - Start dev:    `npm run dev`            # http://localhost:4321
-- Build:        `npm run build`          # 含 minify + RSS + sitemap 后处理，产出 `dist/`
+- Build:        `npm run build`          # prebuild 生成搜索索引 → minify app.js → astro build → postbuild 生成 RSS，产出 `dist/`
 - Test:         `npm test`               # Vitest（`npm run test:coverage` 带覆盖率）
 - Lint:         `npm run lint`           # ESLint flat config
 - Typecheck:    `npm run check`          # `astro check`（CI 里先跑这个再跑 lint）
@@ -19,13 +19,13 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 - `src/content/blog/` — Markdown 文章（frontmatter 见 `src/content.config.ts`）
 - `src/themes/<id>/{light,dark}.css` — 主题，**只放 CSS token**，不放规则
 - `src/styles/_modules/` — 21 个共享 CSS 模块（布局/字体/刻度尺），**不含颜色**
-- `src/generated/` — 构建时生成的主题汇总入口（`themes.ts` 已被跟踪，但内容会被 build 重写，别手改）
-- `public/` — 静态资源（`logos/`、`favicon.svg`、`manifest.json`）
+- `src/generated/` — 构建时生成的主题汇总入口（不进版本库；dev/build/`astro check` 会自动重建，别手改）
+- `public/` — 静态资源（`logos/`、`favicon.svg`、`og-default.png`、`medias/`）；`manifest.json` 与 `robots.txt` 由 `src/pages/*.ts` 构建期生成
 - `astro-plugins/` — remark/rehype 与构建期插件（`rehype-table-scroll` 等）
 - `scripts/` — 构建辅助与 CLI（`atom-cli.mjs`、`create-theme.mjs`、`vectorize-icon.mjs`）
 - `tests/` — Vitest 单元测试，`*.test.ts`
 - `docs/THEMING.md` — **主题作者契约**，改 token 必须同步改这里
-- `.github/workflows/` — `test.yml`（lint → test → build 三段依赖）、`deploy.yml`
+- `.github/workflows/` — `verify.yml` 一条流水线：check → lint → test → build →（push main 时）deploy；部署是 `needs: verify` 的下游 job，复用构建产物
 
 ## Code style
 
@@ -64,12 +64,12 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 
 ## PR & commit conventions
 
-- **推 `main` 即部署**——`deploy.yml` 在 `push` 到 `main` 时触发部署；`test.yml` 同时跑在 push 与 PR 上。本仓库历史以直推 `main` 为主
+- **推 `main` 即部署**——`verify.yml` 在 push/PR 上都跑校验与构建，只有 push 到 `main` 且校验通过才会部署（测试红了不会再上线）。本仓库历史以直推 `main` 为主
 - 需要 review 时从 `main` 切分支、开 PR（`gh pr create`）再合入 `main`
 - Commit message：conventional commits（`feat:` / `fix:` / `docs:` / `refactor:`）
 - 发版时打 annotated tag（`git tag -a v1.1.0 -m "..."`）并 `git push --tags`
 
 ## Security
 
-- 不要提交密钥。注意 **`.env` 目前不在 `.gitignore` 里**——本地建 `.env` 前先自己加进 ignore，CI 侧密钥一律走 GitHub Actions secrets
+- 不要提交密钥。`.env` / `.env.*` 已在 `.gitignore`（例外是 `.env.example`），CI 侧密钥一律走 GitHub Actions secrets
 - `scripts/vectorize-icon.mjs` 依赖 `sharp`，而 `sharp` **未列入 `package.json`**（只是 Astro 的传递依赖）——需要时临时 `npm i -D sharp`，用完卸掉

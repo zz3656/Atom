@@ -1,32 +1,41 @@
 ---
 import { SITE_NAME, SITE_LOGO } from '../consts';
-import { baseAssetsPath } from '../utils/path';
+import {
+  baseAssetsPath,
+  rootPath,
+  blogListUrl,
+  categoriesUrl,
+  tagsUrl,
+  aboutUrl,
+  stripBase,
+} from '../utils/path';
 
 const logoSrc = baseAssetsPath(SITE_LOGO);
 
-// Active path detection
-const currentPath = Astro.url.pathname;
+// 高亮判定必须先去 base：子路径部署下 pathname 是 `/Atom/blog/`，
+// 直接跟 `/blog` 比较永远不相等（历史上 GitHub Pages 全线不亮就是这个原因）。
+const currentPath = stripBase(Astro.url.pathname);
 
 const navLinks = [
-  { label: '首页', href: '/', active: currentPath === '/' },
+  { label: '首页', href: rootPath(), active: currentPath === '/' },
   {
     label: '文章',
-    href: '/blog',
-    active: currentPath === '/blog' || currentPath === '/blog/' || currentPath.startsWith('/blog/'),
+    href: blogListUrl(),
+    active: currentPath === '/blog/' || currentPath.startsWith('/blog/'),
   },
   {
     label: '分类',
-    href: '/categories',
-    active: currentPath === '/categories' || currentPath === '/categories/',
+    href: categoriesUrl(),
+    active: currentPath === '/categories/',
   },
-  { label: '标签', href: '/tags', active: currentPath === '/tags' || currentPath === '/tags/' },
-  { label: '关于', href: '/about', active: currentPath === '/about' || currentPath === '/about/' },
+  { label: '标签', href: tagsUrl(), active: currentPath === '/tags/' },
+  { label: '关于', href: aboutUrl(), active: currentPath === '/about/' },
 ];
 ---
 
 <header class="site-header">
   <nav class="nav-container">
-    <a href={baseAssetsPath('/')} class="site-title">
+    <a href={rootPath()} class="site-title">
       <img src={logoSrc} alt="" class="site-logo" width="26" height="26" />
       <span class="site-name-text">{SITE_NAME}</span>
       <span class="site-tagline">Precision Log</span>

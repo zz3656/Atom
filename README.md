@@ -102,8 +102,7 @@ Atom/
 ├── .github/                    # GitHub 配置（CI 与部署均已启用）
 │   ├── dependabot.yml          # 依赖更新机器人
 │   └── workflows/
-│       ├── test.yml            # CI：lint → test → build
-│       └── deploy.yml          # GitHub Pages / Cloudflare Pages 部署
+│       └── verify.yml          # CI：check → lint → test → build → deploy（main）
 ├── scripts/
 │   ├── atom-cli.mjs           # 🤖 本地 CLI（创建/列出文章）
 │   ├── create-theme.mjs       # 🎨 主题脚手架（npm run theme:create <id>）

@@ -53,6 +53,8 @@ export default defineConfig({
   ],
   site,
   base,
+  // 统一带尾斜杠：内链（path.ts）、canonical、sitemap 三者口径一致，少一次 301
+  trailingSlash: 'always',
   // HTML 压缩优化
   build: {
     compressHTML: true,

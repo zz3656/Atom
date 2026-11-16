@@ -133,8 +133,7 @@ Atom/
 ├── .github/                   # GitHub 配置（CI 与部署均已启用）
 │   ├── dependabot.yml         # 依赖更新机器人
 │   └── workflows/
-│       ├── test.yml           # CI：lint → test → build
-│       └── deploy.yml         # GitHub Pages / Cloudflare Pages 部署
+│       └── verify.yml         # CI：check → lint → test → build →（main）deploy
 ├── scripts/                   # 构建辅助脚本
 │   ├── atom-cli.mjs           # 本地 CLI（创建/列出文章）
 │   ├── create-theme.mjs       # 主题脚手架（npm run theme:create <id>）
@@ -226,8 +225,7 @@ Atom/
 ├── .github/                   # GitHub config (CI + deploy both enabled)
 │   ├── dependabot.yml         # Dependency update bot
 │   └── workflows/
-│       ├── test.yml           # CI: lint → test → build
-│       └── deploy.yml         # GitHub Pages / Cloudflare Pages deploy
+│       └── verify.yml         # CI: check → lint → test → build → deploy (main)
 ├── scripts/                   # Build helper scripts
 │   ├── atom-cli.mjs           # Local CLI (create / list articles)
 │   ├── create-theme.mjs       # Theme scaffold (npm run theme:create <id>)
@@ -959,7 +957,7 @@ export const SITE_VERSION = pkg.version; // 页脚显示的就是它
 
 > 💡 Cloudflare Pages：在 Secrets 中设置 `DEPLOY_TARGET=cf`，并配置 `CF_PAGES_TOKEN`、`CF_ACCOUNT_ID`、`CF_PROJECT_NAME`。
 
-CI（`.github/workflows/test.yml`）与部署相互独立，每次 push / PR 都会跑 `lint → test → build`。
+`verify.yml` 一条流水线：每次 push / PR 跑 `check → lint → test → build`，只有 push 到 `main` 且全部通过才会发布到 Pages（部署 job 复用构建产物，不重新安装/构建）。
 
 ### 自定义域名
 
