@@ -17,6 +17,46 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.1.4] — 2026-11-16
+
+### 🐛 Fixed
+
+- **字体改为自托管**：移除 `fonts.googleapis.com` 外链。原来两个 `preconnect` + 一个阻塞渲染的
+  样式表请求，大陆网络下会挂到超时，之后才回落到系统字体（还带字宽跳变）。
+  现在 `@fontsource-variable/archivo`（手写 `@font-face`，只取 latin 的 `wdth` 轴文件）
+  + `@fontsource/jetbrains-mono` 的 latin 400/500/700，实测首页 gzip 仍 14KB、文章页 18KB
+- **对比度**：亮色主题 `--warning` 4.35:1 → 5.3:1；搜索结果命中文字改用 `--text-bright`
+- **动效与溢出**：`html body *` 的全局颜色过渡收敛到 `body`（换主题不再整页重绘）；
+  `overflow-x: hidden` → `clip`（hidden 会创建滚动容器，把真实横向溢出藏起来）
+- **`site`/`base` 双前缀隐患**：`site` 只写 origin、`base` 单独给子路径——原来两者都含
+  `/<repo>`，只改一边就会生成 `/Atom//Atom/`；fork 后缺 `GITHUB_USER`/`CF_DOMAIN` 会打印警告
+- 删掉与 `inlineStylesheets:'always'` 互相抵消的 `cssCodeSplit`，以及无效的 dev-toolbar 预构建
+
+### ✨ Changed
+
+- **PWA 图标补 PNG**：192/512（含 maskable）与 `apple-touch-icon.png`——Android/Chrome
+  不会拿 SVG 当启动图标；`<link rel="apple-touch-icon">` 走 base
+- 新增 `draft-example.md`（`draft: true`）：把 `featuredImage` / `updatedDate` / `reward` /
+  `draft` 四个可选项的写法固化成可运行的样例，且不会进构建
+- 新增 `npm run preview:github`：本地按 GitHub Pages 子路径预览
+
+### ♻️ Refactor
+
+- 抽出 `PostList.astro` + `Pagination.astro` + `src/utils/pagination.ts`：
+  `index.astro` / `blog/index.astro` / `blog/[...page].astro` 原先各抄一份列表与分页算术，
+  序号列还在两个地方重复实现。首页也改用 `PostList`
+- `PostCard` 的参数 `slug` 更名为 `href`（它一直传的是完整 URL，不是 slug）
+- 新增 `tests/pagination.test.ts` 覆盖 0 / 11 / 12 / 13 篇与 `perPage=0` 的边界
+
+### 📝 Docs
+
+- **文档事实修正**：Cloudflare Pages 不再写成「配三个 secret 的 deploy.yml」（仓库只有
+  GitHub Pages 的 workflow，CF 走其 Git 集成）；发版命令统一为 `git tag -a`；
+  token 数 12 → 18 个语义表面 token（全站 47 个）；minify 脚本描述改成 esbuild 直出；
+  修 README 章节编号重复；`THEMING.md` 三处虚构引用（主题选择里的 Ocean、`scanThemes()` 去重、
+  官方 `atom-themes` 仓库）；`DEVELOP.md` 的 frontmatter 表补齐 `category`/`featuredImage`/`draft`
+- `IDEA.md` 澄清定位：本仓是源码/模板仓，Pages 部署只是流水线自检产物，正式站是另一个仓库
+
 ## [1.1.3] — 2026-11-16
 
 ### 🐛 Fixed

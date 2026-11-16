@@ -3,7 +3,8 @@ import { extractSummary } from '../utils/blog';
 import { formatDateISO } from '../utils/date';
 
 interface Props {
-  slug: string;
+  /** 文章 URL（不是 slug —— 内部会带上 base 与尾斜杠） */
+  href: string;
   title: string;
   pubDate: Date;
   description?: string;
@@ -13,7 +14,7 @@ interface Props {
   body?: string;
 }
 
-const { slug, title, pubDate, description, category = '', tags = [], body = '' } = Astro.props;
+const { href, title, pubDate, description, category = '', tags = [], body = '' } = Astro.props;
 const idx = 'index' in Astro.props ? Astro.props.index : undefined;
 
 // Auto-extract description from body if description is empty
@@ -23,7 +24,7 @@ const ordinal = idx != null ? String(idx + 1).padStart(2, '0') : null;
 ---
 
 <li class="log-row">
-  <a href={slug}>
+  <a href={href}>
     {ordinal && <span class="log-index">{ordinal}</span>}
     <span class="log-title">{title}</span>
     <time class="log-date" datetime={pubDate.toISOString()}>

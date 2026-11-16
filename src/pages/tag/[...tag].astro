@@ -40,7 +40,7 @@ const tagPosts = (await getPublishedPosts()).filter((post) => post.data.tags?.in
       <ul class="log-list">
         {tagPosts.map((post) => (
           <PostCard
-            slug={blogPostUrl(post.id)}
+            href={blogPostUrl(post.id)}
             title={post.data.title}
             description={post.data.description}
             body={post.body}

@@ -1,6 +1,6 @@
 {
   "name": "atom",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "type": "module",
   "scripts": {
     "clean": "rm -rf dist public/js public/_assets src/generated .astro coverage",
@@ -9,6 +9,7 @@
     "prebuild": "node scripts/generate-search-index.mjs",
     "build": "node scripts/minify-app-js.mjs && astro build",
     "preview": "astro preview",
+    "preview:github": "DEPLOY_TARGET=github REPO_NAME=Atom npm run build && DEPLOY_TARGET=github REPO_NAME=Atom astro preview",
     "check": "astro check",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage",
