@@ -149,9 +149,7 @@ Atom/
 │   └── theme-loader.mjs       # 构建时扫描 src/themes/，生成 CSS 入口
 ├── public/                    # 静态资源（原样复制到 dist/）
 │   ├── favicon.svg            # 网站图标
-│   ├── manifest.json          # PWA 配置
 │   ├── robots.txt             # 搜索引擎爬虫规则
-│   ├── opensearch.xml         # 浏览器搜索插件
 │   ├── logos/logo.svg         # 导航栏 Logo
 │   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
 │   ├── _assets/               # 搜索索引（构建时生成）
@@ -171,7 +169,7 @@ Atom/
 │   ├── layouts/               # 页面布局
 │   │   ├── BaseLayout.astro   # 全局布局（head, nav, footer, 内联主题脚本）
 │   │   └── BlogPost.astro     # 文章布局（含 TOC、prev/next、打赏、JSON-LD）
-│   ├── pages/                 # 路由页面
+│   ├── pages/                 # 路由页面（manifest.json.ts 构建期生成 PWA manifest）
 │   │   ├── index.astro        # / → 首页
 │   │   ├── about.astro        # /about → 关于页
 │   │   ├── 404.astro          # /404 → 404 页
@@ -244,9 +242,7 @@ Atom/
 │   └── theme-loader.mjs       # Build-time scan src/themes/, generate CSS entry
 ├── public/                    # Static assets (copied to dist/)
 │   ├── favicon.svg            # Site favicon
-│   ├── manifest.json          # PWA config
 │   ├── robots.txt             # Search engine crawler rules
-│   ├── opensearch.xml         # Browser search plugin
 │   ├── logos/logo.svg         # Navbar logo
 │   ├── js/app.js              # Minified interaction script (generated at build)
 │   ├── _assets/               # Search index (generated at build)
@@ -266,7 +262,7 @@ Atom/
 │   ├── layouts/               # Page layouts
 │   │   ├── BaseLayout.astro   # Global layout (head, nav, footer, inline theme script)
 │   │   └── BlogPost.astro     # Article layout (TOC, prev/next, reward, JSON-LD)
-│   ├── pages/                 # Route pages
+│   ├── pages/                 # Route pages (manifest.json.ts generates the PWA manifest)
 │   │   ├── index.astro        # / → Homepage
 │   │   ├── about.astro        # /about → About page
 │   │   ├── 404.astro          # /404 → 404 page

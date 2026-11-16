@@ -118,9 +118,7 @@ Atom/
 │   └── rehype-table-scroll.mjs # 宽表格包可横向滚动容器
 ├── public/
 │   ├── favicon.svg            # 浏览器标签页图标
-│   ├── manifest.json          # PWA 支持
 │   ├── robots.txt             # 搜索引擎爬虫规则
-│   ├── opensearch.xml         # 浏览器搜索插件
 │   ├── logos/logo.svg         # 导航栏 Logo
 │   ├── js/app.js              # 压缩后的交互脚本（构建时生成）
 │   ├── _assets/               # 搜索索引（构建时生成）
@@ -143,7 +141,7 @@ Atom/
 │   ├── content/               # 📝 Markdown 文章
 │   │   └── blog/              # 文章目录（每篇一个 .md）
 │   ├── layouts/               # 布局模板（BaseLayout / BlogPost）
-│   ├── pages/                 # 路由页面
+│   ├── pages/                 # 路由页面（manifest.json.ts 在构建期生成 PWA manifest）
 │   ├── consts.ts              # 站点配置（SITE_TITLE / REPO_URL / HERO_* 等）
 │   ├── content.config.ts      # 内容集合 Schema（类型安全）
 │   └── env.d.ts

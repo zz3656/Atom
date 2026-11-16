@@ -17,6 +17,31 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.1.2] — 2026-11-16
+
+### 🐛 Fixed
+
+- **站内搜索索引落后一次构建**：索引原先在 `postbuild` 写 `public/_assets/`，而 `astro build` 早已把 `public/` 复制进 `dist/`，导致新文章页面能打开、sitemap 有收录，但站内搜索搜不到它。改为 `prebuild` 生成，并新增 `scripts/verify-search-index.mjs`，在 CI 断言「索引 slug 集合 == `dist/blog` 目录集合」（原先只 `test -f`，旧索引也能过关）
+- `atom new --draft` 的 `draft: true` 被写到 frontmatter 收尾 `---` **之后**（落进正文，草稿会直接发布）；`--reward` 从未写入文件。frontmatter 组装抽到 `scripts/lib/post-template.mjs` 并补测试
+- `atom new` 写完文件后崩溃 `relative is not defined`（`node:path` 少 import 一个）
+- **子路径部署（base=`/Atom`）下头图 404**：`BlogPost` 的 `<img>` 直接用 frontmatter 原值，JSON-LD 的 image/logo 用 `Astro.url.origin`（不含 base），与 `og:image` 给出两个不同 URL。统一走 `baseAssetsPath()` / 新增的 `absoluteUrl()`
+- `public/manifest.json` 的 `start_url:"/"`、图标路径同样不吃 base → 改为构建期生成 `src/pages/manifest.json.ts`
+- `_responsive.css` 断点顺序错乱（`400px` 排在 `480px` 之前），超窄屏的导航栏压缩规则被反覆盖
+- noscript 提示条写死 `#fef3c7` 黄底，暗色模式下是一块刺眼白 → 迁到 `_modules/_layout.css` 的 `.noscript-note`，用 token 着色
+
+### ✨ Changed
+
+- **新增 7 个主题 token**：`--overlay-bg`、`--on-overlay`、`--overlay-control-bg`、`--overlay-control-bg-hover`、`--overlay-control-border`、`--on-success`、`--code-inset`。`_post.css` 里 8 处字面色值（灯箱遮罩、复制成功态、代码块内阴影）全部改用 token；`docs/THEMING.md` 与 `scripts/create-theme.mjs` 已同步
+- 主题 manifest 新增可选 `themeColor{light,dark}`，`<meta name="theme-color">` 与 PWA 配色改为从主题读取，兜底值集中在 `src/consts.ts` 的 `DEFAULT_THEME_COLORS`
+- 内置 Hero「黄铜原子」明确为**品牌资产**（颜色固定，不随主题），THEMING.md 里写明这是组件层不写死颜色的唯一例外
+- 移除不可用的 OpenSearch 声明与 `public/opensearch.xml`：模板从未实现 `?q=` 搜索，静态 XML 里的 `"/"` 也不吃 base
+
+### 🧹 Chore
+
+- `.env` / `.env.*` 进 `.gitignore`（模板仓会被 fork，避免误提交密钥）
+- `.astro/`、`src/generated/themes.ts` 不再入库——dev/build/`astro check` 会自动重建（已实测删除后 `astro check` 与全部测试仍绿）；`.prettierignore` 补 `src/generated`
+- 新增 `tests/blog-posts.test.ts`、`tests/post-template.test.ts`、`tests/theme-tokens.test.ts`，用例数 103 → 118
+
 ## [1.1.1] — 2026-11-16
 
 ### 📝 Docs

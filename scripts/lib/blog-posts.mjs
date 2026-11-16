@@ -14,7 +14,11 @@ import { markdownToPlainText, stripFrontmatter } from '../../src/utils/markdown-
 
 export const BLOG_DIR = 'src/content/blog';
 
-/** 极简 frontmatter 解析：只认单行 key: value 与内联数组。 */
+/**
+ * 极简 frontmatter 解析：只认单行 key: value 与内联数组。
+ * @param {string} content
+ * @returns {Record<string, string | string[]>}
+ */
 export function parseFrontmatter(content) {
   const parts = String(content).split('---');
   if (parts.length < 3) return {};
@@ -39,8 +43,22 @@ export function parseFrontmatter(content) {
 }
 
 /**
+ * @typedef {object} BlogPost
+ * @property {string} title
+ * @property {string} description
+ * @property {Date} pubDate
+ * @property {Date|null} [updatedDate]
+ * @property {string} slug
+ * @property {string} category
+ * @property {string[]} tags
+ * @property {boolean} [draft]
+ * @property {string} content
+ */
+
+/**
  * 读取全部已发布文章，按发布日期倒序。
  * @param {string} [blogDir] 文章目录（相对项目根）
+ * @returns {BlogPost[]}
  */
 export function loadPosts(blogDir = BLOG_DIR) {
   const files = readdirSync(blogDir).filter((f) => f.endsWith('.md'));
@@ -64,7 +82,11 @@ export function loadPosts(blogDir = BLOG_DIR) {
     .sort((a, b) => b.pubDate - a.pubDate);
 }
 
-/** 构建站内搜索索引（客户端只做子串匹配，因此预先把可搜索文本拼好并小写）。 */
+/**
+ * 构建站内搜索索引（客户端只做子串匹配，因此预先把可搜索文本拼好并小写）。
+ * @param {BlogPost[]} posts
+ * @returns {Array<{slug: string, title: string, description: string, pubDate: string, content: string, categories: string, tags: string[]}>}
+ */
 export function buildSearchIndex(posts) {
   return posts.map((p) => {
     const bodyText = markdownToPlainText(p.content || '');

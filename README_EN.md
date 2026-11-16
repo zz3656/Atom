@@ -78,9 +78,7 @@ Atom/
 │   └── rehype-table-scroll.mjs  # Wraps wide tables in a scroll container
 ├── public/                      # Static assets (copied verbatim to dist/)
 │   ├── favicon.svg              # Browser tab icon
-│   ├── manifest.json            # PWA config
 │   ├── robots.txt               # Search engine crawling rules
-│   ├── opensearch.xml           # Browser search plugin
 │   ├── logos/logo.svg           # Navbar logo
 │   ├── js/app.js                # Minified interaction script (generated at build)
 │   ├── _assets/search-index.json # Search index (generated at build)
@@ -106,7 +104,7 @@ Atom/
 │   ├── layouts/                 # Layout templates
 │   │   ├── BaseLayout.astro     # Base layout (head, nav, footer, inline theme script)
 │   │   └── BlogPost.astro       # Article layout (TOC, prev/next, reward, JSON-LD)
-│   ├── pages/                   # Route pages
+│   ├── pages/                   # Route pages (manifest.json.ts generates the PWA manifest)
 │   │   ├── index.astro          # / → Homepage
 │   │   ├── about.astro          # /about
 │   │   ├── 404.astro            # /404
