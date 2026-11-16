@@ -43,6 +43,8 @@ jobs:
           head -3 dist/sitemap-0.xml
           head -5 dist/rss.xml
           du -sh dist/
+          # 部署前最后一道闸：搜索索引必须与实际文章页一致
+          node scripts/verify-search-index.mjs
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

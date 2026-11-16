@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "node --experimental-strip-types scripts/generate-search-index.mjs",
     "build": "node scripts/minify-app-js.mjs && astro build",
     "preview": "astro preview",
     "check": "astro check",

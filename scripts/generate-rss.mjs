@@ -1,7 +1,16 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { readdirSync } from 'fs';
-import { join, dirname } from 'path';
-import { markdownToPlainText, stripFrontmatter } from '../src/utils/markdown-strip.ts';
+/**
+ * 生成 RSS（dist/rss.xml）—— postbuild 阶段运行。
+ *
+ * 文章清单与 frontmatter 解析统一走 scripts/lib/blog-posts.mjs，
+ * 不再自己维护一套正则，避免与搜索索引/页面渲染产生规则漂移。
+ *
+ * 注意：搜索索引不在这里生成（它是 prebuild 阶段的事，见
+ * scripts/generate-search-index.mjs）。历史 bug：索引在 postbuild 写 public/，
+ * 而 astro build 早已复制完 public/，导致索引永远落后一次构建。
+ */
+import { readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { loadPosts } from './lib/blog-posts.mjs';
 
 function escapeXml(str) {
   var map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;' };
@@ -10,52 +19,7 @@ function escapeXml(str) {
   });
 }
 
-function parseFrontmatter(content) {
-  var parts = content.split('---');
-  if (parts.length < 3) return {};
-  var fm = {};
-  var lines = parts[1].split('\n');
-  for (var i = 0; i < lines.length; i++) {
-    var match = lines[i].match(/^(\w[\w\-]*):\s*(.*)$/);
-    if (match) {
-      var val = match[2].trim();
-      if (val.indexOf('[') === 0 && val.lastIndexOf(']') === val.length - 1) {
-        val = val
-          .slice(1, -1)
-          .split(',')
-          .map(function (s) {
-            return s.trim().replace(/^["']|["']$/g, '');
-          })
-          .filter(function (s) {
-            return s;
-          });
-      } else if (val[0] === '"' && val[val.length - 1] === '"') {
-        val = val.slice(1, -1);
-      }
-      fm[match[1]] = val;
-    }
-  }
-  return fm;
-}
-
-// 自动从 dist/_astro/ 目录获取 base 路径（Astro 构建产物）
 var distDir = join(process.cwd(), 'dist');
-var astroFiles = readdirSync(distDir).filter(function (f) {
-  return f.startsWith('_astro');
-});
-var base = '/';
-if (astroFiles.length > 0) {
-  // 通过 dist/index.html 提取 base 路径
-  try {
-    var indexHtml = readFileSync(join(distDir, 'index.html'), 'utf-8');
-    var hrefMatch = indexHtml.match(/href="\/([^\/"']*\/_astro)/);
-    if (hrefMatch) {
-      base = '/' + hrefMatch[1].replace('/_astro', '');
-    }
-  } catch (e) {
-    // fallback to /
-  }
-}
 
 // 自动从 dist/index.html 提取站点 URL（与 astro.config.mjs 保持一致）
 var siteUrl = process.env.SITE_URL;
@@ -73,37 +37,9 @@ if (!siteUrl) {
 if (!siteUrl) siteUrl = 'https://zz3656.github.io';
 // 重要: siteUrl 已包含 base (从 og:url 提取的完整 URL)，不要再叠加 prefix。
 // 之前的 bug: siteUrl + prefix 导致 /Atom//Atom/ 双前缀。
-var sitePath = new URL(siteUrl).pathname.replace(/\/$/, '');
 
-// --- Generate RSS + Search Index ---
-var blogDir = 'src/content/blog';
-var files = readdirSync(blogDir).filter(function (f) {
-  return f.endsWith('.md');
-});
-var posts = files
-  .map(function (f) {
-    var fullContent = readFileSync(join(blogDir, f), 'utf-8');
-    var fm = parseFrontmatter(fullContent);
-    // 提取正文（复用 src/utils/markdown-strip.ts 的实现）
-    var body = stripFrontmatter(fullContent);
-    return {
-      title: fm.title || '',
-      description: fm.description || '',
-      pubDate: new Date(fm.pubDate),
-      updatedDate: fm.updatedDate ? new Date(fm.updatedDate) : null,
-      slug: f.replace('.md', ''),
-      category: fm.category || '',
-      tags: fm.tags || [],
-      draft: fm.draft === true || fm.draft === 'true',
-      content: body,
-    };
-  })
-  .filter(function (p) {
-    return !p.draft;
-  })
-  .sort(function (a, b) {
-    return b.pubDate - a.pubDate;
-  });
+// --- Generate RSS ---
+var posts = loadPosts();
 
 var items = posts
   .map(function (p) {
@@ -153,28 +89,4 @@ var rss = [
 ].join('\n');
 
 writeFileSync('dist/rss.xml', rss, 'utf-8');
-console.log('RSS generated: dist/rss.xml');
-
-// --- Generate Search Index ---
-// 从正文提取纯文本用于搜索（去除 Markdown 标记，函数从 src/utils/markdown-strip.ts 共享）
-var searchIndex = posts.map(function (p) {
-  var bodyText = markdownToPlainText(p.content || '');
-  return {
-    slug: p.slug,
-    title: p.title,
-    description: p.description || '',
-    pubDate: p.pubDate.toISOString(),
-    content: (p.title + ' ' + p.description + ' ' + bodyText).toLowerCase(),
-    categories: (p.category || '').toLowerCase(),
-    tags: (p.tags || []).map(function (t) {
-      return t.toLowerCase();
-    }),
-  };
-});
-// 写入 public/_assets/，Astro 构建时会自动复制到 dist/
-var publicAssetsDir = join(process.cwd(), 'public', '_assets');
-if (!existsSync(publicAssetsDir)) {
-  mkdirSync(publicAssetsDir, { recursive: true });
-}
-writeFileSync(join(publicAssetsDir, 'search-index.json'), JSON.stringify(searchIndex));
-console.log('Search index generated: public/_assets/search-index.json');
+console.log(`RSS generated: dist/rss.xml (${posts.length} item(s))`);

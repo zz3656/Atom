@@ -89,6 +89,8 @@ jobs:
           test -f dist/rss.xml && echo "RSS: OK"
           test -f dist/sitemap-index.xml && echo "Sitemap: OK"
           test -f dist/_assets/search-index.json && echo "Search index: OK"
+          # 索引必须真的覆盖所有构建出的文章页，而不只是"文件存在"
+          node scripts/verify-search-index.mjs
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
