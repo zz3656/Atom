@@ -267,41 +267,6 @@
   }
 }
 
-/* ===== 400px: 超窄屏 —— 压缩导航栏，避免横向溢出 ===== */
-@media (max-width: 400px) {
-  .nav-container {
-    gap: 0.5rem;
-    padding-left: max(1rem, env(safe-area-inset-left));
-    padding-right: max(1rem, env(safe-area-inset-right));
-  }
-
-  .nav-actions {
-    gap: 0.35rem;
-  }
-
-  .search-input {
-    width: 84px;
-    padding-left: 1.6rem;
-  }
-  .search-input:focus {
-    width: 120px;
-  }
-
-  .theme-toggle .theme-icon {
-    width: 22px;
-    height: 22px;
-  }
-
-  .nav-toggle {
-    width: 30px;
-    height: 30px;
-  }
-
-  .site-name-text {
-    font-size: 0.95rem;
-  }
-}
-
 /* ===== 480px: Very Small Screens ===== */
 @media (max-width: 480px) {
   .hero {
@@ -468,5 +433,43 @@
     min-width: 1.8rem;
     height: 1.8rem;
     font-size: 0.8rem;
+  }
+}
+
+
+/* ===== 400px: 超窄屏 —— 压缩导航栏，避免横向溢出 =====
+   断点必须按降序书写（1024 → 768 → 600 → 480 → 400）：
+   同特异性规则后者胜，顺序颠倒会让超窄屏的压缩被 480 的规则反覆盖。 */
+@media (max-width: 400px) {
+  .nav-container {
+    gap: 0.5rem;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
+  .nav-actions {
+    gap: 0.35rem;
+  }
+
+  .search-input {
+    width: 84px;
+    padding-left: 1.6rem;
+  }
+  .search-input:focus {
+    width: 120px;
+  }
+
+  .theme-toggle .theme-icon {
+    width: 22px;
+    height: 22px;
+  }
+
+  .nav-toggle {
+    width: 30px;
+    height: 30px;
+  }
+
+  .site-name-text {
+    font-size: 0.95rem;
   }
 }
