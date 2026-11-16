@@ -15,6 +15,10 @@ All notable changes to this project will be documented in this file.
 
 <!-- 下一轮改动写在这里。发布时把这一段改成 [x.y.z] — YYYY-MM-DD，并同步 package.json -->
 
+---
+
+## [1.1.1] — 2026-11-16
+
 ### 📝 Docs
 
 - 文档事实核对：修正「零 JavaScript」等与实现不符的表述，统一为「无框架运行时 / 仅 ~8.7KB 原生 JS」
