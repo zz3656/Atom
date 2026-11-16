@@ -17,6 +17,38 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.1.3] — 2026-11-16
+
+### 🐛 Fixed
+
+- **灯箱可键盘使用**：原来只能鼠标点开，键盘/读屏用户完全用不了；现在图片可 Tab 聚焦、Enter/Space 打开，关闭后焦点归还给原图，Tab 不出遮罩
+- **搜索可读性**：输入框 `type=search` + `role=combobox` + `aria-expanded/aria-controls`，结果容器 `role=listbox` + `aria-live`，结果项 `role=option`；结果项焦点态原来是 `outline:none` + 1.1:1 的背景色，键盘根本看不出选中项
+- **桌面端幽灵按钮**：`.nav-toggle` 在 ≥769px 无任何样式却照常渲染，是个能 Tab 停住、按了没反应的控件 → 桌面端 `display:none`
+- **控件描边对比度**：搜索框与主题开关用 `--border-color`，对页面底色只有 1.09–1.22:1（WCAG 1.4.11 需 3:1）→ 新增 `--control-border`
+- **导航高亮在子路径部署下永远不亮**：`Header.astro` 用 `Astro.url.pathname` 直接比 `/blog`，而 GitHub Pages 下是 `/Atom/blog/` → 新增 `stripBase()` 后比较
+- **RSS 四处不合规**：`<lastBuildDate>` 写进每个 `<item>`（只允许 channel 层）、`content:encoded` 塞原始 Markdown、缺 `<language>`、`]]>` 未转义；正文改为从构建产物抽取渲染后 HTML
+- **sitemap lastmod**：删掉正则注入的 `scripts/fix-sitemap.mjs`（还插在 `<changefreq>` 之后，不合 XSD 顺序），改用集成 `serialize`，文章页用 `updatedDate ?? pubDate`、其余页面用最新文章日期
+- **robots.txt 没有 Sitemap 指令**且静态文件写不出 base 前缀 → 改为构建期生成；**404** 加 `noindex`、去掉指向首页的 canonical
+- **`og:image` 兜底是 SVG favicon**（微信/X/LinkedIn 都不解析）→ 新增 1200×630 的 `og-default.png`，补 `og:image:width/height/alt`
+- **`SITE_TITLE` 不生效**：7 个页面标题硬编码「Atom Blog」，分页/分类/标签页 meta description 全站同一句 → 改为 `SITE_TITLE` 与逐页描述
+- **正文首图被 lazy**（它通常就是 LCP 元素）→ 首图 `eager` + `fetchpriority=high`，其余仍 lazy
+- 分类/标签 URL 未编码：`getTagUrl('入门')` 现输出 `/tag/%E5%85%A5%E9%97%A8/`
+- frontmatter 块状 YAML 列表（`tags:` 后跟 `- a`）此前静默丢标签，现已支持
+
+### ✨ Changed
+
+- `trailingSlash: 'always'`：内链、canonical、sitemap 三处口径统一，导航少一次 301
+- 打赏二维码 PNG（160KB+143KB）→ 280×280 webp（各 14KB），并加 `loading="lazy"`
+- **移除 6 个全站零引用的 token**（`--accent-secondary`、`--accent-gradient`、`--accent-glow-strong`、`--glow-secondary`、`--purple-glow`、`--shadow-sm`），第三方主题的必填契约随之收窄
+
+### 🧹 Chore & CI
+
+- **一条流水线 `verify.yml`** 取代 test.yml + deploy.yml：部署是 `needs: verify` 的下游 job（测试红了不再发布），且复用 verify 的构建产物（原先 4 次 `npm ci`、2 次全量 build）
+- 覆盖率从"装饰品"变成门禁：`vitest.config.ts` 加 thresholds（lines 80 / stmts 75 / branches 62 / funcs 85），当前实测 91.6 / 88 / 80.5 / 97.3
+- 依赖与工具链：`sharp` 正式列入 devDependencies、`private: true`、`engines.node >= 24` + `.nvmrc`、新增 `clean` / `test:watch`
+- 删掉零引用代码：`FormattedDate.astro`、`date.ts` 的 `formatDateCN`/`formatFullDate`、`path.ts` 的 `isRoot`、`_about.css` 里 78 行死选择器
+- 测试 103 → 128（新增 CLI 模板、token 契约、图片 lazy、块状 YAML、路径编码、`absoluteUrl`/`joinBase`/`stripBase`）
+
 ## [1.1.2] — 2026-11-16
 
 ### 🐛 Fixed
