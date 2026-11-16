@@ -348,7 +348,7 @@ npm run theme:create ocean --no-dark   # 单模式模板
 
 ### 5. 测试
 
-启动 `npm run dev` → 打开站点 → 点击右上角主题按钮 → 应看到 "Ocean" 选项
+启动 `npm run dev` → 打开站点 → 右上角只在「日 / 夜」之间切换；本站**不提供主题选择 UI**，主题由 `src/consts.ts` 的默认主题（扫描顺序第一个）决定。要验证新主题，把它改成默认主题或临时改 `src/themes` 目录。
 
 ---
 
@@ -427,7 +427,7 @@ grep -c "data-theme=\"ocean\"" dist/index.html
 
 ### Q: 主题 id 能否与现有主题重名？
 
-A: 不能。`scanThemes()` 按 id 去重，重名会被警告跳过。
+A: 不会重名——`id` 就是目录名，文件系统本身保证唯一；`scanThemes()` 只校验 id 是否匹配 `^[a-z0-9][a-z0-9_-]{0,31}$`，不合规的主题会被跳过并打印警告。
 
 ### Q: 我能加新 token 给组件用吗？
 
@@ -463,7 +463,7 @@ A: 现代 CSS Variables 在 IE11 不支持。Atom 默认放弃 IE11。
 - `src/themes/atom-default/` — 双模式、冷轧钢 + 黄铜指示灯
 
 它同时也是**最完整的 token 参考实现**——复制这个目录改名，就是一个合规的新主题起点。
-其余主题（Solarized、Sepia 等）放在独立仓库 `atom-themes/`，需要时单独安装。
+本仓库只内置 `atom-default` 一个主题。第三方主题由社区各自发布，放进 `src/themes/<id>/` 即可被自动扫描，不需要也不存在官方的 `atom-themes` 仓库。
 
 ### 版本要求
 

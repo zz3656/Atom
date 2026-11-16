@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 **版本号的唯一数据源是 `package.json` 的 `version` 字段** —— 页脚显示的版本号从那里读取，
 `tests/version.test.ts` 会校验它与本文件的最新发布版本号一致，两边不会漂移。
 
-发布流程：改 `package.json` 的 `version` → 把下面 `[Unreleased]` 段改成 `[x.y.z] — 日期` → `git tag vx.y.z`。
+发布流程：改 `package.json` 的 `version` → 把下面 `[Unreleased]` 段改成 `[x.y.z] — 日期` → `git tag -a vx.y.z -m "..."` → `git push main --tags`。
 
 ---
 

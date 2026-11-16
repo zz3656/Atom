@@ -56,7 +56,7 @@ Atom is a **lightweight, framework-free** static blog built with [Astro](https:/
 | 框架          | Astro 7.4                | 框架默认零 JS 输出（不注入运行时），Content Collections Schema |
 | 语言          | TypeScript 6.x           | 类型安全，编辑器提示                       |
 | 样式          | 原生 CSS + CSS Variables | 无框架依赖，21 个 CSS 模块按职责拆分        |
-| 字体          | Archivo + JetBrains Mono | Archivo 承担标题/正文（含 wdth 宽度轴），Mono 只用于数据 |
+| 字体          | Archivo + JetBrains Mono（自托管） | Archivo 承担标题/正文（含 wdth 宽度轴），Mono 只用于数据；通过 `@fontsource` 打包进站点，无第三方请求 |
 | 代码高亮      | Shiki                    | 内置 Astro，支持 GitHub Dark 主题          |
 | RSS / Sitemap | 自定义 postbuild 脚本    | 零 npm 依赖，构建后自动生成                |
 | 部署          | GitHub Pages + Actions   | 免费、自动化                               |
@@ -68,7 +68,7 @@ Atom is a **lightweight, framework-free** static blog built with [Astro](https:/
 | Framework        | Astro 7.4                  | Zero-JS by default (no runtime injected), Content Collections Schema |
 | Language         | TypeScript 6.x             | Type safety, IDE hints                     |
 | Styling          | Native CSS + CSS Variables | No framework dependency, 21 focused modules |
-| Fonts            | Archivo + JetBrains Mono   | Archivo for display/body (wdth axis), Mono for data only |
+| Fonts            | Archivo + JetBrains Mono   | Self-hosted via @fontsource; Archivo for display/body (wdth axis), Mono for data only |
 | Syntax Highlight | Shiki                      | Built-in Astro, GitHub Dark theme support  |
 | RSS / Sitemap    | Custom postbuild script    | Zero npm deps, auto-generated post-build   |
 | Hosting          | GitHub Pages + Actions     | Free, automated                            |
@@ -139,7 +139,7 @@ Atom/
 │   ├── create-theme.mjs       # 主题脚手架（npm run theme:create <id>）
 │   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
 │   ├── verify-search-index.mjs # 断言搜索索引与构建产物一致
-│   ├── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
+│   ├── minify-app-js.mjs      # esbuild 直接从 src/scripts 产出压缩版 app.js
 │   ├── vectorize-icon.mjs     # 位图 → 矢量（Draw Things 图标流水线第二步）
 │   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）
 ├── astro-plugins/
@@ -334,15 +334,20 @@ reward: true
 
 ### Frontmatter 字段
 
-| 字段          | 类型       | 必填 | 说明                         |
-| ------------- | ---------- | ---- | ---------------------------- |
-| `title`       | `string`   | ✅   | 文章标题                     |
-| `description` | `string`   | ✅   | 卡片描述（约 1-2 行）        |
-| `pubDate`     | `date`     | ✅   | 发布日期                     |
-| `tags`        | `string[]` | ❌   | 标签列表                     |
-| `heroImage`   | `string`   | ❌   | 封面图片（相对于 `public/`） |
-| `updatedDate` | `date`     | ❌   | 更新日期（可选）             |
-| `reward`      | `boolean`  | ❌   | 显示打赏码（默认 `false`）   |
+| 字段            | 类型       | 必填 | 说明                                                          |
+| --------------- | ---------- | ---- | ------------------------------------------------------------- |
+| `title`         | `string`   | ✅   | 文章标题                                                      |
+| `description`   | `string`   | ✅   | 卡片描述（约 1-2 行，也用于 meta description 与 RSS）         |
+| `pubDate`       | `date`     | ✅   | 发布日期                                                      |
+| `category`      | `string`   | ❌   | 分类（默认空串；用于分类页与分类通道配色）                     |
+| `tags`          | `string[]` | ❌   | 标签列表（默认空数组；支持内联 `[a, b]` 与块状 `- a` 两种写法） |
+| `heroImage`     | `string`   | ❌   | 正文顶部大图（相对于 `public/`）                               |
+| `featuredImage` | `string`   | ❌   | 社交分享专用封面，优先于 `heroImage`；缺省用站点 `og-default.png` |
+| `updatedDate`   | `date`     | ❌   | 更新日期；影响 sitemap 的 `lastmod` 与文末「更新于」           |
+| `reward`        | `boolean`  | ❌   | 是否在文末显示打赏码（默认 `false`）                           |
+| `draft`         | `boolean`  | ❌   | 草稿开关：为 `true` 时页面、RSS、搜索索引、sitemap 全部跳过     |
+
+> 想看全部可选字段的真实写法：`src/content/blog/draft-example.md`（`draft: true`，不会进构建）。
 
 ### 添加封面图片
 
@@ -405,7 +410,7 @@ Atom 的视觉由**两层 Token**驱动。理解这个分层，是改样式 / �
 
 | 角色 | 字体 | 用在哪 |
 |---|---|---|
-| 标题 / 正文 | `Archivo`（可变字体，含 `wdth` 宽度轴） | 大标题用 `font-variation-settings: 'wdth' 112, 'wght' 800` 做宽字重标识感 |
+| 标题 / 正文 | `Archivo Variable`（自托管可变字体，含 `wdth` 宽度轴） | 大标题用 `font-variation-settings: 'wdth' 112, 'wght' 800` 做宽字重标识感 |
 | 数据 | `JetBrains Mono` | 日期、计数、序号、刻度、代码 |
 | 中文 | 系统黑体（PingFang SC / 微软雅黑） | CJK 字符回落到 `--font-cjk` 栈 |
 
@@ -528,7 +533,7 @@ Earlier versions scattered violet / cyber-cyan literals through component CSS, w
 
 | Role | Face | Where |
 |---|---|---|
-| Headings / body | `Archivo` (variable, incl. `wdth` axis) | Display headings use `font-variation-settings: 'wdth' 112, 'wght' 800` for a wide, signage-like voice |
+| Headings / body | `Archivo Variable` (self-hosted, incl. `wdth` axis) | Display headings use `font-variation-settings: 'wdth' 112, 'wght' 800` for a wide, signage-like voice |
 | Data | `JetBrains Mono` | Dates, counts, indices, ticks, code |
 | CJK | System sans (PingFang SC / Microsoft YaHei) | CJK glyphs fall back to the `--font-cjk` stack |
 
@@ -642,7 +647,7 @@ npm run theme:create ocean
 ```css
 :root {
   --radius: 6px;
-  --font-sans: 'Archivo', var(--font-cjk), system-ui, -apple-system, sans-serif;
+  --font-sans: 'Archivo Variable', var(--font-cjk), system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
 }
 ```
@@ -660,13 +665,13 @@ npm run theme:create ocean
 ```css
 :root {
   --font-cjk: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei';
-  --font-display: 'Archivo', var(--font-cjk), system-ui, sans-serif;
-  --font-sans: 'Archivo', var(--font-cjk), system-ui, -apple-system, sans-serif;
+  --font-display: 'Archivo Variable', var(--font-cjk), system-ui, sans-serif;
+  --font-sans: 'Archivo Variable', var(--font-cjk), system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', 'Fira Code', monospace;
 }
 ```
 
-> `Archivo` 是可变字体，带 `wdth` 宽度轴（`font-stretch`），标题的字宽变化是"精密仪表"感的来源。
+> `Archivo Variable` 是自托管可变字体（`@fontsource-variable/archivo`），带 `wdth` 宽度轴（`font-stretch`），标题的字宽变化是"精密仪表"感的来源。
 
 #### 修改站点信息
 
@@ -744,7 +749,7 @@ Edit `src/styles/_modules/_variables.css` (**not** in theme CSS):
 ```css
 :root {
   --radius: 6px;
-  --font-sans: 'Archivo', var(--font-cjk), system-ui, -apple-system, sans-serif;
+  --font-sans: 'Archivo Variable', var(--font-cjk), system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', monospace;
 }
 ```
@@ -762,8 +767,8 @@ The site has exactly three font "voices". Do not mix their jobs:
 ```css
 :root {
   --font-cjk: 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei';
-  --font-display: 'Archivo', var(--font-cjk), system-ui, sans-serif;
-  --font-sans: 'Archivo', var(--font-cjk), system-ui, -apple-system, sans-serif;
+  --font-display: 'Archivo Variable', var(--font-cjk), system-ui, sans-serif;
+  --font-sans: 'Archivo Variable', var(--font-cjk), system-ui, -apple-system, sans-serif;
   --font-mono: 'JetBrains Mono', 'SFMono-Regular', 'Fira Code', monospace;
 }
 ```
@@ -920,7 +925,7 @@ export const SITE_VERSION = pkg.version; // 页脚显示的就是它
 1. 把 `CHANGELOG.md` 里的 `[Unreleased]` 段改成 `[x.y.z] — YYYY-MM-DD`（保留新内容，补上小节标题）
 2. 改 `package.json` 的 `version` 为 `x.y.z`
 3. `npm run build && npm test && npm run lint && npm run check` 全绿
-4. `git commit` + `git tag vx.y.z`
+4. `git commit` + `git tag -a vx.y.z -m "vx.y.z — 一句话摘要"`（带附注的 tag，CI/文档都按 annotated 处理）
 5. 推送：`git push && git push --tags`
 
 > 第 2 步和第 1 步**必须同时做** —— 测试会盯着这两个地方的一致性。
@@ -955,7 +960,7 @@ export const SITE_VERSION = pkg.version; // 页脚显示的就是它
 
 > 💡 子路径仓库：仓库名为 `my-blog` 时自动部署到 `https://username.github.io/my-blog/`。
 
-> 💡 Cloudflare Pages：在 Secrets 中设置 `DEPLOY_TARGET=cf`，并配置 `CF_PAGES_TOKEN`、`CF_ACCOUNT_ID`、`CF_PROJECT_NAME`。
+> 💡 Cloudflare Pages：仓库只自带 GitHub Pages 的 workflow。CF 侧用其 Git 集成（构建 `npm run build`、产物 `dist`、环境变量 `DEPLOY_TARGET=cf` + `CF_DOMAIN`），不需要任何 CF secret。
 
 `verify.yml` 一条流水线：每次 push / PR 跑 `check → lint → test → build`，只有 push 到 `main` 且全部通过才会发布到 Pages（部署 job 复用构建产物，不重新安装/构建）。
 

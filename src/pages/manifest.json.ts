@@ -35,11 +35,20 @@ export const GET: APIRoute = () => {
     // PWA 只接受单值：用亮色主题的底色，与 <meta name="theme-color"> 的 light 分支一致
     theme_color: light,
     icons: [
+      // Android/Chrome 装 PWA 只认 PNG（SVG 图标不会被用作启动图标）
+      { src: absoluteUrl('/icon-192.png'), sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: absoluteUrl('/icon-512.png'), sizes: '512x512', type: 'image/png', purpose: 'any' },
+      {
+        src: absoluteUrl('/icon-512.png'),
+        sizes: '512x512',
+        type: 'image/png',
+        purpose: 'maskable',
+      },
       {
         src: absoluteUrl(SITE_FAVICON),
         sizes: 'any',
         type: 'image/svg+xml',
-        purpose: 'any maskable',
+        purpose: 'any',
       },
     ],
   };

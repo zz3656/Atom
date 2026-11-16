@@ -45,7 +45,7 @@
 | 🔍 **SEO Friendly**     | Semantic HTML, Open Graph / Twitter Card / JSON-LD, canonical URL, Sitemap, RSS                                |
 | 📦 **Tiny Size**        | Homepage HTML ~14KB gzipped (CSS inline, no extra request); single post ~18KB gzipped                            |
 | 💯 **Lighthouse-Ready** | Built-in semantics for 100/100 scores: canonical, OG/Twitter, JSON-LD, sitemap, RSS, a11y skip-link              |
-| 🎚️ **Token Design System** | 12 semantic surface tokens drive every color; components hardcode zero colors, third-party themes plug in with zero config |
+| 🎚️ **Token Design System** | 18 semantic surface tokens (47 color tokens in total) drive every color; components hardcode zero colors, third-party themes plug in with zero config |
 | 📐 **Ruler Visual Language** | Tick-marked rules run through the site; every log entry is a tick on a vertical ruler spine                        |
 
 ## 📸 Preview
@@ -224,7 +224,7 @@ GitHub Actions is already configured. Just:
 
 > 💡 **Sub-path repositories**: if the repo is named `my-blog`, it deploys to `https://username.github.io/my-blog/`.
 
-> 💡 **Cloudflare Pages**: set `DEPLOY_TARGET=cf` in Secrets, plus `CF_PAGES_TOKEN`, `CF_ACCOUNT_ID` and `CF_PROJECT_NAME`.
+> 💡 **Cloudflare Pages**: this repo only ships a GitHub Pages workflow. Use Cloudflare Pages' own Git integration (build `npm run build`, output `dist`, env `DEPLOY_TARGET=cf` + `CF_DOMAIN`) — no CF secret is needed here.
 
 Actions will automatically: `Install deps → Build → Deploy`
 
@@ -350,7 +350,7 @@ src/pages/blog/index.astro → /blog
 - **TypeScript safety** — Content validated via Astro Content Collections Schema
 - **Token-driven design system** — 12 semantic surface tokens; components contain zero hardcoded colors
 - **Ruler visual language** — Tick-marked rules run through the site; the log list sits on a vertical ruler spine
-- **Built-in client search** — Static index generated post-build, ~8.7KB of interaction JS in total
+- **Built-in client search** — Static index generated in `prebuild`, ~8.7KB of interaction JS in total
 - **Zero horizontal overflow** — Verified from 320px up; wide tables scroll inside their own container
 - **Centered navbar** — Logo left, nav links centered, actions right
 - **Dark mode** — CSS variable based, auto-remembers user preference

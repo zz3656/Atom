@@ -20,8 +20,8 @@
    */
   --font-cjk:
     'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Source Han Sans SC', 'Noto Sans CJK SC';
-  --font-display: 'Archivo', var(--font-cjk), system-ui, sans-serif;
-  --font-sans: 'Archivo', var(--font-cjk), system-ui, -apple-system, sans-serif;
+  --font-display: 'Archivo Variable', var(--font-cjk), system-ui, sans-serif;
+  --font-sans: 'Archivo Variable', var(--font-cjk), system-ui, -apple-system, sans-serif;
   --font-mono:
     'JetBrains Mono', 'SFMono-Regular', 'Fira Code', 'Cascadia Code', Consolas, 'PingFang SC',
     monospace;

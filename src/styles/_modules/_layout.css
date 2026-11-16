@@ -13,11 +13,11 @@ html {
   transition: background-color 0.25s ease;
 }
 
-html body,
-html body * {
+/* 主题切换只给 body 挂颜色过渡。以前是 `html body *`（所有元素），
+   主题一换整页重绘、任意 hover 也带着颜色动画；具体组件需要过渡的在各自模块里声明。 */
+body {
   transition:
     background-color 0.25s ease,
-    border-color 0.25s ease,
     color 0.15s ease;
 }
 

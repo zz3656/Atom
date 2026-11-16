@@ -41,7 +41,8 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+  /* clip 而不是 hidden：hidden 会创建滚动容器（吞掉真实横向溢出，sticky 表现也因浏览器而异） */
+  overflow-x: clip;
   transition:
     background 0.3s ease,
     color 0.3s ease;

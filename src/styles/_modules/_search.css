@@ -112,7 +112,8 @@
 
 .search-result-title mark {
   background: var(--highlight);
-  color: var(--accent);
+  /* 用 --text-bright 而不是 --accent：后者压在 --highlight 上只有 4.29:1（亮色主题） */
+  color: var(--text-bright);
   padding: 0.05rem 0.15rem;
   border-radius: 2px;
 }

@@ -45,7 +45,7 @@
 | 🔍 **SEO 友好**        | 语义化 HTML、Open Graph / Twitter Card / JSON-LD 结构化数据、Sitemap、RSS 订阅 |
 | 📦 **超小体积**        | 首页 HTML ~14KB gzipped（CSS 内联，无额外请求）；单篇文章 ~18KB gzipped             |
 | 💯 **Lighthouse 满分** | 在简洁页面上可达到 100/100（性能/无障碍/SEO）；内置配置：语义化 HTML、canonical、OG、Twitter Card、JSON-LD、sitemap、RSS、a11y skip-link |
-| 🎚️ **Token 化设计系统** | 组件层零硬编码颜色，12 组语义表面 token 驱动全部配色，第三方主题零配置接入 |
+| 🎚️ **Token 化设计系统** | 组件层零硬编码颜色，18 个语义表面 token（全站共 47 个颜色 token）驱动全部配色，第三方主题零配置接入 |
 | 📐 **刻度尺视觉语言** | 横竖刻度线贯穿全站，日志列表配标尺脊线，让"按时间排列的日志"成为可读的视觉结构 |
 
 ---
@@ -108,7 +108,7 @@ Atom/
 │   ├── create-theme.mjs       # 🎨 主题脚手架（npm run theme:create <id>）
 │   ├── generate-rss.mjs       # RSS Feed + 搜索索引生成
 │   ├── verify-search-index.mjs # 断言搜索索引与构建产物一致
-│   ├── minify-app-js.mjs      # app.js 压缩 + 子路径兼容
+│   ├── minify-app-js.mjs      # esbuild 直接从 src/scripts 产出压缩版 app.js
 │   ├── vectorize-icon.mjs     # 位图 → 矢量（图标流水线）
 │   └── convert-hexo.mjs       # Hexo 迁移工具（可选用）
 ├── astro-plugins/
@@ -332,7 +332,7 @@ CSS 已按功能拆分为 21 个模块（`src/styles/_modules/`），编辑对�
 
 > 💡 **子路径仓库**：如果仓库名为 `my-blog`，则自动部署到 `https://username.github.io/my-blog/`。
 
-> 💡 **Cloudflare Pages**：将 Secrets 中设置 `DEPLOY_TARGET=cf`，并配置 `CF_PAGES_TOKEN`、`CF_ACCOUNT_ID`、`CF_PROJECT_NAME`。
+> 💡 **Cloudflare Pages**：本项目只自带 GitHub Pages 的 workflow。CF 侧请用 Cloudflare Pages 的 Git 集成（构建命令 `npm run build`、产物目录 `dist`、环境变量 `DEPLOY_TARGET=cf` + `CF_DOMAIN`），不要试图复用 GitHub Actions——仓库里没有、也不需要任何 CF 相关 secret。
 
 Actions 会自动：`安装依赖 → 构建 → 部署`
 
@@ -474,13 +474,13 @@ export default defineConfig({
 });
 ```
 
-### 3. 导航栏
+### 4. 导航栏
 
 导航栏项在 `src/components/Header.astro` 中配置，修改 `navLinks` 数组即可增删导航项。
 
 布局：Logo + 站点名称在左侧，导航链接居中，搜索和主题切换在右侧。页脚已包含 RSS 订阅链接。
 
-### 4. 页脚
+### 5. 页脚
 
 Footer 展示三类信息：①用户可定制的社交链接；②自动生成的 RSS / 关于链接；③硬编码的框架品牌。
 
@@ -512,7 +512,7 @@ Footer 展示三类信息：①用户可定制的社交链接；②自动生成�
 | `REPO_URL` | 底部 "Atom" 链接，指向项目源代码仓库 | ✅ 用户必改 |
 | `FRAMEWORK_NAME` | 底部 "Atom" 文字 | ❌ 硬编码框架品牌 |
 
-### 5. 打赏二维码
+### 6. 打赏二维码
 
 二维码图片放在 `public/medias/reward/` 目录下：
 
@@ -524,7 +524,7 @@ public/medias/reward/
 
 在文章 frontmatter 中设置 `reward: true` 即可在文章末尾显示打赏码。
 
-### 6. 主题 / 换肤
+### 7. 主题 / 换肤
 
 Atom 自带一套精心调校的默认主题：**冷轧钢 + 黄铜指示灯**（日间镀锌灰 + 深棕黄铜，夜间枪铁灰 + 琥珀黄铜）。
 
