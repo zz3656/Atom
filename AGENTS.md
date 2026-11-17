@@ -17,7 +17,7 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 
 - `src/` — Astro 应用：`pages/` 路由、`components/`、`layouts/`、`content/` 文章集合、`themes/`、`styles/`、`utils/`、`consts.ts` 站点配置
 - `src/content/blog/` — Markdown 文章（frontmatter 见 `src/content.config.ts`）
-- `src/themes/<id>/{light,dark}.css` — 主题，**只放 CSS token**，不放规则
+- `src/themes/<id>/` — 主题包：`manifest.json` + `light.css`（token 必填）、`dark.css`、`overlay.css`（该主题作用域下的规则，可选）、`hero.astro`（该主题自己的首页 Hero，可选）。安装 = 放目录，不改项目源码
 - `src/styles/_modules/` — 21 个共享 CSS 模块（布局/字体/刻度尺），**不含颜色**
 - `src/generated/` — 构建时生成的主题汇总入口（不进版本库；dev/build/`astro check` 会自动重建，别手改）
 - `public/` — 静态资源（`logos/`、`favicon.svg`、`og-default.png`、`medias/`）；`manifest.json` 与 `robots.txt` 由 `src/pages/*.ts` 构建期生成
@@ -36,7 +36,8 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 
 ## Project rules (违反会被 review 打回)
 
-- **组件层不得写死任何颜色**——只用语义 token（`--accent`、`--bg-primary`、`--rule-tick` …）。主题目录只放 token；组件 CSS 写死颜色会让第三方主题渲染出错的配色
+- **组件层不得写死任何颜色**——只用语义 token（`--accent`、`--bg-primary`、`--rule-tick` …）。颜色只来自主题的 token 层；组件 CSS 写死颜色会让第三方主题渲染出错的配色
+- **主题包自带 overlay 与 hero，项目只提供槽位**——`theme-loader` 自动注入 `overlay.css`，首页用 `import.meta.glob` 取主题的 `hero.astro`；装/删主题都不该改 `consts.ts`、`pages/`、`components/`
 - **文章目录永远不挤压正文宽度**——正文列固定 `--content-width`(740px) 居中，TOC 只能待在两侧空白区（≥1280px 左侧刻度栏 / <1280px 顶部折叠条）。曾因在 1100–1279px 把 TOC 塞进文章块当左列，正文被压到 508px 且右移 116px
 - 新增/修改 token 时，`scripts/create-theme.mjs` 脚手架和 `docs/THEMING.md` 必须同步
 - JetBrains Mono **只用于真实数据**（日期、计数、序号、刻度、代码）；中文界面一律无衬线
