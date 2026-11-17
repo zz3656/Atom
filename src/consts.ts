@@ -15,6 +15,9 @@ export const SITE_DESCRIPTION =
   'Atom 博客 —— 用 Astro 构建的现代轻量级博客。无框架运行时，内容优先，为技术写作而生的精密日志。';
 export const AUTHOR = 'zz3656';
 
+/** 站点副标（页头标识旁的小字 / 页脚品牌后缀）。站点文案，不属于主题 */
+export const SITE_TAGLINE = 'Precision Log';
+
 /** 站点版本号（显示在页脚）。数据源：package.json 的 version 字段。 */
 export const SITE_VERSION = pkg.version;
 
