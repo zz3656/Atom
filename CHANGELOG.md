@@ -15,6 +15,13 @@ All notable changes to this project will be documented in this file.
 
 <!-- 下一轮改动写在这里。发布时把这一段改成 [x.y.z] — YYYY-MM-DD，并同步 package.json -->
 
+### 📝 Docs
+
+- 明确「两条版本线」：本仓 semver 是模板契约（主题 token / 脚本 CLI / 目录约定），派生站点有自己的发版史，
+  不互相对齐。`DEVELOP.md` 新增「两条版本线：模板仓 vs 派生站点」小节（含 `upstream` 字段写法、
+  升级时哪些文件不要覆盖、升级后必跑的校验）；`README.md` 同步摘要；历史版本表补齐 1.1.1–1.1.5
+- `AGENTS.md` 补两条规则：链接不得重复包 `baseAssetsPath`（附 `npm run verify:links`）、版本号分线
+
 ---
 
 ## [1.1.5] — 2026-11-16

@@ -44,7 +44,10 @@ Atom —— 一个用 Astro 构建的现代轻量级博客（冷轧钢 + 黄铜�
 - **版本号只有一个数据源**——只改 `package.json` 的 `version`。`src/consts.ts` 的 `SITE_VERSION` 从那里 import，页脚显示它；`tests/version.test.ts` 会校验它与 `CHANGELOG.md` 最新版本号一致。发版流程见 DEVELOP.md「版本号与发布流程」
 - `@astrojs/markdown-remark` 在 Astro 7 里是 **peer dependency**，必须显式留在 `devDependencies`
 - Markdown 管线走 `astro.config.mjs` 的 `markdown.processor: unified({ ... })`（旧的 `markdown.remarkPlugins` 顶层写法已废弃）
-- 链接要走 `src/utils/path.ts` 的 `withBase`，不要手写 base 前缀
+- 链接要走 `src/utils/path.ts` 的 `withBase`，不要手写 base 前缀（派生站点曾因多包一层 `baseAssetsPath`
+  拼出 `/Atom/Atom/…` 导致整站 404；改完必跑 `npm run verify:links`）
+- **版本号分两条线**：本仓 semver 是模板契约（token/脚本/目录），派生站点有自己的发版史，不要互相对齐；
+  站点侧用 `package.json` 的 `upstream` 字段记录基础版本，升级清单见 DEVELOP.md「两条版本线」
 
 ## Testing instructions
 

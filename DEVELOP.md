@@ -946,8 +946,49 @@ export const SITE_VERSION = pkg.version; // 页脚显示的就是它
 
 | 版本 | 日期 | 说明 |
 |---|---|---|
+| 1.1.5 | 2026-11-16 | 修复导航 base 双前缀导致的全站 404；新增 `verify-build-links.mjs` 链接门禁 |
+| 1.1.4 | 2026-11-16 | 字体自托管、PWA PNG 图标、对比度与动效细节、`site`/`base` 拆分、列表与分页去重 |
+| 1.1.3 | 2026-11-16 | 可访问性（灯箱/搜索/幽灵按钮/控件对比度）、RSS 与 sitemap/robots/404/OG 图、CI 合并为单条流水线、死代码清理 |
+| 1.1.2 | 2026-11-16 | 搜索索引改 prebuild、`atom-cli` 的 draft/reward 修复、子路径资源走 base、token 契约收敛 |
+| 1.1.1 | 2026-11-16 | 收口积压的文档修正与 CI 修复 |
 | 1.1.0 | 2026-10-25 | 视觉重设计 "PRECISION LOG"、移动端适配、Astro 7.4 升级、DrawThings 品牌图标、版本号系统 |
 | 1.0.0 | 2026-09-13 | 首个正式版 |
+
+### 两条版本线：模板仓 vs 派生站点
+
+**本仓（Atom）的版本号是给 fork 的人看的契约**，派生站点（例如 Astro 博客上线站）有自己的发版史。
+两者**不要互相对齐数字**——版本号量的是两件不同的事：
+
+| | 本仓 Atom | 派生站点（如 Atom-blog） |
+|---|---|---|
+| 版本号含义 | 主题 token / 脚本 CLI / 目录约定的对外承诺 | 站点自己的内容与客制化迭代 |
+| 频率 | 有契约变更才发 | 按内容节奏发 |
+| tag | `v1.1.5`（annotated） | 站点自己的 `v1.6.2` 等 |
+
+派生站点应该在**自己的** `package.json` 里注明基于哪个上游版本，让两个事实同时可见：
+
+```json
+{
+  "version": "1.6.2",
+  "upstream": { "repo": "zz3656/Atom", "version": "1.1.5" }
+}
+```
+
+并在自己的 `CHANGELOG.md` 顶部写一行 `Based on Atom 1.1.5`。
+
+**代码层单向跟随上游**：派生站点只保留 `src/content/`（内容）、`src/consts.ts`（站点标识）、
+`src/themes/<自己的主题>/`，其余工程文件跟本仓走。这是为了避免同源代码各走一套——
+历史上两边就分叉过：站点还留着旧的 `fix-sitemap.mjs` 与双 workflow，而本仓已经换成
+`verify.yml` 单条门禁。
+
+**升级上游时按这张清单收尾**：
+
+1. 契约层：`src/themes/*` 的 token 集合、`docs/THEMING.md`、`scripts/create-theme.mjs` 三处一起更新
+2. 工程层：`scripts/`（含 `lib/`）、`astro-plugins/`、`.github/workflows/verify.yml`、`.nvmrc`、`engines`
+3. 站点层**不要覆盖**：`src/content/**`、`src/consts.ts`、站点自己的主题目录、`scripts/generate-og.mjs` 这类站点专属脚本
+4. 校验：`npm run check && npm run lint && npm run test:coverage`；
+   `npm run build` 后跑 `node scripts/verify-search-index.mjs`（全部文章是否都进了索引）
+   与 `node scripts/verify-build-links.mjs`（子路径部署下链接是否都命中产物）
 
 ---
 
